@@ -4,7 +4,7 @@ import { createContext} from 'react';
 import { useState } from 'react';
 export const myContext = createContext(null)
 function App() {
-  const [user,setUser]=useState(null)
+  const [user,setUser]=useState(sessionStorage.getItem('id')?sessionStorage.getItem('id'):null)
   const context = {
     user,
   }

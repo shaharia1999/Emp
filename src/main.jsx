@@ -5,29 +5,37 @@ import './index.css'
 import {createBrowserRouter,Outlet,RouterProvider,} from "react-router-dom";
 import Home from './Home.jsx';
 import Login from './Login.jsx';
-import NavBar from './NavBar.jsx';
 import Profile from './Profile.jsx'
+import Private from './Private.jsx';
+import ForHome from './ForHome.jsx';
 const router=createBrowserRouter([{
   path:'/',
   element:<App></App>,
   children:[
     {
       path:'/',
-      element:<Home></Home>
+      element:<Home></Home>,
+      children:[
+        {
+          path:'/',
+          element:<ForHome></ForHome>
+        },
+        {
+          path:'/login',
+          element:<Login></Login>
+        },
+        {
+          path:'/profile',
+          element:<Private><Profile></Profile></Private>
+        }
+      ]
     },
-    {
-      path:'/login',
-      element:<Login></Login>
-    },
-    {
-      path:'/profile',
-      element:<Profile></Profile>
-    }
+
+
   ]
 }])
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <NavBar></NavBar>
     <RouterProvider router={router} />
      <Outlet></Outlet>
   </React.StrictMode>,

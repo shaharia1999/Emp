@@ -3,6 +3,8 @@ const ApiUrl={
     LoginUrl: `${baseUrl}login/`,
     ProfileUrl:`${baseUrl}profile/`,
     AttendUrl:`${baseUrl}attendance/`,
+    ClockIn:`${baseUrl}clockin/`,
+    ClockOut:`${baseUrl}clockout/`,
 }
 
 export default ApiUrl;

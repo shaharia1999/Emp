@@ -1,16 +1,17 @@
 import { Navbar } from 'flowbite-react';
+import { NavLink } from 'react-router-dom';
 const NavBar = () => {
     return (
         <Navbar fluid rounded>
-            <Navbar.Brand href="https://flowbite-react.com">
-                <img src="/favicon.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Flowbite React</span>
+            <Navbar.Brand href="/">
+                <img src="https://arenawebsecurity.net/static/media/main-log-new.png" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
+                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">EmpPanel</span>
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-                <Navbar.Link href="/">Home</Navbar.Link>
-                <Navbar.Link href="/login">Login</Navbar.Link>
-                <Navbar.Link href="/profile">Profile</Navbar.Link>
+                <NavLink to="/">Home</NavLink> 
+                <NavLink to="/profile">Profile</NavLink>
+                <NavLink to="/login">Login</NavLink>
             </Navbar.Collapse>
         </Navbar>
     );
