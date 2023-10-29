@@ -1,13 +1,25 @@
+import axios from 'axios';
 import { Button, Card } from 'flowbite-react';
 import { Label, TextInput } from 'flowbite-react';
-import { useNavigation } from 'react-router-dom';
+import ApiUrl from './ApiUrl';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
-    const navigate= useNavigation()
+    const navigate= useNavigate()
     function LoginUser(e) {
         e.preventDefault();
         let formdata=new FormData(e.target);
-        console.log(Object.fromEntries(formdata))
-        navigate('/profile')
+        let data=Object.fromEntries(formdata)
+        axios.post(ApiUrl.LoginUrl,data,{'Content-Type':'multipart/form-data'})
+        .then(res=>{
+            if (res.data) {
+                sessionStorage.setItem("id",res.data.id)
+                navigate("/profile")
+            }
+        }).catch(error=>{
+            console.log(error)
+        })
+
+        
     }
     return (
         <div className='flex justify-center'>
