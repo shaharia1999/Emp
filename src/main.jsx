@@ -8,6 +8,7 @@ import Login from './Login.jsx';
 import Profile from './Profile.jsx'
 import Private from './Private.jsx';
 import ForHome from './ForHome.jsx';
+import CreateInvoice from './CreateInvoice.jsx';
 const router=createBrowserRouter([{
   path:'/',
   element:<App></App>,
@@ -27,6 +28,10 @@ const router=createBrowserRouter([{
         {
           path:'/profile',
           element:<Private><Profile></Profile></Private>
+        },
+        {
+          path:'/invoice',
+          element:<CreateInvoice></CreateInvoice>
         }
       ]
     },

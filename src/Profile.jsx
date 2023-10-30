@@ -1,6 +1,6 @@
 import { Card, Avatar, Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
+import { Table } from 'flowbite-react';
 import axios from 'axios';
 import ApiUrl from './ApiUrl';
 import TimeCard from './TimeCard';
@@ -15,9 +15,18 @@ const Profile = () => {
     let id = sessionStorage.getItem('id')
     useEffect(() => {
         getProfileInfo()
+        getAttenDanceInfo()
+    }, [])
 
+    function getProfileInfo() {
+        axios.get(`${ApiUrl.ProfileUrl}${id}/`).then(res => {
+            setEmp(res.data)
+        }).catch(error => console.log(error))
+    }
+    function getAttenDanceInfo() {
         axios.get(`${ApiUrl.AttendUrl}${id}/`).then(res => {
-            let data = res.data
+            const data = res.data
+            console.log(data);
             let month = moment().month() + 1
             let year = moment().year()
             let date = moment().date()
@@ -32,35 +41,31 @@ const Profile = () => {
                     }
                 }
                 if (x != null) {
-                    newAtten.push(data[x])
-                    data?.splice(x, 1)
+                    let create = moment(data[x].created_at)
+                    let t = { 'date': create.format('YYYY-MM-DD'), clock_in: create.format('h:mm a') }
+                    if (data[x].clock_out != null) {
+                        t.clock_out = moment(data[x].clock_out).format('h:mm a')
+                    } else {
+                        t.clock_out = null
+                    }
+                    newAtten.push(t)
 
                 } else {
 
-                    let newDate = { 'created_at': moment(`${year}-${month}-${index}`, "YYYY-MM-DD").format(), 'clock_out': '' }
+                    let newDate = { 'date': moment(`${year}-${month}-${index}`, "YYYY-MM-DD").format("YYYY-MM-DD"), 'clock_in': null, 'clock_out': null }
                     newAtten.push(newDate)
                 }
             }
-            console.log(newAtten)
             setAtten(newAtten)
 
-        }).catch(error => console.log(error))
 
-    }, [])
 
-    function getProfileInfo() {
-        axios.get(`${ApiUrl.ProfileUrl}${id}/`).then(res => {
-            console.log(res.data)
-            setEmp(res.data)
         }).catch(error => console.log(error))
-    }
-    function getAttenDanceInfo() {
-        
     }
     function ClockIn() {
         Swal.fire({
             title: `Clock In`,
-            text: `are you Clocking In at ${moment().format('dddd, MMMM Do YYYY,h:mm:ss a')}?`,
+            text: `Are you currently timestamped for ${moment().format('dddd, MMMM Do YYYY,h:mm a')}?`,
             icon: 'question',
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -68,18 +73,14 @@ const Profile = () => {
             showConfirmButton: true,
             showCancelButton: true,
         }).then(res => {
+            console.log(res.isConfirmed)
             if (res.isConfirmed) {
                 let id = sessionStorage.getItem('id')
                 if (id != null) {
-                    axios.post(ApiUrl.ClockIn, { id })
-                        .then(res => {
-                            axios.get(`${ApiUrl.ProfileUrl}${id}/`).then(res => {
-                                console.log(res.data)
-                                setEmp(res.data)
-                            }).catch(error => console.log(error))
-                        }).catch(error => {
-                            console.log(error)
-                        })
+                    axios.post(ApiUrl.ClockIn, { id }).then(() => {
+                        getProfileInfo();
+                        getAttenDanceInfo()
+                    }).catch(error=>console.log(error))
                 }
             }
         })
@@ -88,7 +89,7 @@ const Profile = () => {
     function ClockOut() {
         Swal.fire({
             title: "Are You Sure You want to Clock out?",
-            text: 'Clock out mean you are finished for the day. or did you mean logout',
+            text: "Clocking out signifies the completion of your day's work, or were you referring to logging out?",
             icon: 'warning',
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -102,11 +103,11 @@ const Profile = () => {
                 if (id != null) {
 
                     axios.post(ApiUrl.ClockOut, { id })
-                        .then(res => {
-                            console.log(res.data);
-                            sessionStorage.clear();
+                        .then(() => {
+                            getAttenDanceInfo()
+                            // sessionStorage.clear();
                             emp.clock = false;
-                            navigate('/login')
+                            // navigate('/login')
                         }).catch(error => {
                             console.log(error)
                         })
@@ -150,101 +151,42 @@ const Profile = () => {
                 <TimeCard clock={emp.clock} ClockIn={ClockIn} ClockOut={ClockOut}></TimeCard>
 
                 <Card >
-                    <Card >
-                        <div className='flex justify-between p-1'>
-                            <p className='font-semibold'>No.</p>
-                            <p className='font-semibold'>Weekday</p>
-                            <p className='font-semibold'>Clock In</p>
-                            <p className='font-semibold'>Clock Out</p>
-                            <p className='font-semibold'>status</p>
-                        </div>
-
-
-                    </Card>
-                    {
-                        atten?.map((x, index) => {
-                            let isAtten = false
-                            let isWeekend = false
-
-                            if (moment(x.created_at).hour() != 0) {
-                                isAtten = true
-                            }
-                            if (moment(x.created_at).format('d') == 5 || moment(x.created_at).format('d') == 6) {
-                                isWeekend = true
-                            }
-
-
-
-                            return (
-                                <Card key={index} className={`${isWeekend && "bg-red-400"}`}>
-                                    <div className='flex justify-between' >
-                                        <p >{index + 1}</p>
-                                        <p >{moment(x.created_at).format('dddd')}</p>
-
-                                        <p>{
-                                            isAtten ? moment(x.created_at).format('MMM Do,h:mm a') : moment(x.created_at).format('DD-MM-YYYY ')
-                                        }</p>
-                                        <p>
-                                            {
-                                                isAtten ? moment(x.clock_out).format('MMM Do,h:mm a') :  <pre>   </pre>
-                                            }
-                                        </p>
-                                        <p >{
-                                            isAtten ? <AiFillCheckCircle className='text-green-400 text-2xl'></AiFillCheckCircle> : <AiFillCloseCircle className='text-red-600 text-2xl'></AiFillCloseCircle>
-                                        }</p>
-                                    </div>
-
-
-                                </Card>
-                            )
-                        })
-                    }
-
-
-                    {/* <table>
-                        <thead>
-                            <tr>
-                                <td>No.</td>
-                                <td>Weekday</td>
-                                <td>Date</td>
-                                <td>status</td>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table>
+                        <Table.Head>
+                            <Table.HeadCell>
+                                No.
+                            </Table.HeadCell>
+                            <Table.HeadCell>
+                                Date
+                            </Table.HeadCell>
+                            <Table.HeadCell>
+                                Weekday
+                            </Table.HeadCell>
+                            <Table.HeadCell>
+                                Clock in
+                            </Table.HeadCell>
+                            <Table.HeadCell>
+                                Clock Out
+                            </Table.HeadCell>
+                        </Table.Head>
+                        <Table.Body>
                             {
                                 atten?.map((x, index) => {
-                                    let isAtten=false
-                                    let isWeekend=false
-                                    console.log(x)
-                                    if (moment(x).hour()!=0) {
-                                        isAtten=true
-                                    }
-                                    if (moment(x).format('d')==5 || moment(x).format('d')==6 ) {
-                                        isWeekend=true
-                                    }
-
-
+                                    let isHoldiay=moment(x.date).format('d')==5 || moment(x.date).format('d')==6
                                     return (
-                                        <tr key={index} className={`${isWeekend && "bg-red-400"}`}>
-                                            <td>{index}</td>
-                                            <td >{moment(x).format('dddd')}</td>
-                                            {
-                                                isAtten ? <td>{moment(x).format('MMM Do,h:mm a')}</td> : <td>{moment(x).format('DD-MM-YYYY ')}</td>
-                                            }
-                                            {
-                                                isAtten ? <td><AiFillCheckCircle className='text-green-400 text-2xl'></AiFillCheckCircle></td> : <td><AiFillCloseCircle className='text-red-600 text-2xl'></AiFillCloseCircle></td>
-                                            }
-                                        </tr>
+                                        <Table.Row key={index} className={`text-black border-4 drop-shadow-md bg-white border-white ${isHoldiay && "bg-red-300 rounded-lg"}`}>
+                                            <Table.Cell className='rounded-l-xl'>{index + 1}</Table.Cell>
+                                            <Table.Cell>{x.date}</Table.Cell>
+                                            <Table.Cell>{moment(x.date).format('dddd')}</Table.Cell>
+                                            <Table.Cell>{x.clock_in}</Table.Cell>
+                                            <Table.Cell className='rounded-r-xl'>{x.clock_out}</Table.Cell>
+                                        </Table.Row>
                                     )
                                 })
                             }
-                        </tbody>
-                    </table> */}
-
-
+                        </Table.Body>
+                    </Table>
                 </Card>
-
-
             </div>
         </div>
     );
