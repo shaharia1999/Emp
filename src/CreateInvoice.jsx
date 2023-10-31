@@ -56,6 +56,18 @@ const CreateInvoice = () => {
             setInvoiceRow([newRow])
         }
     }
+    function MakePDF() {
+        let disturb = document.getElementById('disturb');
+        let temp = disturb.innerHTML;
+        if (year != null) {
+            if (month!=null) {
+                disturb.innerHTML = `<span style="margin-right:10px">${moment().month(month - 1).format('MMMM')}</span><span>${year}</span>`
+            }
+        }
+        toPDF()
+        disturb.innerHTML=temp
+
+    }
     useEffect(() => {
         getEmployee();
     }, [])
@@ -66,7 +78,7 @@ const CreateInvoice = () => {
             </div>
             {
                 emp && <div>
-                    <Button color="success" onClick={() => toPDF()}>
+                    <Button color="success" onClick={() => MakePDF()}>
                         Save PDF
                     </Button>
                 </div>
@@ -79,17 +91,17 @@ const CreateInvoice = () => {
                     <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
                     <div className="flex justify-center">
                         <div className="border border-black px-2 py-3 mt-3">
-                            <span>Salary of: </span>
+                            <span className="font-semibold">Salary of: </span>
                             {/* <Select className="inline-block w-40" options={months} /> */}
                             <div
-                                className="max-w-md inline-block"
-                                id="select"
+                                className="max-w-md inline-flex"
+                                id='disturb'
                             >
                                 <FlowbiteSelect
-                                    id="countries"
+                                    id="select"
                                     required
                                     onChange={value => setMonth(value.target.value)}
-                                    
+
                                 >
                                     <option>Select Month</option>
                                     {
@@ -102,15 +114,16 @@ const CreateInvoice = () => {
                                         })
                                     }
                                 </FlowbiteSelect>
+                                <TextInput
+                                    id="year"
+                                    placeholder="Year..."
+                                    required
+                                    onChange={value => setYear(value.target.value)}
+                                    type="number"
+                                    className="ml-1"
+                                />
                             </div>
-                            <TextInput
-                                id="email1"
-                                placeholder="Year..."
-                                required
-                                onChange={value => setYear(value.target.value)}
-                                type="number"
-                                className="inline-block ml-1"
-                            />
+
 
                         </div>
 
