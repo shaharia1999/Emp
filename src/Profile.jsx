@@ -20,6 +20,7 @@ const Profile = () => {
 
     function getProfileInfo() {
         axios.get(`${ApiUrl.ProfileUrl}${id}/`).then(res => {
+            console.log(res.data);
             setEmp(res.data)
         }).catch(error => console.log(error))
     }
@@ -35,27 +36,27 @@ const Profile = () => {
             for (let index = date; index > 0; index--) {
                 let x = null
                 for (let index2 = 0; index2 < data?.length; index2++) {
-                    const element = data[index2].created_at;
+                    const element = data[index2].date;
                     if (moment(element).date() == index) {
                         x = index2
                     }
                 }
                 if (x != null) {
-                    let create = moment(data[x].created_at)
-                    let t = { 'date': create.format('YYYY-MM-DD'), clock_in: create.format('h:mm a') }
+                    let t = { 'date': data[x].date ,clock_in: moment(data[x].clock_in,'hh:mm:ss').format('hh:mm a') }
                     if (data[x].clock_out != null) {
-                        t.clock_out = moment(data[x].clock_out).format('h:mm a')
+                        t.clock_out =  moment(data[x].clock_out ,'hh:mm:ss').format('hh:mm a')
                     } else {
                         t.clock_out = null
                     }
                     newAtten.push(t)
-
+                    data.splice(x, 1);
                 } else {
 
                     let newDate = { 'date': moment(`${year}-${month}-${index}`, "YYYY-MM-DD").format("YYYY-MM-DD"), 'clock_in': null, 'clock_out': null }
                     newAtten.push(newDate)
                 }
             }
+            console.log(newAtten);
             setAtten(newAtten)
 
 

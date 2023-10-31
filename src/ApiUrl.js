@@ -7,6 +7,7 @@ const ApiUrl={
     ClockOut:`${baseUrl}clockout/`,
     GetEmployees:`${baseUrl}get-employees/`,
     GetEmployee:`${baseUrl}get-employee/`,
+    GetInfo:`${baseUrl}get-info/`,
 }
 
 export default ApiUrl;
