@@ -6,9 +6,12 @@ import moment from "moment";
 import { Select as FlowbiteSelect, TextInput, Modal, Button } from 'flowbite-react';
 import { toWords } from 'number-to-words'
 import InsideModal from "./InsideModal";
-import { usePDF } from 'react-to-pdf';
-
-
+// import { usePDF } from 'react-to-pdf'; // it has family issues
+// import html2pdf from 'html2pdf.js' // it raise the same problem
+// https://html2canvas.hertzen.com/features/
+// read this then manually design this
+//
+//
 const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
@@ -20,7 +23,8 @@ const CreateInvoice = () => {
     const props = { openModal, setOpenModal };
     const [earning, setEarning] = useState(0)
     const [deduct, setDeduct] = useState(0)
-    const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
+    // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
+
     for (let index = 0; index < 12; index++) {
         let t = { 'label': moment().month(index).format('MMMM'), 'value': index + 1 }
         months.push(t)
@@ -56,36 +60,50 @@ const CreateInvoice = () => {
             setInvoiceRow([newRow])
         }
     }
-    function MakePDF() {
-        let disturb = document.getElementById('disturb');
-        let temp = disturb.innerHTML;
-        if (year != null) {
-            if (month!=null) {
-                disturb.innerHTML = `<span style="margin-right:10px">${moment().month(month - 1).format('MMMM')}</span><span>${year}</span>`
-            }
+    // function MakePDF() { // TODO it has its own problem. but worked
+    //     let disturb = document.getElementById('disturb');
+    //     let temp = disturb.innerHTML;
+    //     if (year != null) {
+    //         if (month != null) {
+    //             disturb.innerHTML = `<span style="margin-right:10px">${moment().month(month - 1).format('MMMM')}</span><span>${year}</span>`
+    //         }
+    //     }
+    //     toPDF()
+    //     disturb.innerHTML = temp
+    // }
+    function MakePDF2() { //WORKED FLAWLESSLY
+        let element=document.getElementById('print')
+        let opt={
+            filename:`${emp.name}.pdf`,
         }
-        toPDF()
-        disturb.innerHTML=temp
+        html2pdf().set(opt).from(element).save(); // ignore the error. cdn covering for it. browser will not make hassel about this
 
     }
+
+
     useEffect(() => {
         getEmployee();
+        let script=document.createElement('script');
+        script.type = 'application/javascript';
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+        document.head.appendChild(script);
+
     }, [])
     return (
         <div className="mx-20 flex flex-col justify-center items-center">
-            <div className="mx-32 mb-6 w-[90%]">
+            <div className="mx-32 mb-6 w-[90%] justify-items-center">
                 <Select options={emps} onChange={value => getSingleEmp(value)} />
             </div>
             {
                 emp && <div>
-                    <Button color="success" onClick={() => MakePDF()}>
+                    <Button color="success" onClick={() => MakePDF2()}>
                         Save PDF
                     </Button>
                 </div>
             }
 
             {
-                emp && <div id="print" ref={targetRef} className=" mt-4 border border-black p-4 w-[8.3in] h-[11.7in] relative mb-7 ">
+                emp && <div id="print"  className=" mt-4 border border-black p-4 w-[768px] h-[1056px] relative mb-7 ">
                     <p className="text-end mt-[1.2in]"><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
                     <p><span className="font-bold">Name: </span>{emp?.name} </p>
                     <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
@@ -132,10 +150,10 @@ const CreateInvoice = () => {
                         <table className="w-full  border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="border border-black pb-2">Title</th>
-                                    <th className="border border-black pb-2">Description</th>
-                                    <th className="border border-black pb-2">Amount</th>
-                                    <th className="border border-black pb-2">Status</th>
+                                    <th className="border border-black ">Title</th>
+                                    <th className="border border-black ">Description</th>
+                                    <th className="border border-black ">Amount</th>
+                                    <th className="border border-black ">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -143,41 +161,41 @@ const CreateInvoice = () => {
                                     invoiceRow?.map((x, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td className="border border-black pb-2">{x.title}</td>
-                                                <td className="border border-black pb-2">{x.desc}</td>
-                                                <td className="border border-black pb-2">{x.amount}</td>
-                                                <td className="border border-black pb-2">{x.status}</td>
+                                                <td className="border border-black ">{x.title}</td>
+                                                <td className="border border-black ">{x.desc}</td>
+                                                <td className="border border-black ">{x.amount}</td>
+                                                <td className="border border-black ">{x.status}</td>
                                             </tr>
                                         )
                                     })
                                 }
                                 <tr>
                                     {
-                                        year && month && <td onClick={() => props.setOpenModal('default')} className=" pb-2 border border-black text-center text-black font-bold hover:cursor-pointer hover:bg-slate-950/10" colSpan={4}>Add</td>
+                                        year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center text-black font-bold hover:cursor-pointer hover:bg-slate-950/10" colSpan={4}>Add</td>
                                     }
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="mt-4">
+                        <div className="mt-4" >
                             <table>
                                 <tr>
-                                    <td className="font-semibold ">Total Earning</td>
-                                    <td className="font-semibold  "> : </td>
+                                    <td className="font-semibold border">Total Earning</td>
+                                    <td className="font-semibold  border"> : </td>
                                     <td >{earning}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold ">Total Deduct</td>
-                                    <td className="font-semibold "> : </td>
+                                    <td className="font-semibold border">Total Deduct</td>
+                                    <td className="font-semibold border"> : </td>
                                     <td >{deduct}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold ">Net Salary</td>
-                                    <td className="font-semibold "> : </td>
+                                    <td className="font-semibold border">Net Salary</td>
+                                    <td className="font-semibold border"> : </td>
                                     <td >{Number(earning) - Number(deduct)}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold ">Amount In Words</td>
-                                    <td className="font-semibold ">:</td>
+                                    <td className="font-semibold border">Amount In Words</td>
+                                    <td className="font-semibold border">:</td>
                                     <td >{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
@@ -206,80 +224,7 @@ const CreateInvoice = () => {
                     </div>
                 </div>
             }
-            {
-                // <div id="print" className="border p-4">
-                //     <p className="text-end"><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
-                //     <p><span className="font-bold">Name: </span>{emp?.name} </p>
-                //     <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
-                //     <div className="flex justify-center">
-                //         <div className="border border-black px-2 py-3 mt-3">
-                //             <span>Salary of: </span>
-                //             {/* <Select className="inline-block w-40" options={months} /> */}
-                //             <div
-                //                 className="max-w-md inline-block"
-                //                 id="select"
-                //             >
-                //                 <FlowbiteSelect
-                //                     id="countries"
-                //                     required
-                //                     onChange={value => setMonth(value)}
-                //                 >
-                //                     {
-                //                         months?.map((x, index) => {
-                //                             return (
-                //                                 <option key={index} value={x.value}>
-                //                                     {x.label}
-                //                                 </option>
-                //                             )
-                //                         })
-                //                     }
-                //                 </FlowbiteSelect>
-                //             </div>
-                //             <TextInput
-                //                 id="email1"
-                //                 placeholder="Year..."
-                //                 required
-                //                 onChange={value=>setYear(value)}
-                //                 type="number"
-                //                 className="inline-block ml-1"
-                //             />
 
-                //         </div>
-
-                //     </div>
-                //     <div className="w-full px-7 mt-6">
-                //         <table className="w-full  border-collapse">
-                //             <thead>
-                //                 <tr>
-                //                     <th className="border border-black">Title</th>
-                //                     <th className="border border-black">Description</th>
-                //                     <th className="border border-black">Amount</th>
-                //                     <th className="border border-black">Status</th>
-                //                 </tr>
-                //             </thead>
-                //             <tbody>
-                //                 <td onClick={() => props.setOpenModal('default')} className="border border-black text-center text-black font-bold hover:cursor-pointer hover:bg-slate-950/10" colSpan={4}>Add</td>
-                //             </tbody>
-                //         </table>
-
-                //         <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
-                //             <Modal.Body>
-                //                 <InsideModal year={year} month={month}  ></InsideModal>
-                //             </Modal.Body>
-                //             <Modal.Footer>
-                //                 <Button onClick={() => props.setOpenModal(undefined)}>I accept</Button>
-                //                 <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-                //                     Decline
-                //                 </Button>
-                //             </Modal.Footer>
-                //         </Modal>
-                //     </div>
-                //     <div className="overline decoration-dotted flex justify-between p-3 mt-10">
-                //         <span>Employee Signature</span>
-                //         <span>Authority Signature</span>
-                //     </div>
-                // </div>
-            }
         </div>
     );
 };
