@@ -218,9 +218,9 @@ const CreateInvoice = () => {
                         </Modal>
                     </div>
 
-                    <div className="overline decoration-dotted w-full flex justify-between absolute bottom-[.8in] left-0 p-3">
-                        <span>Employee Signature</span>
-                        <span>Authority Signature</span>
+                    <div className=" w-full flex justify-between absolute bottom-[.8in] left-0 p-3" >
+                        <span className="overline ">Employee Signature</span>
+                        <span className="overline ">Authority Signature</span>
                     </div>
                 </div>
             }
