@@ -106,6 +106,7 @@ const CreateInvoice = () => {
         // document.head.appendChild(script);
 
     }, [])
+
     return (
         <div className="mx-20 flex flex-col justify-center items-center" id="main-body">
 
@@ -306,7 +307,7 @@ const CreateInvoice = () => {
 
 
             }
-            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
+            <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
                 <Modal.Body>
 
                     <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
@@ -317,7 +318,7 @@ const CreateInvoice = () => {
                         Decline
                     </Button>
                 </Modal.Footer>
-            </Modal> */}
+            </Modal>
 
         </div>
     );

@@ -8,6 +8,7 @@ import { DatePicker } from 'react-rainbow-components';
 import moment from 'moment';
 const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     const [info, setInfo] = useState(null)
+    console.log(info);
     const [salary, setSalary] = useState(null)
     let endDate = moment(year + '-' + month + '-' + 1 + ' 00:00:00').endOf('month').toDate();
 
@@ -50,7 +51,16 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
         }
         setDate(value);
     }
-
+ useEffect(()=>{
+    // let Fromabsent =document.getElementById('absent')?.value;
+    // let Fromadays =Number(document.getElementById('days')?.value);
+    // let Fromfine =Number(document.getElementById('fine')?.value);
+      
+  
+    // // let result=(Fromabsent/Fromadays)*Fromfine
+    // console.log(Fromabsent);
+    // // setSalary(result)
+ },[])
     return (
         <Tabs>
             <TabList>
@@ -153,7 +163,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                     <Button type='submit' className='mt-2 w-full'>Add</Button>
                 </form>
             </TabPanel>
-            {/* ************************************************************************************************** */}
+            {/* ********************************************⏬****************************************************** */}
             <TabPanel>
                 <form className='mx-20' id='other-form' onSubmit={(e) => otherFormSubmit(e)}>
                     <div>
@@ -169,6 +179,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                             type="text"
                             name="title"
                             value="Absent"
+                           
                             readOnly
                         />
                     </div>
@@ -184,6 +195,9 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 id="attend"
                                 required
                                 readOnly
+                                value={info?.atten
+
+                                }
                                 type="number"
                             />
                         </div>
@@ -199,6 +213,8 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 required
                                 type="number"
                                 readOnly
+                                value={info?.absent
+                                }
                             />
                         </div>
                         <div className='flex items-center'>
@@ -209,14 +225,15 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                         value="Days Per Fine"
                                     />
                                 </div>
-                                <div className='flex items-center'><TextInput
+                                <div className='flex items-center gap-2'><TextInput
                                     id="days"
                                     type="number"
+                                    defaultValue={3}
                                 />X</div>
 
 
                             </div>
-                            <div>
+                            <div className='ml-2'>
                                 <div className="mb-2 block">
                                     <Label
                                         htmlFor="fine"
@@ -226,6 +243,8 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 <TextInput
                                     id="fine"
                                     type="number"
+                                  
+                                    defaultValue={parseInt(Number(info?.salary) / Number(endDate.getDate()))}
                                 />
                             </div>
                         </div>
@@ -259,6 +278,8 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 required
                                 type="number"
                                 name="amount"
+                                value={salary}
+                                onChange={value => setSalary(value.value)}
                             />
                         </div>
                         <div
@@ -289,7 +310,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                     <Button type='submit' className='mt-2 w-full'>Add</Button>
                 </form>
             </TabPanel>
-            {/* ********************************************************************************************* */}
+            {/* ********************************************⏫************************************************* */}
             <TabPanel>
                 <form className='mx-20' id='other-form' onSubmit={(e) => otherFormSubmit(e)}>
                     <div>
