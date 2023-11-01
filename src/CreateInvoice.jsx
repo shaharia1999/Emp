@@ -6,6 +6,7 @@ import moment from "moment";
 import { Select as FlowbiteSelect, TextInput, Modal, Button } from 'flowbite-react';
 import { toWords } from 'number-to-words'
 import InsideModal from "./InsideModal";
+
 // import { usePDF } from 'react-to-pdf'; // it has family issues
 // import html2pdf from 'html2pdf.js' // it raise the same problem
 // https://html2canvas.hertzen.com/features/
@@ -72,9 +73,9 @@ const CreateInvoice = () => {
     //     disturb.innerHTML = temp
     // }
     function MakePDF2() { //WORKED FLAWLESSLY
-        let element=document.getElementById('print')
-        let opt={
-            filename:`${emp.name}.pdf`,
+        let element = document.getElementById('print')
+        let opt = {
+            filename: `${emp.name}.pdf`,
         }
         html2pdf().set(opt).from(element).save(); // ignore the error. cdn covering for it. browser will not make hassel about this
 
@@ -83,17 +84,19 @@ const CreateInvoice = () => {
 
     useEffect(() => {
         getEmployee();
-        let script=document.createElement('script');
-        script.type = 'application/javascript';
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-        document.head.appendChild(script);
+        // let script=document.createElement('script');
+        // script.type = 'application/javascript';
+        // script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+        // script.src = './html2pdf.bundle.min.js';
+        // document.head.appendChild(script);
 
     }, [])
     return (
-        <div className="mx-20 flex flex-col justify-center items-center">
-            <div className="mx-32 mb-6 w-[90%] justify-items-center">
+        <div className="mx-20 flex flex-col justify-center items-center" >
+            <div className="mx-32 mb-6 w-[90%] justify-items-center" >
                 <Select options={emps} onChange={value => getSingleEmp(value)} />
             </div>
+            <Button onClick={() => props.setOpenModal('default')}>HUUH</Button>
             {
                 emp && <div>
                     <Button color="success" onClick={() => MakePDF2()}>
@@ -103,8 +106,8 @@ const CreateInvoice = () => {
             }
 
             {
-                emp && <div id="print"  className=" mt-4 border border-black p-4 w-[768px] h-[1056px] relative mb-7 ">
-                    <p className="text-end mt-[1.2in]"><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
+                emp && <div id="print" className=" mt-4 border border-black p-4 w-[768px] h-[1056px] relative mb-7 ">
+                    <p className="text-end "><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
                     <p><span className="font-bold">Name: </span>{emp?.name} </p>
                     <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
                     <div className="flex justify-center">
@@ -162,9 +165,9 @@ const CreateInvoice = () => {
                                         return (
                                             <tr key={index}>
                                                 <td className="border border-black ">{x.title}</td>
-                                                <td className="border border-black ">{x.desc}</td>
+                                                <td className="border border-black "><pre>{x.desc} </pre> </td>
                                                 <td className="border border-black ">{x.amount}</td>
-                                                <td className="border border-black ">{x.status}</td>
+                                                <td className="border border-black ">{x.status == 1 ? "Addition" : "Deduction"}</td>
                                             </tr>
                                         )
                                     })
@@ -176,27 +179,23 @@ const CreateInvoice = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="mt-4" >
-                            <table>
+                        <div className="mt-4 w-1/2 mx-auto" >
+                            <table className=" w-full">
                                 <tr>
-                                    <td className="font-semibold border">Total Earning</td>
-                                    <td className="font-semibold  border"> : </td>
-                                    <td >{earning}</td>
+                                    <td className="font-semibold border border-black w-1/2">Total Earning</td>
+                                    <td className="border  border-black ">{earning}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold border">Total Deduct</td>
-                                    <td className="font-semibold border"> : </td>
-                                    <td >{deduct}</td>
+                                    <td className="font-semibold border border-black">Total Deduct</td>
+                                    <td className="border  border-black ">{deduct}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold border">Net Salary</td>
-                                    <td className="font-semibold border"> : </td>
-                                    <td >{Number(earning) - Number(deduct)}</td>
+                                    <td className="font-semibold border  border-black">Net Salary</td>
+                                    <td className="border  border-black ">{Number(earning) - Number(deduct)}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold border">Amount In Words</td>
-                                    <td className="font-semibold border">:</td>
-                                    <td >{toWords(Number(earning) - Number(deduct))}</td>
+                                    <td className="font-semibold border  border-black">Amount In Words</td>
+                                    <td className="border  border-black ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
                             {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
@@ -218,12 +217,25 @@ const CreateInvoice = () => {
                             </Modal.Footer>
                         </Modal>
                     </div>
+
                     <div className="overline decoration-dotted w-full flex justify-between absolute bottom-[.8in] left-0 p-3">
                         <span>Employee Signature</span>
                         <span>Authority Signature</span>
                     </div>
                 </div>
             }
+            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
+                <Modal.Body>
+
+                    <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+                        Decline
+                    </Button>
+                </Modal.Footer>
+            </Modal> */}
 
         </div>
     );
