@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Select from 'react-select'
 import ApiUrl from "./ApiUrl";
 import moment from "moment";
-import { Select as FlowbiteSelect, TextInput, Modal, Button } from 'flowbite-react';
+import { Select as FlowbiteSelect, TextInput, Modal, Button, Textarea } from 'flowbite-react';
 import { toWords } from 'number-to-words'
 import InsideModal from "./InsideModal";
 import {Timeline } from 'flowbite-react';
@@ -22,7 +22,7 @@ const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
     const [month, setMonth] = useState(null)
-    const [year, setYear] = useState(null)
+    const [year, setYear] = useState(moment().format("YYYY"))
     const months = new Array(12)
     const [openModal, setOpenModal] = useState(null);
     const [invoiceRow, setInvoiceRow] = useState([])
@@ -86,6 +86,16 @@ const CreateInvoice = () => {
 
     }
 
+    function MakePDF3() {
+        let print = document.getElementById("print")
+        let main_body = document.getElementById("root")
+        main_body.innerHTML = print.innerHTML
+        let t = main_body.innerHTML
+        window.print()
+        main_body.innerHTML = t
+
+
+    }
 
     useEffect(() => {
         getEmployee();
@@ -97,15 +107,15 @@ const CreateInvoice = () => {
 
     }, [])
     return (
-        // <div className="mx-20 flex flex-col justify-center items-center bg-[url('../src/images/Final-Pad.png')]" >
-        <div className="mx-20 flex flex-col justify-center items-center " >
+        <div className="mx-20 flex flex-col justify-center items-center" id="main-body">
+
             <div className="mx-32 mb-6 w-[90%] justify-items-center" >
                 <Select options={emps} onChange={value => getSingleEmp(value)} />
             </div>
             <Button onClick={() => props.setOpenModal('default')}>HUUH</Button>
             {
                 emp && <div>
-                    <Button color="success" onClick={() => MakePDF2()}>
+                    <Button color="success" onClick={() => MakePDF3()}>
                         Save PDF
                     </Button>
                 </div>
@@ -145,6 +155,8 @@ const CreateInvoice = () => {
                                     id="year"
                                     placeholder="Year..."
                                     required
+                                    defaultValue={year}
+                                    maxLength={4}
                                     onChange={value => setYear(value.target.value)}
                                     type="number"
                                     className="ml-1"
@@ -208,6 +220,20 @@ const CreateInvoice = () => {
                             <p><span className="font-semibold">Total Deduct:</span>{deduct}</p>
                             <p><span className="font-semibold">Net Salary:</span>{Number(earning) - Number(deduct)}</p>
                             <p><span className="font-semibold">Amount In Words:</span>{toWords(Number(earning) - Number(deduct))}</p> */}
+                        </div>
+                        <div className="mt-5">
+                            <span>*Amount Paid through</span>
+                            <FlowbiteSelect className="inline-block font-bold">
+                                <option value='cash'>Cash</option>
+                                <option value='bank'>Bank</option>
+                                <option value='nogod'>Nogod</option>
+                                <option value='bkash'>Bkash</option>
+                                <option value='other'>Other</option>
+                            </FlowbiteSelect>
+                        </div>
+                        <div className="mt-2">
+                            <Textarea rows={4}>
+                            </Textarea>
                         </div>
 
                         <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
@@ -277,6 +303,8 @@ const CreateInvoice = () => {
     </Timeline>
                     </div>
                 </div>
+
+
             }
             {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
                 <Modal.Body>
