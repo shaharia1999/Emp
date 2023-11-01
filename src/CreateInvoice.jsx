@@ -6,6 +6,11 @@ import moment from "moment";
 import { Select as FlowbiteSelect, TextInput, Modal, Button, Textarea } from 'flowbite-react';
 import { toWords } from 'number-to-words'
 import InsideModal from "./InsideModal";
+import {Timeline } from 'flowbite-react';
+
+import {HiLocationMarker} from 'react-icons/hi';
+import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
+
 
 // import { usePDF } from 'react-to-pdf'; // it has family issues
 // import html2pdf from 'html2pdf.js' // it raise the same problem
@@ -103,6 +108,7 @@ const CreateInvoice = () => {
     }, [])
     return (
         <div className="mx-20 flex flex-col justify-center items-center" id="main-body">
+
             <div className="mx-32 mb-6 w-[90%] justify-items-center" >
                 <Select options={emps} onChange={value => getSingleEmp(value)} />
             </div>
@@ -244,9 +250,57 @@ const CreateInvoice = () => {
                         </Modal>
                     </div>
 
-                    <div className=" w-full flex justify-between absolute bottom-[.8in] left-0 p-3" >
-                        <span className="overline ">Employee Signature</span>
-                        <span className="overline ">Authority Signature</span>
+  
+
+
+                    <div className="  absolute bottom-0 left-0 right-0 p-3" >
+                        <div className="w-full flex justify-between mb-3">
+                        <span className=" leading-8 border-t-4 border-dotted border-black ">Employee Signature</span>
+                        <span className="leading-8 border-t-4 border-dotted border-black ">Authority Signature</span>
+                        </div>
+                       
+                        <Timeline horizontal className=" text-black">
+      <Timeline.Item>
+        {/* <Timeline.Point icon={HiCalendar}  /> */}
+        <div className="relative h-1 bg-[#69D4DD]">
+        <HiLocationMarker className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
+        </div>
+        <Timeline.Content>
+          
+          <Timeline.Body className="text-center text-black">
+            House No-1,Block-B,Banasree,<br/>
+            Main Road,Rampura,Dhaka-1219
+          </Timeline.Body>
+         
+        </Timeline.Content>
+      </Timeline.Item>
+      <Timeline.Item>
+        {/* <Timeline.Point icon={HiCalendar} /> */}
+        <div className="relative h-1 bg-[#69D4DD]">
+        <AiTwotoneMail className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
+        </div>
+        <Timeline.Content>
+          
+          <Timeline.Body className="text-black text-center">
+             www.arenawebsecurity.net<br/>
+             support@arenawebsecurity.net
+          </Timeline.Body>
+        </Timeline.Content>
+      </Timeline.Item>
+      <Timeline.Item className=" w-1/3">
+        {/* <Timeline.Point icon={HiCalendar} /> */}
+          <div className="relative h-1 bg-[#69D4DD]">
+        <AiFillPhone className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
+        </div>
+        <Timeline.Content>
+
+          <Timeline.Body className="text-black text-right">
+            +8800188663989<br/>
+            +8801779224640
+          </Timeline.Body>
+        </Timeline.Content>
+      </Timeline.Item>
+    </Timeline>
                     </div>
                 </div>
 
