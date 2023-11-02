@@ -32,6 +32,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
             axios.put(ApiUrl.GetInfo + `${id}/`, { year: year, month: month }).then(res => {
                 setInfo(res.data)
                 setSalary(res.data.salary)
+
             }).catch(error => console.log(error))
         }
     }
@@ -72,6 +73,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
         // console.log(PerFine);
         console.log(document.getElementById('days')?.value)
  }
+
     return (
         <Tabs>
             <TabList>
