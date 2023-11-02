@@ -41,7 +41,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
         console.log(object);
      
         if(object?.title =='Absent'){
-            object.desc = `${object.desc} \nyou are absent=${(object.days)}`
+            object.desc = `you are absent=${(object.days)}days \n${object.desc}`
         }
         if (object?.desc2) {
             object.desc = `${object.desc} \n${object.desc2}`
@@ -187,7 +187,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                             </Select>
                         </div>
                     </div>
-                    <Button type='submit' className='mt-2 w-full'>Add</Button>
+                    <Button type='submit' className='mt-2 w-full hover:bg-lime-500'>Add</Button>
                 </form>
             </TabPanel>
             {/* ********************************************⏬****************************************************** */}
@@ -340,7 +340,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                             </Select>
                         </div>
                     </div>
-                    <Button type='submit' className='mt-2 w-full'>Add</Button>
+                    <Button type='submit' className='mt-2 w-full hover:bg-lime-500 ]'>Add</Button>
                 </form>
             </TabPanel>
             {/* ********************************************⏫************************************************* */}
@@ -415,7 +415,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                             </Select>
                         </div>
                     </div>
-                    <Button type='submit' className='mt-2 w-full'>Add</Button>
+                    <Button type='submit' className='mt-2 w-full hover:bg-lime-500'>Add</Button>
                 </form>
 
             </TabPanel>

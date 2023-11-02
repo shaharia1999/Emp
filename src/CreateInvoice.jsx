@@ -29,7 +29,9 @@ const CreateInvoice = () => {
     const props = { openModal, setOpenModal };
     const [earning, setEarning] = useState(0)
     const [deduct, setDeduct] = useState(0);
-    const[empId,setEmpId]=useState(null)
+    const[empId,setEmpId]=useState(null);
+    const[PaymentMethod,setPaymentMethod]=useState('Cash');
+    console.log(PaymentMethod);
     // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
@@ -45,6 +47,8 @@ const CreateInvoice = () => {
     }
     function getSingleEmp(value) {
         setEmpId(value.value);
+        setEarning(0)
+        setInvoiceRow([])
         if (value != null) {
             axios.get(ApiUrl.GetEmployee + `${value.value}/`).then(res => {
                 setEmp(res.data)
@@ -74,12 +78,12 @@ const CreateInvoice = () => {
     let TotalDeduct=deduct
     let NetSalary=Number(earning) - Number(deduct);
     let AmountInWords=toWords(Number(earning) - Number(deduct));
+    let description=document.getElementById('description').value
+    console.log(description);
     console.log(totalAmount,TotalDeduct,NetSalary,AmountInWords,empId);
-    // axios.post().then((res)=>{
-
-    // }).catch((err)=>{
-
-    // })
+    axios.post(ApiUrl.Invoice,{invoiceRow,totalAmount,TotalDeduct,NetSalary,AmountInWords,description,PaymentMethod,empId,month,year}).then((res)=>{
+console.log(res);
+    })
     
 
     }
@@ -89,28 +93,33 @@ const CreateInvoice = () => {
     }, [])
 
     return (
-        <div className="mx-20 flex flex-col justify-center items-center" id="main-body">
+        <div className="mx-20 flex flex-col justify-center items-center font-Rovoto" id="main-body" >
 
-            <div className="mx-32 mb-6 w-[90%] justify-items-center" >
-                <Select options={emps} onChange={value => getSingleEmp(value)} />
+            <div className="mx-32 mb-6  w-[768px]  justify-items-center" >
+                <Select options={emps} className="hover:bg-[#0891B2]" onChange={value => getSingleEmp(value)} />
             </div>
-            <Button onClick={() => props.setOpenModal('default')}>HUUH</Button>
+            {/* <Button onClick={() => props.setOpenModal('default')}>HUUH</Button> */}
             {
                 emp && <div>
-                    <Button color="success" onClick={() => MakePDF3()}>
+                    <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
                         Save PDF
-                    </Button>
+                    </button>
                 </div>
             }
 
             {
-                emp && <div id="print" className=" mt-4 border border-black p-4 w-[768px] h-[1056px] relative mb-7 ">
-                    <p className="text-end "><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
-                    <p><span className="font-bold">Name: </span>{emp?.name} </p>
-                    <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
+                emp && <div id="print" className=" mt-4 shadow-md p-4 w-[768px] h-[1056px] relative mb-7 ">
+                    <div className="flex justify-between">
+                    <div> <p><span className="font-semibold">Name: </span>{emp?.name} </p>
+                    <p><span className="font-semibold">Designation: </span>{emp?.desig} </p>
+                    </div>
+                    <p className="text-end "><span className="font-semibold  ">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
+                    </div>
+                    
+                   
                     <div className="flex justify-center">
-                        <div className="border border-black px-2 py-3 mt-3">
-                            <span className="font-semibold">Salary of: </span>
+                        <div className="shadow-sm px-5 py-4 mt-3">
+                            <p className="font-semibold text-center pb-3 text-[#0891B2]">Salary Of </p>
                             {/* <Select className="inline-block w-40" options={months} /> */}
                             <div
                                 className="max-w-md inline-flex"
@@ -119,6 +128,7 @@ const CreateInvoice = () => {
                                 <FlowbiteSelect
                                     id="select"
                                     required
+                                    className="w-1/2"
                                     onChange={value => setMonth(value.target.value)}
 
                                 >
@@ -150,7 +160,7 @@ const CreateInvoice = () => {
 
                     </div>
                     <div className="w-full mt-6">
-                        <table className="w-full  border-collapse">
+                        <table className="w-full  border-collapse break-all">
                             <thead>
                                 <tr>
                                     <th className="border border-black ">Title</th>
@@ -164,17 +174,17 @@ const CreateInvoice = () => {
                                     invoiceRow?.map((x, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td className="border border-black ">{x.title}</td>
-                                                <td className="border border-black "><pre>{x.desc} </pre> </td>
-                                                <td className="border border-black ">{x.amount}</td>
-                                                <td className="border border-black ">{x.status == 1 ? "Addition" : "Deduction"}</td>
+                                                <td className="border border-black pl-5">{x.title}</td>
+                                                <td className="border border-black pl-5  "><pre className=" w-[300px] break-all">{x.desc} </pre> </td>
+                                                <td className="border border-black pl-5">{x.amount}</td>
+                                                <td className="border border-black pl-5">{x.status == 1 ? "Addition" : "Deduction"}</td>
                                             </tr>
                                         )
                                     })
                                 }
                                 <tr>
                                     {
-                                        year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center text-black font-bold hover:cursor-pointer hover:bg-slate-950/10" colSpan={4}>Add</td>
+                                        year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center bg-[#0891B2] text-white font-semibold hover:cursor-pointer hover:bg-lime-600" colSpan={4}>Add</td>
                                     }
                                 </tr>
                             </tbody>
@@ -182,20 +192,20 @@ const CreateInvoice = () => {
                         <div className="mt-4  mx-auto" >
                             <table className=" w-full">
                                 <tr>
-                                    <td className="font-semibold border border-black w-1/2">Total Earning</td>
-                                    <td className="border  border-black " id='earning'>{earning}</td>
+                                    <td className=" border border-black w-1/2 pl-5">Total Earning</td>
+                                    <td className="border  border-black text-center " id='earning'>{earning}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold border border-black">Total Deduct</td>
-                                    <td className="border  border-black ">{deduct}</td>
+                                    <td className=" border border-black pl-5">Total Deduct</td>
+                                    <td className="border  border-black text-center">{deduct}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold border  border-black">Net Salary</td>
-                                    <td className="border  border-black ">{Number(earning) - Number(deduct)}</td>
+                                    <td className=" border  border-black pl-5">Net Salary</td>
+                                    <td className="border  border-black text-center">{Number(earning) - Number(deduct)}</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-semibold border  border-black">Amount In Words</td>
-                                    <td className="border  border-black ">{toWords(Number(earning) - Number(deduct))}</td>
+                                    <td className=" border  border-black pl-5">Amount In Words</td>
+                                    <td className="border  border-black text-center ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
                             {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
@@ -204,17 +214,20 @@ const CreateInvoice = () => {
                             <p><span className="font-semibold">Amount In Words:</span>{toWords(Number(earning) - Number(deduct))}</p> */}
                         </div>
                         <div className="mt-5">
-                            <span>*Amount Paid through</span>
-                            <FlowbiteSelect className="inline-block font-bold">
+                            <div className="flex justify-between">
+                            <p>*Amount Paid through</p>
+                            <FlowbiteSelect className="w-2/5 font-semibold" id='paymetmethod' onChange={(value)=>setPaymentMethod(value.target.value)}>
                                 <option value='cash'>Cash</option>
                                 <option value='bank'>Bank</option>
                                 <option value='nogod'>Nogod</option>
                                 <option value='bkash'>Bkash</option>
                                 <option value='other'>Other</option>
                             </FlowbiteSelect>
+                            </div>
+                           
                         </div>
                         <div className="mt-2">
-                            <Textarea rows={4}>
+                            <Textarea rows={4} id='description'>
                             </Textarea>
                         </div>
 
@@ -241,8 +254,8 @@ const CreateInvoice = () => {
                         <span className="leading-8 border-t-4 border-dotted border-black ">Authority Signature</span>
                         </div>
                        
-                        <Timeline horizontal className=" text-black">
-      <Timeline.Item>
+                        <Timeline horizontal className=" text-black ">
+      <Timeline.Item className=" w-1/3 ">
         {/* <Timeline.Point icon={HiCalendar}  /> */}
         <div className="relative h-1 bg-[#69D4DD]">
         <HiLocationMarker className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
@@ -256,7 +269,7 @@ const CreateInvoice = () => {
          
         </Timeline.Content>
       </Timeline.Item>
-      <Timeline.Item>
+      <Timeline.Item className=" w-1/3 ">
         {/* <Timeline.Point icon={HiCalendar} /> */}
         <div className="relative h-1 bg-[#69D4DD]">
         <AiTwotoneMail className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
@@ -269,7 +282,7 @@ const CreateInvoice = () => {
           </Timeline.Body>
         </Timeline.Content>
       </Timeline.Item>
-      <Timeline.Item className=" w-1/3">
+      <Timeline.Item className=" w-1/3 ">
         {/* <Timeline.Point icon={HiCalendar} /> */}
           <div className="relative h-1 bg-[#69D4DD]">
         <AiFillPhone className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
@@ -288,7 +301,7 @@ const CreateInvoice = () => {
 
 
             }
-            <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
+            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
                 <Modal.Body>
 
                     <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
@@ -299,7 +312,7 @@ const CreateInvoice = () => {
                         Decline
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
         </div>
     );
