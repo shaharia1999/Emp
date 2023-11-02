@@ -7,13 +7,11 @@ import { Button, Label, TextInput, Textarea, Select } from 'flowbite-react';
 import { DatePicker } from 'react-rainbow-components';
 import moment from 'moment';
 const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
-    console.log(setOpenModal);
     const [info, setInfo] = useState(null)
-    console.log(info);
     const [salary, setSalary] = useState(null)
     const [absent, setAbsent] = useState(null)
     const [absentSumAmount,setAbsentSumAmount]=useState(null)
-    let endDate = moment(year + '-' + month + '-' + 1 + ' 00:00:00').endOf('month').toDate();
+    let endDate = moment(year + '-' + month + '-' + 1,"YYYY-M-D").endOf('month').toDate();
 
     const initialState = {
         // default_date: new Date(`${year}-${month}-1 10:44`),
@@ -39,10 +37,9 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
         e.preventDefault()
         let formdata = new FormData(e.target)
         let object = Object.fromEntries(formdata);
-        console.log(object);
      
-        if(object?.title =='Absent'){
-            object.desc = `you are absent=${(object.days)}days \n${object.desc}`
+        if(object?.days){
+            object.desc = `you are absent:${(object.days)}days \n${object.desc}`
         }
         if (object?.desc2) {
             object.desc = `${object.desc} \n${object.desc2}`
@@ -75,13 +72,10 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
  function calculation(){
     let sum=parseInt((absent /(Number(document.getElementById('days').value))))
      let sum2 =sum*(Number(document.getElementById('fine').value));
-    console.log(sum2);
     return sum2;
    
  }
  function AbsentTab(){
-        // console.log(PerFine);
-        // console.log(document.getElementById('days').value)
         setTimeout(function () {
             
                     let amount=calculation()

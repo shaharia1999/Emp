@@ -31,7 +31,6 @@ const CreateInvoice = () => {
     const [deduct, setDeduct] = useState(0);
     const [empId, setEmpId] = useState(null);
     const [PaymentMethod, setPaymentMethod] = useState('Cash');
-    console.log(PaymentMethod);
     // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
@@ -41,7 +40,6 @@ const CreateInvoice = () => {
 
     function getEmployee() {
         axios.get(ApiUrl.GetEmployees).then(res => {
-            console.log(res.data);
             setEmps(res.data)
         }).catch(error => console.log(error))
     }
@@ -73,35 +71,19 @@ const CreateInvoice = () => {
         }
     }
 
-    function saveBlob(blob, filename) {
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', filename);
-        document.body.appendChild(link);
-        link.click();
-        // Cleanup
-        link.remove();
-        window.URL.revokeObjectURL(url);
-    }
-
     function MakePDF3() {
         let totalAmount = earning;
         let TotalDeduct = deduct
         let NetSalary = Number(earning) - Number(deduct);
         let AmountInWords = toWords(Number(earning) - Number(deduct));
         let description = document.getElementById('description').value
-        console.log(description);
-        console.log(totalAmount, TotalDeduct, NetSalary, AmountInWords, empId);
         axios.post(ApiUrl.Invoice, { invoiceRow, totalAmount, TotalDeduct, NetSalary, AmountInWords, description, PaymentMethod, empId, month, year }).then((res) => {
-            const contentDisposition = res.headers['content-disposition'];
-            const filenameMatch = contentDisposition && contentDisposition.match(/filename="(.+)"$/);
-            if (filenameMatch) {
-                const filename = filenameMatch[1];
-                saveBlob(res.data, filename);
-            } else {
-                saveBlob(res.data, 'your_file_name.pdf');
-            }
+        const link = document.createElement('a');
+        link.href = ApiUrl.BaseUrl+res.data;
+        link.setAttribute('download', String(res.data).split('/').pop());
+        link.click();
+        // Cleanup
+        link.remove();
         })
     }
 
@@ -155,7 +137,7 @@ const CreateInvoice = () => {
 
 
 
-                    emp && <div id="print" className=" mt-4 border border-black p-4 w-[595px] h-[842px] relative mb-7 ">
+                    <div id="print" className=" mt-4 border border-black p-4 w-[595px] h-[842px] relative mb-7 ">
                         <p className="text-end "><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
                         <p><span className="font-bold">Name: </span>{emp?.name} </p>
                         <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
@@ -298,48 +280,7 @@ const CreateInvoice = () => {
                             </div>
 
 
-                            <Timeline horizontal className=" text-black ">
-                                <Timeline.Item className=" w-1/3 ">
-                                    {/* <Timeline.Point icon={HiCalendar}  /> */}
-                                    <div className="relative h-1 bg-[#69D4DD]">
-                                        <HiLocationMarker className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
-                                    </div>
-                                    <Timeline.Content>
-
-                                        <Timeline.Body className="text-center text-black">
-                                            House No-1,Block-B,Banasree,<br />
-                                            Main Road,Rampura,Dhaka-1219
-                                        </Timeline.Body>
-
-                                    </Timeline.Content>
-                                </Timeline.Item>
-                                <Timeline.Item className=" w-1/3 ">
-                                    {/* <Timeline.Point icon={HiCalendar} /> */}
-                                    <div className="relative h-1 bg-[#69D4DD]">
-                                        <AiTwotoneMail className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
-                                    </div>
-                                    <Timeline.Content>
-
-                                        <Timeline.Body className="text-black text-center">
-                                            www.arenawebsecurity.net<br />
-                                            support@arenawebsecurity.net
-                                        </Timeline.Body>
-                                    </Timeline.Content>
-                                </Timeline.Item>
-                                <Timeline.Item className=" w-1/3 ">
-                                    {/* <Timeline.Point icon={HiCalendar} /> */}
-                                    <div className="relative h-1 bg-[#69D4DD]">
-                                        <AiFillPhone className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
-                                    </div>
-                                    <Timeline.Content>
-
-                                        <Timeline.Body className="text-black text-right">
-                                            +8800188663989<br />
-                                            +8801779224640
-                                        </Timeline.Body>
-                                    </Timeline.Content>
-                                </Timeline.Item>
-                            </Timeline>
+                        
 
 
                             <Timeline horizontal className=" text-black">
