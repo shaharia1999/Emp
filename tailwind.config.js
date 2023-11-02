@@ -7,7 +7,11 @@ export default {
     
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        Rovoto:['Roboto Condensed']
+      }
+    },
   },
   plugins: [require('flowbite/plugin')],
 }

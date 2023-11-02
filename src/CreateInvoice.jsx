@@ -28,7 +28,8 @@ const CreateInvoice = () => {
     const [invoiceRow, setInvoiceRow] = useState([])
     const props = { openModal, setOpenModal };
     const [earning, setEarning] = useState(0)
-    const [deduct, setDeduct] = useState(0)
+    const [deduct, setDeduct] = useState(0);
+    const[empId,setEmpId]=useState(null)
     // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
@@ -43,6 +44,7 @@ const CreateInvoice = () => {
         }).catch(error => console.log(error))
     }
     function getSingleEmp(value) {
+        setEmpId(value.value);
         if (value != null) {
             axios.get(ApiUrl.GetEmployee + `${value.value}/`).then(res => {
                 setEmp(res.data)
@@ -66,45 +68,24 @@ const CreateInvoice = () => {
             setInvoiceRow([newRow])
         }
     }
-    // function MakePDF() { // TODO it has its own problem. but worked
-    //     let disturb = document.getElementById('disturb');
-    //     let temp = disturb.innerHTML;
-    //     if (year != null) {
-    //         if (month != null) {
-    //             disturb.innerHTML = `<span style="margin-right:10px">${moment().month(month - 1).format('MMMM')}</span><span>${year}</span>`
-    //         }
-    //     }
-    //     toPDF()
-    //     disturb.innerHTML = temp
-    // }
-    function MakePDF2() { //WORKED FLAWLESSLY
-        let element = document.getElementById('print')
-        let opt = {
-            filename: `${emp.name}.pdf`,
-        }
-        html2pdf().set(opt).from(element).save(); // ignore the error. cdn covering for it. browser will not make hassel about this
-
-    }
 
     function MakePDF3() {
-        let print = document.getElementById("print")
-        let main_body = document.getElementById("root")
-        main_body.innerHTML = print.innerHTML
-        let t = main_body.innerHTML
-        window.print()
-        main_body.innerHTML = t
+    let totalAmount=earning;
+    let TotalDeduct=deduct
+    let NetSalary=Number(earning) - Number(deduct);
+    let AmountInWords=toWords(Number(earning) - Number(deduct));
+    console.log(totalAmount,TotalDeduct,NetSalary,AmountInWords,empId);
+    // axios.post().then((res)=>{
 
+    // }).catch((err)=>{
+
+    // })
+    
 
     }
 
     useEffect(() => {
         getEmployee();
-        // let script=document.createElement('script');
-        // script.type = 'application/javascript';
-        // script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-        // script.src = './html2pdf.bundle.min.js';
-        // document.head.appendChild(script);
-
     }, [])
 
     return (
@@ -198,11 +179,11 @@ const CreateInvoice = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="mt-4 w-1/2 mx-auto" >
+                        <div className="mt-4  mx-auto" >
                             <table className=" w-full">
                                 <tr>
                                     <td className="font-semibold border border-black w-1/2">Total Earning</td>
-                                    <td className="border  border-black ">{earning}</td>
+                                    <td className="border  border-black " id='earning'>{earning}</td>
                                 </tr>
                                 <tr>
                                     <td className="font-semibold border border-black">Total Deduct</td>

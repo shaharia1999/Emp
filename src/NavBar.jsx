@@ -13,6 +13,7 @@ const NavBar = () => {
                 <NavLink to="/profile">Profile</NavLink>
                 <NavLink to="/login">Login</NavLink>
                 <NavLink to="/invoice">Invoice</NavLink>
+                <NavLink to="/leave">Leave</NavLink>
             </Navbar.Collapse>
         </Navbar>
     );
