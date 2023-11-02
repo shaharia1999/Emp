@@ -31,6 +31,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                 setInfo(res.data)
                 setAbsent(res.data.absent);
                 setSalary(res.data.salary)
+
             }).catch(error => console.log(error))
         }
     }
@@ -88,6 +89,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
 
         }, 100);
  }
+
     return (
         <Tabs>
             <TabList>
