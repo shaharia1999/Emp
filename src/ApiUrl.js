@@ -9,6 +9,7 @@ const ApiUrl={
     GetEmployees:`${baseUrl}get-employees/`,
     GetEmployee:`${baseUrl}get-employee/`,
     GetInfo:`${baseUrl}get-info/`,
+    Invoice:`${baseUrl}invoice-generator/`,
 }
 
 export default ApiUrl;

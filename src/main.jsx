@@ -9,6 +9,7 @@ import Profile from './Profile.jsx'
 import Private from './Private.jsx';
 import ForHome from './ForHome.jsx';
 import CreateInvoice from './CreateInvoice.jsx';
+import Leave from './Leave.jsx';
 const router = createBrowserRouter([{
   path: '/',
   element: <App></App>,
@@ -32,6 +33,10 @@ const router = createBrowserRouter([{
         {
           path: '/invoice',
           element: <CreateInvoice></CreateInvoice>
+        },
+        {
+          path: '/leave',
+          element: <Leave></Leave>
         }
       ]
     },

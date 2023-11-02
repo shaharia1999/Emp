@@ -11,10 +11,8 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     const [info, setInfo] = useState(null)
     console.log(info);
     const [salary, setSalary] = useState(null)
-    const [atten, setAttend] = useState(null)
     const [absent, setAbsent] = useState(null)
-    const [PerFine, setPerFine] = useState(null)
-    const [PerFineDays, setPerFineDays] = useState(null)
+    const [absentSumAmount,setAbsentSumAmount]=useState(null)
     let endDate = moment(year + '-' + month + '-' + 1 + ' 00:00:00').endOf('month').toDate();
 
     const initialState = {
@@ -31,6 +29,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
         if (id != null) {
             axios.put(ApiUrl.GetInfo + `${id}/`, { year: year, month: month }).then(res => {
                 setInfo(res.data)
+                setAbsent(res.data.absent);
                 setSalary(res.data.salary)
 
             }).catch(error => console.log(error))
@@ -39,8 +38,12 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     function otherFormSubmit(e) {
         e.preventDefault()
         let formdata = new FormData(e.target)
-        let object = Object.fromEntries(formdata)
+        let object = Object.fromEntries(formdata);
         console.log(object);
+     
+        if(object?.title =='Absent'){
+            object.desc = `you are absent=${(object.days)}days \n${object.desc}`
+        }
         if (object?.desc2) {
             object.desc = `${object.desc} \n${object.desc2}`
         }
@@ -68,17 +71,30 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     // console.log(Fromabsent);
     // // setSalary(result)
  },[])
+
+ function calculation(){
+    let sum=parseInt((absent /(Number(document.getElementById('days').value))))
+     let sum2 =sum*(Number(document.getElementById('fine').value));
+    console.log(sum2);
+    return sum2;
+   
+ }
  function AbsentTab(){
-        //   setPerFine(document.getElementById('days').value);
         // console.log(PerFine);
-        console.log(document.getElementById('days')?.value)
+        // console.log(document.getElementById('days').value)
+        setTimeout(function () {
+            
+                    let amount=calculation()
+                    setAbsentSumAmount(amount)
+
+        }, 100);
  }
 
     return (
         <Tabs>
             <TabList>
                 <Tab>Salary</Tab>
-                <Tab onTouchMove={AbsentTab}>Absent</Tab>
+                <Tab onClick={AbsentTab}>Absent</Tab>
                 <Tab>Other</Tab>
             </TabList>
             <TabPanel>
@@ -173,7 +189,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                             </Select>
                         </div>
                     </div>
-                    <Button type='submit' className='mt-2 w-full'>Add</Button>
+                    <Button type='submit' className='mt-2 w-full hover:bg-lime-500'>Add</Button>
                 </form>
             </TabPanel>
             {/* ********************************************⏬****************************************************** */}
@@ -225,6 +241,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 id="absent"
                                 required
                                 type="number"
+                                name='days'
                                 readOnly
                                 value={info?.absent
                                 }
@@ -242,6 +259,8 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                     <TextInput
                                     id="days"
                                     type="number"
+                                   
+                                    onChange={AbsentTab}
                                     defaultValue={3}
                                    />
                                 X</div>
@@ -258,7 +277,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 <TextInput
                                     id="fine"
                                     type="number"
-                                  
+                                    onChange={AbsentTab}
                                     defaultValue={parseInt(Number(info?.salary) / Number(endDate.getDate()))}
                                 />
                             </div>
@@ -293,7 +312,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 required
                                 type="number"
                                 name="amount"
-                                value={salary}
+                                value={absentSumAmount}
                                 onChange={value => setSalary(value.value)}
                             />
                         </div>
@@ -312,17 +331,18 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 required
                                 name="status"
                             >
-                                <option value={1}>
-                                    Addition
-                                </option>
                                 <option value={2}>
                                     Deduction
                                 </option>
+                                <option value={1}>
+                                    Addition
+                                </option>
+                                
 
                             </Select>
                         </div>
                     </div>
-                    <Button type='submit' className='mt-2 w-full'>Add</Button>
+                    <Button type='submit' className='mt-2 w-full hover:bg-lime-500 ]'>Add</Button>
                 </form>
             </TabPanel>
             {/* ********************************************⏫************************************************* */}
@@ -397,7 +417,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                             </Select>
                         </div>
                     </div>
-                    <Button type='submit' className='mt-2 w-full'>Add</Button>
+                    <Button type='submit' className='mt-2 w-full hover:bg-lime-500'>Add</Button>
                 </form>
 
             </TabPanel>
