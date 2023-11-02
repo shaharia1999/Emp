@@ -7,9 +7,14 @@ import { Button, Label, TextInput, Textarea, Select } from 'flowbite-react';
 import { DatePicker } from 'react-rainbow-components';
 import moment from 'moment';
 const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
+    console.log(setOpenModal);
     const [info, setInfo] = useState(null)
     console.log(info);
     const [salary, setSalary] = useState(null)
+    const [atten, setAttend] = useState(null)
+    const [absent, setAbsent] = useState(null)
+    const [PerFine, setPerFine] = useState(null)
+    const [PerFineDays, setPerFineDays] = useState(null)
     let endDate = moment(year + '-' + month + '-' + 1 + ' 00:00:00').endOf('month').toDate();
 
     const initialState = {
@@ -20,6 +25,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     const [date, setDate] = useState(initialState.default_date)
     useEffect(() => {
         getInfo()
+ 
     }, [])
     function getInfo() {
         if (id != null) {
@@ -61,11 +67,16 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     // console.log(Fromabsent);
     // // setSalary(result)
  },[])
+ function AbsentTab(){
+        //   setPerFine(document.getElementById('days').value);
+        // console.log(PerFine);
+        console.log(document.getElementById('days')?.value)
+ }
     return (
         <Tabs>
             <TabList>
                 <Tab>Salary</Tab>
-                <Tab>Absent</Tab>
+                <Tab onTouchMove={AbsentTab}>Absent</Tab>
                 <Tab>Other</Tab>
             </TabList>
             <TabPanel>
@@ -225,11 +236,13 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                         value="Days Per Fine"
                                     />
                                 </div>
-                                <div className='flex items-center gap-2'><TextInput
+                                <div className='flex items-center gap-2'>
+                                    <TextInput
                                     id="days"
                                     type="number"
                                     defaultValue={3}
-                                />X</div>
+                                   />
+                                X</div>
 
 
                             </div>

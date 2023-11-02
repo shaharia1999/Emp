@@ -240,7 +240,7 @@ const CreateInvoice = () => {
                         <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
                             <Modal.Body>
 
-                                <InsideModal year={year} month={month} id={emp.uid} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+                                <InsideModal p year={year} month={month} id={emp.uid} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
 
                             </Modal.Body>
                             <Modal.Footer>
