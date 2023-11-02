@@ -72,6 +72,17 @@ const CreateInvoice = () => {
             setInvoiceRow([newRow])
         }
     }
+    function saveBlob(blob, filename) {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        // Cleanup
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      }
 
     function MakePDF3() {
     let totalAmount=earning;
@@ -82,10 +93,15 @@ const CreateInvoice = () => {
     console.log(description);
     console.log(totalAmount,TotalDeduct,NetSalary,AmountInWords,empId);
     axios.post(ApiUrl.Invoice,{invoiceRow,totalAmount,TotalDeduct,NetSalary,AmountInWords,description,PaymentMethod,empId,month,year}).then((res)=>{
-console.log(res);
+        const contentDisposition = res.headers['content-disposition'];
+        const filenameMatch = contentDisposition && contentDisposition.match(/filename="(.+)"$/);
+        if (filenameMatch) {
+            const filename = filenameMatch[1];
+            saveBlob(res.data, filename);
+          } else {
+            saveBlob(res.data, 'your_file_name.pdf');
+          }
     })
-    
-
     }
 
     useEffect(() => {
