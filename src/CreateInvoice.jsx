@@ -11,13 +11,6 @@ import {Timeline } from 'flowbite-react';
 import {HiLocationMarker} from 'react-icons/hi';
 import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
 
-
-// import { usePDF } from 'react-to-pdf'; // it has family issues
-// import html2pdf from 'html2pdf.js' // it raise the same problem
-// https://html2canvas.hertzen.com/features/
-// read this then manually design this
-//
-//
 const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
@@ -32,7 +25,6 @@ const CreateInvoice = () => {
     const[empId,setEmpId]=useState(null);
     const[PaymentMethod,setPaymentMethod]=useState('Cash');
     console.log(PaymentMethod);
-    // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
         let t = { 'label': moment().month(index).format('MMMM'), 'value': index + 1 }
@@ -302,18 +294,7 @@ const CreateInvoice = () => {
 
 
             }
-            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
-                <Modal.Body>
 
-                    <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-                        Decline
-                    </Button>
-                </Modal.Footer>
-            </Modal> */}
 
         </div>
     );
