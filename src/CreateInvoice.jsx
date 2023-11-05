@@ -29,9 +29,8 @@ const CreateInvoice = () => {
     const props = { openModal, setOpenModal };
     const [earning, setEarning] = useState(0)
     const [deduct, setDeduct] = useState(0);
-    const[empId,setEmpId]=useState(null);
-    const[PaymentMethod,setPaymentMethod]=useState('Cash');
-    console.log(PaymentMethod);
+    const [empId, setEmpId] = useState(null);
+    const [PaymentMethod, setPaymentMethod] = useState('Cash');
     // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
@@ -41,7 +40,6 @@ const CreateInvoice = () => {
 
     function getEmployee() {
         axios.get(ApiUrl.GetEmployees).then(res => {
-            console.log(res.data);
             setEmps(res.data)
         }).catch(error => console.log(error))
     }
@@ -89,6 +87,7 @@ const CreateInvoice = () => {
         link.remove();
         })
     }
+
     useEffect(() => {
         getEmployee();
     }, [])
@@ -102,7 +101,7 @@ const CreateInvoice = () => {
             {/* <Button onClick={() => props.setOpenModal('default')}>HUUH</Button> */}
             {
                 emp && <div>
-                    <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
+                    <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length == 0 ? 'hidden' : 'block'}`} onClick={() => MakePDF3()}>
                         Save PDF
                     </button>
                 </div>
@@ -111,10 +110,10 @@ const CreateInvoice = () => {
             {
                 emp && <div id="print" className=" mt-4 shadow-md p-4 w-[768px] h-[1056px] relative mb-7 ">
                     <div className="flex justify-between">
-                    <div> <p><span className="font-semibold">Name: </span>{emp?.name} </p>
-                    <p><span className="font-semibold">Designation: </span>{emp?.desig} </p>
-                    </div>
-                    <p className="text-end "><span className="font-semibold  ">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
+                        <div> <p><span className="font-semibold">Name: </span>{emp?.name} </p>
+                            <p><span className="font-semibold">Designation: </span>{emp?.desig} </p>
+                        </div>
+                        <p className="text-end "><span className="font-semibold  ">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
                     </div>
                     
                    
@@ -132,119 +131,133 @@ const CreateInvoice = () => {
                                     className="w-1/2"
                                     onChange={value => setMonth(value.target.value)}
 
+
+
+
+                    <div id="print" className=" mt-4 border border-black p-4 w-[595px] h-[842px] relative mb-7 ">
+                        <p className="text-end "><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
+                        <p><span className="font-bold">Name: </span>{emp?.name} </p>
+                        <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
+
+                        <div className="flex justify-center">
+                            <div className="shadow-sm px-5 py-4 mt-3">
+                                <p className="font-semibold text-center pb-3 text-[#0891B2]">Salary Of </p>
+                                {/* <Select className="inline-block w-40" options={months} /> */}
+                                <div
+                                    className="max-w-md inline-flex"
+                                    id='disturb'
                                 >
-                                    <option>Select Month</option>
+                                    <FlowbiteSelect
+                                        id="select"
+                                        required
+                                        className="w-1/2"
+                                        onChange={value => setMonth(value.target.value)}
+
+                                    >
+                                        <option>Select Month</option>
+                                        {
+                                            months?.map((x, index) => {
+                                                return (
+                                                    <option key={index} value={x.value}>
+                                                        {x.label}
+                                                    </option>
+                                                )
+                                            })
+                                        }
+                                    </FlowbiteSelect>
+                                    <TextInput
+                                        id="year"
+                                        placeholder="Year..."
+                                        required
+                                        defaultValue={year}
+                                        maxLength={4}
+                                        onChange={value => setYear(value.target.value)}
+                                        type="number"
+                                        className="ml-1"
+                                    />
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div className="w-full mt-6">
+                            <table className="w-full  border-collapse break-all">
+                                <thead>
+                                    <tr>
+                                        <th className="border border-black ">Title</th>
+                                        <th className="border border-black ">Description</th>
+                                        <th className="border border-black ">Amount</th>
+                                        <th className="border border-black ">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     {
-                                        months?.map((x, index) => {
+                                        invoiceRow?.map((x, index) => {
                                             return (
-                                                <option key={index} value={x.value}>
-                                                    {x.label}
-                                                </option>
+                                                <tr key={index}>
+                                                    <td className="border border-black pl-5">{x.title}</td>
+                                                    <td className="border border-black pl-5  "><pre className=" w-[300px] break-all">{x.desc} </pre> </td>
+                                                    <td className="border border-black pl-5">{x.amount}</td>
+                                                    <td className="border border-black pl-5">{x.status == 1 ? "Addition" : "Deduction"}</td>
+                                                </tr>
                                             )
                                         })
                                     }
-                                </FlowbiteSelect>
-                                <TextInput
-                                    id="year"
-                                    placeholder="Year..."
-                                    required
-                                    defaultValue={year}
-                                    maxLength={4}
-                                    onChange={value => setYear(value.target.value)}
-                                    type="number"
-                                    className="ml-1"
-                                />
-                            </div>
-
-
-                        </div>
-
-                    </div>
-                    <div className="w-full mt-6">
-                        <table className="w-full  border-collapse break-all">
-                            <thead>
-                                <tr>
-                                    <th className="border border-black ">Title</th>
-                                    <th className="border border-black ">Description</th>
-                                    <th className="border border-black ">Amount</th>
-                                    <th className="border border-black ">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    invoiceRow?.map((x, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td className="border border-black pl-5">{x.title}</td>
-                                                <td className="border border-black pl-5  "><pre className=" w-[300px] break-all">{x.desc} </pre> </td>
-                                                <td className="border border-black pl-5">{x.amount}</td>
-                                                <td className="border border-black pl-5">{x.status == 1 ? "Addition" : "Deduction"}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                                <tr>
-                                    {
-                                        year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center bg-[#0891B2] text-white font-semibold hover:cursor-pointer hover:bg-lime-600" colSpan={4}>Add</td>
-                                    }
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div className="mt-4  mx-auto" >
-                            <table className=" w-full">
-                                <tr>
-                                    <td className=" border border-black w-1/2 pl-5">Total Earning</td>
-                                    <td className="border  border-black text-center " id='earning'>{earning}</td>
-                                </tr>
-                                <tr>
-                                    <td className=" border border-black pl-5">Total Deduct</td>
-                                    <td className="border  border-black text-center">{deduct}</td>
-                                </tr>
-                                <tr>
-                                    <td className=" border  border-black pl-5">Net Salary</td>
-                                    <td className="border  border-black text-center">{Number(earning) - Number(deduct)}</td>
-                                </tr>
-                                <tr>
-                                    <td className=" border  border-black pl-5">Amount In Words</td>
-                                    <td className="border  border-black text-center ">{toWords(Number(earning) - Number(deduct))}</td>
-                                </tr>
+                                    <tr>
+                                        {
+                                            year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center bg-[#0891B2] text-white font-semibold hover:cursor-pointer hover:bg-lime-600" colSpan={4}>Add</td>
+                                        }
+                                    </tr>
+                                </tbody>
                             </table>
-                            {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
+                            <div className="mt-4  mx-auto" >
+                                <table className=" w-full">
+                                    <tr>
+                                        <td className=" border border-black w-1/2 pl-5">Total Earning</td>
+                                        <td className="border  border-black text-center " id='earning'>{earning}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className=" border border-black pl-5">Total Deduct</td>
+                                        <td className="border  border-black text-center">{deduct}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className=" border  border-black pl-5">Net Salary</td>
+                                        <td className="border  border-black text-center">{Number(earning) - Number(deduct)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className=" border  border-black pl-5">Amount In Words</td>
+                                        <td className="border  border-black text-center ">{toWords(Number(earning) - Number(deduct))}</td>
+                                    </tr>
+                                </table>
+                                {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
                             <p><span className="font-semibold">Total Deduct:</span>{deduct}</p>
                             <p><span className="font-semibold">Net Salary:</span>{Number(earning) - Number(deduct)}</p>
                             <p><span className="font-semibold">Amount In Words:</span>{toWords(Number(earning) - Number(deduct))}</p> */}
-                        </div>
-                        <div className="mt-5">
-                            <div className="flex justify-between">
-                            <p>*Amount Paid through</p>
-                            <FlowbiteSelect className="w-2/5 font-semibold" id='paymetmethod' onChange={(value)=>setPaymentMethod(value.target.value)}>
-                                <option value='cash'>Cash</option>
-                                <option value='bank'>Bank</option>
-                                <option value='nogod'>Nogod</option>
-                                <option value='bkash'>Bkash</option>
-                                <option value='other'>Other</option>
-                            </FlowbiteSelect>
                             </div>
-                           
-                        </div>
-                        <div className="mt-2">
-                            <Textarea rows={4} id='description'>
-                            </Textarea>
-                        </div>
+                            <div className="mt-5">
+                                <div className="flex justify-between">
+                                    <p>*Amount Paid through</p>
+                                    <FlowbiteSelect className="w-2/5 font-semibold" id='paymetmethod' onChange={(value) => setPaymentMethod(value.target.value)}>
+                                        <option value='cash'>Cash</option>
+                                        <option value='bank'>Bank</option>
+                                        <option value='nogod'>Nogod</option>
+                                        <option value='bkash'>Bkash</option>
+                                        <option value='other'>Other</option>
+                                    </FlowbiteSelect>
+                                </div>
 
-                        <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
-                            <Modal.Body>
+                            </div>
+                            <div className="mt-2">
+                                <Textarea rows={4} id='description'>
+                                </Textarea>
+                            </div>
 
-                                <InsideModal p year={year} month={month} id={emp.uid} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+                            <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
+                                <Modal.Body>
 
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-                                    Decline
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>
-                    </div>
+                                    <InsideModal p year={year} month={month} id={emp.uid} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+
 
   
 
@@ -300,21 +313,54 @@ const CreateInvoice = () => {
                     </div>
                 </div>
 
+                            <Timeline horizontal className=" text-black">
+                                <Timeline.Item>
+                                    {/* <Timeline.Point icon={HiCalendar}  /> */}
+                                    <div className="relative h-1 bg-[#69D4DD]">
+                                        <HiLocationMarker className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
+                                    </div>
+                                    <Timeline.Content>
 
-            }
-            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
-                <Modal.Body>
+                                        <Timeline.Body className="text-center text-black">
+                                            House No-1,Block-B,Banasree,<br />
+                                            Main Road,Rampura,Dhaka-1219
+                                        </Timeline.Body>
 
-                    <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+                                    </Timeline.Content>
+                                </Timeline.Item>
+                                <Timeline.Item>
+                                    {/* <Timeline.Point icon={HiCalendar} /> */}
+                                    <div className="relative h-1 bg-[#69D4DD]">
+                                        <AiTwotoneMail className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
+                                    </div>
+                                    <Timeline.Content>
 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-                        Decline
-                    </Button>
-                </Modal.Footer>
-            </Modal> */}
+                                        <Timeline.Body className="text-black text-center">
+                                            www.arenawebsecurity.net<br />
+                                            support@arenawebsecurity.net
+                                        </Timeline.Body>
+                                    </Timeline.Content>
+                                </Timeline.Item>
+                                <Timeline.Item className=" w-1/3">
+                                    {/* <Timeline.Point icon={HiCalendar} /> */}
+                                    <div className="relative h-1 bg-[#69D4DD]">
+                                        <AiFillPhone className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
+                                    </div>
+                                    <Timeline.Content>
 
+                                        <Timeline.Body className="text-black text-right">
+                                            +8800188663989<br />
+                                            +8801779224640
+                                        </Timeline.Body>
+                                    </Timeline.Content>
+                                </Timeline.Item>
+                            </Timeline>
+
+                        </div>
+                    </div>
+
+
+                </div>}
         </div>
     );
 };
