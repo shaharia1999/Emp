@@ -78,8 +78,9 @@ const CreateInvoice = () => {
         let AmountInWords = toWords(Number(earning) - Number(deduct));
         let description = document.getElementById('description').value
         axios.post(ApiUrl.Invoice, { invoiceRow, totalAmount, TotalDeduct, NetSalary, AmountInWords, description, PaymentMethod, empId, month, year }).then((res) => {
+        let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
         const link = document.createElement('a');
-        link.href = ApiUrl.BaseUrl+res.data;
+        link.href = newBase+res.data;
         link.setAttribute('download', String(res.data).split('/').pop());
         link.click();
         // Cleanup
@@ -280,7 +281,7 @@ const CreateInvoice = () => {
                             </div>
 
 
-                        
+
 
 
                             <Timeline horizontal className=" text-black">
