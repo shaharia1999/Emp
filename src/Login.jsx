@@ -11,9 +11,18 @@ const Login = () => {
         let data=Object.fromEntries(formdata)
         axios.post(ApiUrl.LoginUrl,data,{'Content-Type':'multipart/form-data'})
         .then(res=>{
+            console.log(res);
             if (res.data) {
-                sessionStorage.setItem("id",res.data.id)
+                localStorage.setItem("id",res.data.id)
+                if(res?.data?.type){
+                    localStorage.setItem("type",res.data?.type)
+                }
+                // if(localStorage.getItem('type')){
+                  
+                // }
                 navigate("/profile")
+               
+               
             }
         }).catch(error=>{
             console.log(error)

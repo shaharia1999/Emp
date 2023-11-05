@@ -92,7 +92,12 @@ function MakePDF3() {
     useEffect(() => {
         getEmployee();
     }, [])
-
+function Remove(index){
+  invoiceRow.splice(index,1);
+  setInvoiceRow(invoiceRow.map((x)=>x));
+    
+ 
+}
     return (
         <div className="mx-20 flex flex-col justify-center items-center font-Rovoto" id="main-body" >
 
@@ -168,6 +173,7 @@ function MakePDF3() {
                                     <th className="border border-black ">Description</th>
                                     <th className="border border-black ">Amount</th>
                                     <th className="border border-black ">Status</th>
+                                    <th className="border border-black ">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,13 +185,15 @@ function MakePDF3() {
                                                 <td className="border border-black pl-5  "><pre className=" w-[300px] break-all">{x.desc} </pre> </td>
                                                 <td className="border border-black pl-5">{x.amount}</td>
                                                 <td className="border border-black pl-5">{x.status == 1 ? "Addition" : "Deduction"}</td>
+                                                <td className="border border-black pl-5"><button className="bg-red-500 px-4 py-1 rounded-lg text-white" onClick={()=>
+                                                Remove(index)}>delete</button></td>
                                             </tr>
                                         )
                                     })
                                 }
                                 <tr>
                                     {
-                                        year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center bg-[#0891B2] text-white font-semibold hover:cursor-pointer hover:bg-lime-600" colSpan={4}>Add</td>
+                                        year && month && <td onClick={() => props.setOpenModal('default')} className="  border border-black text-center bg-[#0891B2] text-white font-semibold hover:cursor-pointer hover:bg-lime-600" colSpan={5}>Add</td>
                                     }
                                 </tr>
                             </tbody>

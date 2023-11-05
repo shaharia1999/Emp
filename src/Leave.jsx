@@ -119,19 +119,19 @@ const Leave = () => {
               </div>
               <div className="w-1/2">
                 <div className="mb-2 block">
-                  <Label value="Position" />
+                  <Label value="Department" />
                 </div>
                 <TextInput
                   // id="email1"
-                  placeholder="Position"
+                  placeholder="Department"
                   required
                   type="text"
-                  name="position"
+                  name="Department"
                 />
               </div>
             </div>
             <div className="flex gap-2 mt-5">
-              <div className="w-1/2">
+              {/* <div className="w-1/2">
                 <div className="mb-2 block">
                   <Label value="Position" />
                 </div>
@@ -142,7 +142,7 @@ const Leave = () => {
                   type="text"
                   name="position"
                 />
-              </div>
+              </div> */}
               <div className="w-1/2">
                 <div className="mb-2 block">
                   <Label value="Leave Type" />
