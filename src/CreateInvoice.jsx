@@ -11,6 +11,13 @@ import {Timeline } from 'flowbite-react';
 import {HiLocationMarker} from 'react-icons/hi';
 import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
 
+
+// import { usePDF } from 'react-to-pdf'; // it has family issues
+// import html2pdf from 'html2pdf.js' // it raise the same problem
+// https://html2canvas.hertzen.com/features/
+// read this then manually design this
+//
+//
 const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
@@ -25,6 +32,7 @@ const CreateInvoice = () => {
     const[empId,setEmpId]=useState(null);
     const[PaymentMethod,setPaymentMethod]=useState('Cash');
     console.log(PaymentMethod);
+    // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
         let t = { 'label': moment().month(index).format('MMMM'), 'value': index + 1 }
@@ -201,10 +209,7 @@ const CreateInvoice = () => {
                                     <td className="border  border-black text-center ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
-                            {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
-                            <p><span className="font-semibold">Total Deduct:</span>{deduct}</p>
-                            <p><span className="font-semibold">Net Salary:</span>{Number(earning) - Number(deduct)}</p>
-                            <p><span className="font-semibold">Amount In Words:</span>{toWords(Number(earning) - Number(deduct))}</p> */}
+
                         </div>
                         <div className="mt-5">
                             <div className="flex justify-between">
