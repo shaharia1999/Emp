@@ -84,24 +84,40 @@ const CreateInvoice = () => {
         window.URL.revokeObjectURL(url);
       }
 
+    // function MakePDF3() {
+    // let totalAmount=earning;
+    // let TotalDeduct=deduct
+    // let NetSalary=Number(earning) - Number(deduct);
+    // let AmountInWords=toWords(Number(earning) - Number(deduct));
+    // let description=document.getElementById('description').value
+    // console.log(description);
+    // console.log(totalAmount,TotalDeduct,NetSalary,AmountInWords,empId);
+    // axios.post(ApiUrl.Invoice,{invoiceRow,totalAmount,TotalDeduct,NetSalary,AmountInWords,description,PaymentMethod,empId,month,year}).then((res)=>{
+    //     const contentDisposition = res.headers['content-disposition'];
+    //     const filenameMatch = contentDisposition && contentDisposition.match(/filename="(.+)"$/);
+    //     if (filenameMatch) {
+    //         const filename = filenameMatch[1];
+    //         saveBlob(res.data, filename);
+    //       } else {
+    //         saveBlob(res.data, 'your_file_name.pdf');
+    //       }
+    // })
+    // }
     function MakePDF3() {
-    let totalAmount=earning;
-    let TotalDeduct=deduct
-    let NetSalary=Number(earning) - Number(deduct);
-    let AmountInWords=toWords(Number(earning) - Number(deduct));
-    let description=document.getElementById('description').value
-    console.log(description);
-    console.log(totalAmount,TotalDeduct,NetSalary,AmountInWords,empId);
-    axios.post(ApiUrl.Invoice,{invoiceRow,totalAmount,TotalDeduct,NetSalary,AmountInWords,description,PaymentMethod,empId,month,year}).then((res)=>{
-        const contentDisposition = res.headers['content-disposition'];
-        const filenameMatch = contentDisposition && contentDisposition.match(/filename="(.+)"$/);
-        if (filenameMatch) {
-            const filename = filenameMatch[1];
-            saveBlob(res.data, filename);
-          } else {
-            saveBlob(res.data, 'your_file_name.pdf');
-          }
-    })
+        let totalAmount = earning;
+        let TotalDeduct = deduct
+        let NetSalary = Number(earning) - Number(deduct);
+        let AmountInWords = toWords(Number(earning) - Number(deduct));
+        let description = document.getElementById('description').value
+        axios.post(ApiUrl.Invoice, { invoiceRow, totalAmount, TotalDeduct, NetSalary, AmountInWords, description, PaymentMethod, empId, month, year }).then((res) => {
+        let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
+        const link = document.createElement('a');
+        link.href = newBase+res.data;
+        link.setAttribute('download', String(res.data).split('/').pop());
+        link.click();
+        // Cleanup
+        link.remove();
+        })
     }
 
     useEffect(() => {
