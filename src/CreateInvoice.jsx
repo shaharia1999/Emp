@@ -73,7 +73,7 @@ const CreateInvoice = () => {
         }
     }
 
-    function MakePDF3() {
+function MakePDF3() {
         let totalAmount = earning;
         let TotalDeduct = deduct
         let NetSalary = Number(earning) - Number(deduct);
@@ -209,7 +209,10 @@ const CreateInvoice = () => {
                                     <td className="border  border-black text-center ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
-
+                            {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
+                            <p><span className="font-semibold">Total Deduct:</span>{deduct}</p>
+                            <p><span className="font-semibold">Net Salary:</span>{Number(earning) - Number(deduct)}</p>
+                            <p><span className="font-semibold">Amount In Words:</span>{toWords(Number(earning) - Number(deduct))}</p> */}
                         </div>
                         <div className="mt-5">
                             <div className="flex justify-between">
@@ -299,7 +302,18 @@ const CreateInvoice = () => {
 
 
             }
+            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
+                <Modal.Body>
 
+                    <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+                        Decline
+                    </Button>
+                </Modal.Footer>
+            </Modal> */}
 
         </div>
     );
