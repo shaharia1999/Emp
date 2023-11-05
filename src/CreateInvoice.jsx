@@ -6,10 +6,10 @@ import moment from "moment";
 import { Select as FlowbiteSelect, TextInput, Modal, Button, Textarea } from 'flowbite-react';
 import { toWords } from 'number-to-words'
 import InsideModal from "./InsideModal";
-import {Timeline } from 'flowbite-react';
+import { Timeline } from 'flowbite-react';
 
-import {HiLocationMarker} from 'react-icons/hi';
-import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
+import { HiLocationMarker } from 'react-icons/hi';
+import { AiFillPhone, AiTwotoneMail } from 'react-icons/ai';
 
 
 // import { usePDF } from 'react-to-pdf'; // it has family issues
@@ -72,6 +72,7 @@ const CreateInvoice = () => {
             setInvoiceRow([newRow])
         }
     }
+
     function saveBlob(blob, filename) {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -102,6 +103,37 @@ const CreateInvoice = () => {
             saveBlob(res.data, 'your_file_name.pdf');
           }
     })
+
+    // function MakePDF() { // TODO it has its own problem. but worked
+    //     let disturb = document.getElementById('disturb');
+    //     let temp = disturb.innerHTML;
+    //     if (year != null) {
+    //         if (month != null) {
+    //             disturb.innerHTML = `<span style="margin-right:10px">${moment().month(month - 1).format('MMMM')}</span><span>${year}</span>`
+    //         }
+    //     }
+    //     toPDF()
+    //     disturb.innerHTML = temp
+    // }
+    // function MakePDF2() { //WORKED FLAWLESSLY
+    //     let element = document.getElementById('print')
+    //     let opt = {
+    //         filename: `${emp.name}.pdf`,
+    //     }
+    //     html2pdf().set(opt).from(element).save(); // ignore the error. cdn covering for it. browser will not make hassel about this
+
+    // }
+
+    function MakePDF3() {
+        let print = document.getElementById("print")
+        let main_body = document.getElementById("root")
+        let t = main_body.innerHTML
+        main_body.innerHTML = print.innerHTML
+        window.print()
+        main_body.innerHTML = t
+
+
+
     }
 
     useEffect(() => {
@@ -124,6 +156,7 @@ const CreateInvoice = () => {
             }
 
             {
+
                 emp && <div id="print" className=" mt-4 shadow-md p-4 w-[768px] h-[1056px] relative mb-7 ">
                     <div className="flex justify-between">
                     <div> <p><span className="font-semibold">Name: </span>{emp?.name} </p>
@@ -133,6 +166,12 @@ const CreateInvoice = () => {
                     </div>
                     
                    
+
+                emp && <div id="print" className=" mt-4 border border-black p-4 w-[595px] h-[842px] relative mb-7 ">
+                    <p className="text-end "><span className="font-bold">Date: </span>{moment().format("dddd, MMM Do YYYY")}</p>
+                    <p><span className="font-bold">Name: </span>{emp?.name} </p>
+                    <p><span className="font-bold">Designation: </span>{emp?.desig} </p>
+
                     <div className="flex justify-center">
                         <div className="shadow-sm px-5 py-4 mt-3">
                             <p className="font-semibold text-center pb-3 text-[#0891B2]">Salary Of </p>
@@ -261,14 +300,15 @@ const CreateInvoice = () => {
                         </Modal>
                     </div>
 
-  
+
 
 
                     <div className="  absolute bottom-0 left-0 right-0 p-3" >
                         <div className="w-full flex justify-between mb-3">
-                        <span className=" leading-8 border-t-4 border-dotted border-black ">Employee Signature</span>
-                        <span className="leading-8 border-t-4 border-dotted border-black ">Authority Signature</span>
+                            <span className=" leading-8 border-t-4 border-dotted border-black ">Employee Signature</span>
+                            <span className="leading-8 border-t-4 border-dotted border-black ">Authority Signature</span>
                         </div>
+
                        
                         <Timeline horizontal className=" text-black ">
       <Timeline.Item className=" w-1/3 ">
@@ -312,6 +352,51 @@ const CreateInvoice = () => {
         </Timeline.Content>
       </Timeline.Item>
     </Timeline>
+
+
+                        <Timeline horizontal className=" text-black">
+                            <Timeline.Item>
+                                {/* <Timeline.Point icon={HiCalendar}  /> */}
+                                <div className="relative h-1 bg-[#69D4DD]">
+                                    <HiLocationMarker className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
+                                </div>
+                                <Timeline.Content>
+
+                                    <Timeline.Body className="text-center text-black">
+                                        House No-1,Block-B,Banasree,<br />
+                                        Main Road,Rampura,Dhaka-1219
+                                    </Timeline.Body>
+
+                                </Timeline.Content>
+                            </Timeline.Item>
+                            <Timeline.Item>
+                                {/* <Timeline.Point icon={HiCalendar} /> */}
+                                <div className="relative h-1 bg-[#69D4DD]">
+                                    <AiTwotoneMail className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
+                                </div>
+                                <Timeline.Content>
+
+                                    <Timeline.Body className="text-black text-center">
+                                        www.arenawebsecurity.net<br />
+                                        support@arenawebsecurity.net
+                                    </Timeline.Body>
+                                </Timeline.Content>
+                            </Timeline.Item>
+                            <Timeline.Item className=" w-1/3">
+                                {/* <Timeline.Point icon={HiCalendar} /> */}
+                                <div className="relative h-1 bg-[#69D4DD]">
+                                    <AiFillPhone className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full" />
+                                </div>
+                                <Timeline.Content>
+
+                                    <Timeline.Body className="text-black text-right">
+                                        +8800188663989<br />
+                                        +8801779224640
+                                    </Timeline.Body>
+                                </Timeline.Content>
+                            </Timeline.Item>
+                        </Timeline>
+
                     </div>
                 </div>
 
