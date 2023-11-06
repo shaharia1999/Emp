@@ -1,11 +1,17 @@
 import { Navbar } from 'flowbite-react';
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { myContext } from './App';
+
+
 
 const NavBar = () => {
-    
-    const {type} =useContext(myContext);
+    const [type,setType]=useState(null)
+    console.log(type);
+    useEffect(()=>{
+            setType(localStorage.getItem('type'))
+ 
+    },[type])
+
     return (
         <Navbar fluid rounded className='bg-[#0891B2] mb-4'>
             <Navbar.Brand href="/">
@@ -18,10 +24,15 @@ const NavBar = () => {
                 <NavLink to="/profile" className='text-white'>Profile</NavLink>
                 <NavLink to="/login" className='text-white'>Login</NavLink>
                 {
-                    type&&<NavLink to="/invoice" className='text-white'>Invoice</NavLink>
+                    // type && <NavLink to="/invoice" className='text-white'>Invoice</NavLink>
                 }
                 
-                <NavLink to="/leave" className='text-white'>Leave</NavLink>
+                    
+                
+                
+                {/* <NavLink to="/leave" className='text-white'>Leave</NavLink> */}
+                {/* <NavLink to="/employer" className='text-white'>Employer</NavLink> */}
+                
             </Navbar.Collapse>
         </Navbar>
     );

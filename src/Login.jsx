@@ -25,15 +25,15 @@ const Login = () => {
                
             }
         }).catch(error=>{
-            console.log(error)
+            console.log(error.response)
         })
 
         
     }
     return (
         <div className='flex justify-center'>
-            <Card className="w-[50%]">
-                <form className="flex max-w-md flex-col gap-4" onSubmit={LoginUser}>
+            <Card className="w-[50%] flex justify-center">
+                <form className="flex  flex-col gap-4 " onSubmit={LoginUser}>
                     <div>
                         <div className="mb-2 block">
                             <Label
@@ -63,9 +63,9 @@ const Login = () => {
                             name="password"
                         />
                     </div>
-                    <Button type="submit">
+                    <button type="submit" className='hover:bg-lime-600 bg-[#0891B2] py-2 rounded-lg text-white'>
                         Submit
-                    </Button>
+                    </button>
                 </form>
             </Card>
         </div>

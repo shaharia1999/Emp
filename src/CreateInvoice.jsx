@@ -106,7 +106,7 @@ function Remove(index){
             </div>
             {/* <Button onClick={() => props.setOpenModal('default')}>HUUH</Button> */}
             {
-                emp && <div>
+                emp && <div >
                     <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
                         Save PDF
                     </button>
@@ -185,7 +185,8 @@ function Remove(index){
                                                 <td className="border border-black pl-5  "><pre className=" w-[300px] break-all">{x.desc} </pre> </td>
                                                 <td className="border border-black pl-5">{x.amount}</td>
                                                 <td className="border border-black pl-5">{x.status == 1 ? "Addition" : "Deduction"}</td>
-                                                <td className="border border-black pl-5"><button className="bg-red-500 px-4 py-1 rounded-lg text-white" onClick={()=>
+                                                <td className="border border-black pl-5  " onClick={()=>
+                                                   Remove(index)}><button className="hover:bg-red-500 px-4 bg-amber-500  cursor-pointe py-1 rounded-lg text-white" onClick={()=>
                                                 Remove(index)}>delete</button></td>
                                             </tr>
                                         )

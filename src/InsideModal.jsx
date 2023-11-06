@@ -5,6 +5,7 @@ import ApiUrl from './ApiUrl';
 import { useEffect, useState } from 'react';
 import { Button, Label, TextInput, Textarea, Select } from 'flowbite-react';
 import { DatePicker } from 'react-rainbow-components';
+import {LuDivide } from 'react-icons/lu';
 import moment from 'moment';
 const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     const [info, setInfo] = useState(null)
@@ -12,20 +13,45 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
     const [absent, setAbsent] = useState(null)
     const [absentSumAmount,setAbsentSumAmount]=useState(null)
     let endDate = moment(year + '-' + month + '-' + 1,"YYYY-M-D").endOf('month').toDate();
-
+    let [latetime,setletTime]=useState(0)
+    // console.log(latetime);
     const initialState = {
         // default_date: new Date(`${year}-${month}-1 10:44`),
         default_date: [new Date(`${year}-${month}-1`), new Date(endDate)],
         locale: { name: 'en-US', label: 'English (US)' },
     };
+    // function getProfileInfo() {
+    //     axios
+    //     .get(`${ApiUrl.AttendUrl}${id}/`)
+    //     .then((res) => {
+    //       const data = res.data;
+    //     //   console.log(data);
+
+    //       data.map((x)=>{
+    //         let clock_in=Number(moment(x.clock_in, "HH:mm:ss.SSSSSS").hours());
+    //         let clock_munites=moment(x.clock_in, "HH:mm:ss.SSSSSS").minutes()
+    //         if(clock_in>=11){
+    //             setletTime((prev)=>prev +1)
+    //         }else if(clock_munites>10){
+    //             setletTime((prev)=>prev +1)
+    //         }
+           
+            
+
+    //       })
+    //        })
+    //   }
     const [date, setDate] = useState(initialState.default_date)
     useEffect(() => {
         getInfo()
+
+        
  
     }, [])
     function getInfo() {
         if (id != null) {
             axios.put(ApiUrl.GetInfo + `${id}/`, { year: year, month: month }).then(res => {
+                // console.log(res.data);
                 setInfo(res.data)
                 setAbsent(res.data.absent);
                 setSalary(res.data.salary)
@@ -70,14 +96,19 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
  },[])
 
  function calculation(){
-    let sum=parseInt((absent /(Number(document.getElementById('days').value))))
-     let sum2 =sum*(Number(document.getElementById('fine').value));
-    return sum2;
+    let late=parseInt((info.late /(Number(document.getElementById('days').value))))
+     let lateculation =late*(Number(document.getElementById('fine').value));
+    //  console.log(lateculation);
+     let absent2=parseInt((absent /(Number(document.getElementById('days2').value))))
+     let absentculation =absent2*(Number(document.getElementById('fine2').value));
+    //  console.log(absentculation);
+     let sum =lateculation + absentculation
+     console.log(sum);
+    return sum;
    
  }
  function AbsentTab(){
         setTimeout(function () {
-            
                     let amount=calculation()
                     setAbsentSumAmount(amount)
 
@@ -207,7 +238,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                         />
                     </div>
                     <div className='flex gap-1 w-full'>
-                        <div>
+                        {/* <div>
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="attend"
@@ -223,24 +254,27 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                                 }
                                 type="number"
                             />
-                        </div>
-                        <div>
+                        </div> */}
+                        <div >
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="absent"
-                                    value="Absent"
+                                    value="Late"
                                 />
                             </div>
+                            <div className='flex items-center gap-2'>
                             <TextInput
                                 id="absent"
                                 required
                                 type="number"
                                 name='days'
                                 readOnly
-                                value={info?.absent
+                                value={info?.late
                                 }
-                            />
+                            /><LuDivide></LuDivide>
+                            </div>
                         </div>
+                        
                         <div className='flex items-center'>
                             <div>
                                 <div className="mb-2 block">
@@ -261,7 +295,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
 
 
                             </div>
-                            <div className='ml-2'>
+                            <div className='ml-2 w'>
                                 <div className="mb-2 block">
                                     <Label
                                         htmlFor="fine"
@@ -278,6 +312,86 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                         </div>
 
                     </div>
+                    {/* late  End Count */}
+
+                    {/* absent start */}
+                    <div className='flex gap-1 w-full'>
+                 
+                        {/* <div>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="attend"
+                                    value="Attend"
+                                />
+                            </div>
+                            <TextInput
+                                id="attend"
+                                required
+                                readOnly
+                                value={info?.atten
+
+                                }
+                                type="number"
+                            />
+                        </div> */}
+                        
+                        <div>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="absent"
+                                    value="Absent"
+                                />
+                            </div>
+                            <div className='flex items-center gap-2'>
+                            <TextInput
+                                id="absent"
+                                required
+                                type="number"
+                                // name='days'
+                                readOnly
+                                value={info?.absent
+                                }
+                            /><LuDivide></LuDivide>
+                            </div>
+                        </div>
+                        <div className='flex items-center'>
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label
+                                        htmlFor="days"
+                                        value="Days Per Fine"
+                                    />
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <TextInput
+                                    id="days2"
+                                    type="number"
+                                   
+                                    onChange={AbsentTab}
+                                    defaultValue={1}
+                                   />
+                                X</div>
+
+
+                            </div>
+                            <div className='ml-2 w'>
+                                <div className="mb-2 block">
+                                    <Label
+                                        htmlFor="fine"
+                                        value="Amount Per Fine"
+                                    />
+                                </div>
+                                <TextInput
+                                    id="fine2"
+                                    type="number"
+                                    onChange={AbsentTab}
+                                    defaultValue={parseInt(Number(info?.salary) / Number(endDate.getDate()))}
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+                    
                     <div>
                         <div className="mb-2 block">
                             <Label

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -10,6 +10,10 @@ import Private from './Private.jsx';
 import ForHome from './ForHome.jsx';
 import CreateInvoice from './CreateInvoice.jsx';
 import Leave from './Leave.jsx';
+import Employers from './Employer.jsx';
+import Admin from './Adimn.jsx';
+
+
 const router = createBrowserRouter([{
   path: '/',
   element: <App></App>,
@@ -32,12 +36,17 @@ const router = createBrowserRouter([{
         },
         {
           path: '/invoice',
-          element: <CreateInvoice></CreateInvoice>
+          element: <Admin><CreateInvoice></CreateInvoice></Admin>
         },
         {
           path: '/leave',
           element: <Leave></Leave>
-        }
+        },
+        
+        {
+          path: '/employer',
+          element:<Employers></Employers>
+        },
       ]
     },
 
@@ -46,8 +55,10 @@ const router = createBrowserRouter([{
 },
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <div>
     <RouterProvider router={router} />
     <Outlet></Outlet>
-  </React.StrictMode>,
+    </div>
+  /* </React.StrictMode>, */
 )

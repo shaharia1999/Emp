@@ -13,11 +13,11 @@ const TimeCard = ({ clock, ClockIn, ClockOut }) => {
         <div className='flex-1'>
            
             <Card >
-            <span className='text-red-600 text-sm'>*press the card to clock in and out</span>
+            <span className={` text-2xl text-center ${clock? 'text-red-600':'text-green-600'}`}>*press the card to clock in and out</span>
                 <div className='flex flex-col justify-center items-center gap-5' onClick={() => { clock ? ClockOut() : ClockIn() }}>
                     <p>{now.format('dddd, MMMM Do YYYY')}</p>
                     {
-                        clock ? <TbClockDown className='text-4xl '></TbClockDown> : <TbClockUp className='text-4xl '></TbClockUp>
+                        clock ? <TbClockDown className='text-4xl text-red-500 '></TbClockDown> : <TbClockUp className='text-4xl text-green-500'></TbClockUp>
                     }
                     <p>{now.format('h:mm:ss a')}</p>
                 </div>
