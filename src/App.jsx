@@ -5,7 +5,7 @@ import { useState } from 'react';
 export const myContext = createContext(null)
 function App() {
   const [user,setUser]=useState(localStorage.getItem('id')?localStorage.getItem('id'):null)
-  const [type,setType]=useState(localStorage.getItem('type')?localStorage.getItem('type'):null)
+  const [type,setType]=useState(false)
   const context = {
     user,
     type,

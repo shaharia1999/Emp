@@ -215,7 +215,7 @@ function Remove(index){
                                 </tr>
                                 <tr>
                                     <td className=" border  border-black pl-5">Amount In Words</td>
-                                    <td className="border  border-black text-center ">{toWords(Number(earning) - Number(deduct))}</td>
+                                    <td className="border  border-black text-center uppercase ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
                             {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>

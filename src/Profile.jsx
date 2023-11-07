@@ -15,11 +15,21 @@ const Profile = () => {
   const navigate = useNavigate();
   let id = localStorage.getItem("id");
   const {setType}=useContext(myContext);
-  console.log(setType);
+   let [types,setTypes]=useState(false)
   useEffect(() => {
     getProfileInfo();
     getAttenDanceInfo();
   }, []);
+  // useEffect(() => {
+  //   if (!types) {
+  //     // Your initial setup logic here
+  //     setTypes(true);
+  //   } else {
+  //     // Reload logic here
+  //     location.reload();
+  //   }
+  // }, [types]);
+ 
 
   function getProfileInfo() {
     axios
@@ -102,7 +112,16 @@ const Profile = () => {
               getProfileInfo();
               getAttenDanceInfo();
             })
-            .catch((error) => console.log(error));
+            .catch((error) =>  Swal.fire({
+              title: error.response.msg,
+              text:error.response.data.msg,
+              icon: "error",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false,
+              showConfirmButton: true,
+              showCancelButton: true,
+            }));
         }
       }
     });
@@ -130,7 +149,16 @@ const Profile = () => {
               // navigate('/login')
             })
             .catch((error) => {
-              console.log(error);
+              Swal.fire({
+                title: error.response.msg,
+                text:error.response.data.msg,
+                icon: "error",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showConfirmButton: true,
+                showCancelButton: true,
+              })
             });
         }
       }

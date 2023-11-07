@@ -3,12 +3,14 @@ import { TextInput } from "flowbite-react";
 import ApiUrl from "./ApiUrl";
 import { useState } from "react";
 import moment from "moment";
+import { toWords } from "number-to-words";
 
 const Employers = () => {
   const [student, setStudent] = useState(null);
+  const [newarrey,setNewarrey]=useState([])
   console.log(student);
   const [total,setTotal]=useState(0)
- console.log(total);
+ console.log(newarrey);
 
   function Search() {
     let email = document.getElementById("title").value;
@@ -43,7 +45,21 @@ const Employers = () => {
       
    
   }
+  function MakePDF3() {
 
+  
+
+   let wordtotal=document.getElementById('wordtotal').innerText
+  //   axios.post(ApiUrl.getStudentInfoPdf,{student,total,wordtotal}).then((res) => {
+  //   let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
+  //   const link = document.createElement('a');
+  //   link.href = newBase+res.data;
+  //   link.setAttribute('download', String(res.data).split('/').pop());
+  //   link.click();
+  //   // Cleanup
+  //   link.remove();
+  //   })
+}
     
   
   return (
@@ -116,15 +132,15 @@ const Employers = () => {
                                     <tr>
                                         <td className="font-semibold border border-black pl-5 text-center">Total</td>
                                         <td className="border border-black pl-5 text-center font-semibold">{total}</td>
-                                        <td className="border border-black pl-5 text-center"></td>
-                                        <td className="border border-black pl-5 text-center"></td>
+                                        <td className="border border-black pl-5 text-center uppercase" id='wordtotal'>{toWords(Number(total))}</td>
+                                        <td className="border border-black pl-5 text-center "></td>
                                     </tr>
                                 }
                                
                             </tbody>
                         </table>
                         <center className="mt-10">
-                        <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} onClick={() => MakePDF3()}>
+                        <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} onClick={MakePDF3}>
                         Save PDF
                        </button>
                         </center>

@@ -5,10 +5,16 @@ import { NavLink } from 'react-router-dom';
 
 
 const NavBar = () => {
-    const [type,setType]=useState(null)
-    console.log(type);
+    const [type,setType]=useState(false)
+    let data= localStorage.getItem('type')
+    console.log(data);
     useEffect(()=>{
-            setType(localStorage.getItem('type'))
+      
+        let data= localStorage.getItem('type')
+           if(data){
+            setType(true)
+           }
+          
  
     },[type])
 
@@ -20,18 +26,24 @@ const NavBar = () => {
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-                <NavLink to="/" className='text-white'>Home</NavLink> 
+                {/* <NavLink to="/" className='text-white'>Home</NavLink>  */}
                 <NavLink to="/profile" className='text-white'>Profile</NavLink>
                 <NavLink to="/login" className='text-white'>Login</NavLink>
                 {
-                    // type && <NavLink to="/invoice" className='text-white'>Invoice</NavLink>
+                    type && <NavLink to="/invoice" className='text-white'>Invoice</NavLink>
                 }
                 
                     
                 
+                {
+                    type &&  <NavLink to="/leave" className='text-white'>Leave</NavLink> 
+                }
                 
-                {/* <NavLink to="/leave" className='text-white'>Leave</NavLink> */}
-                {/* <NavLink to="/employer" className='text-white'>Employer</NavLink> */}
+                {
+                    type &&  <NavLink to="/student" className='text-white'>Student</NavLink> 
+                }
+                
+    
                 
             </Navbar.Collapse>
         </Navbar>

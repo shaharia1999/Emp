@@ -3,6 +3,7 @@ import { Button, Card } from 'flowbite-react';
 import { Label, TextInput } from 'flowbite-react';
 import ApiUrl from './ApiUrl';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 const Login = () => {
     const navigate= useNavigate()
     function LoginUser(e) {
@@ -12,20 +13,37 @@ const Login = () => {
         axios.post(ApiUrl.LoginUrl,data,{'Content-Type':'multipart/form-data'})
         .then(res=>{
             console.log(res);
-            if (res.data) {
-                localStorage.setItem("id",res.data.id)
-                if(res?.data?.type){
+         
+                
+                if(res?.data?.type && res.data){
                     localStorage.setItem("type",res.data?.type)
+                    localStorage.setItem("id",res.data.id)
+                    
+                    navigate("/profile")
+                    location.reload()
+                }else if(res.data){
+                    localStorage.setItem("id",res.data.id)
+                    navigate("/profile")
                 }
                 // if(localStorage.getItem('type')){
                   
                 // }
-                navigate("/profile")
+                
                
                
-            }
+           
         }).catch(error=>{
-            console.log(error.response)
+            console.log(error.response.data.msg);
+            Swal.fire({
+                title: error.response.msg,
+                text:error.response.data.msg,
+                icon: "error",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showConfirmButton: true,
+                showCancelButton: true,
+              })
         })
 
         

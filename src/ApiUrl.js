@@ -11,7 +11,8 @@ const ApiUrl={
     GetEmployee:`${baseUrl}get-employee/`,
     GetInfo:`${baseUrl}get-info/`,
     Invoice:`${baseUrl}invoice-generator/`,
-    getStudentInfo:'http://192.168.0.121:8000/V5n9e9FXU8kZ/'
+    getStudentInfo:'http://192.168.0.121:8000/V5n9e9FXU8kZ/',
+    getStudentInfoPdf:`${baseUrl}invoice-generator-student/`
 }
 
 export default ApiUrl;
