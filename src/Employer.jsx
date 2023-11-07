@@ -4,6 +4,9 @@ import ApiUrl from "./ApiUrl";
 import { useState } from "react";
 import moment from "moment";
 import { toWords } from "number-to-words";
+import { split } from "postcss/lib/list";
+
+// console.log(id);
 
 const Employers = () => {
   const [student, setStudent] = useState(null);
@@ -14,6 +17,8 @@ const Employers = () => {
 
   function Search() {
     let email = document.getElementById("title").value;
+    let id = localStorage.getItem("id");
+   console.log(id);
     axios
       .post(ApiUrl.getStudentInfo, { huzaifa: "aws-201", shaharia: email })
       .then((res) => {
@@ -46,19 +51,21 @@ const Employers = () => {
    
   }
   function MakePDF3() {
-
-  
-
    let wordtotal=document.getElementById('wordtotal').innerText
-  //   axios.post(ApiUrl.getStudentInfoPdf,{student,total,wordtotal}).then((res) => {
-  //   let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
-  //   const link = document.createElement('a');
-  //   link.href = newBase+res.data;
-  //   link.setAttribute('download', String(res.data).split('/').pop());
-  //   link.click();
-  //   // Cleanup
-  //   link.remove();
-  //   })
+   
+    axios.post(ApiUrl.getStudentInfoPdf,{student,total,wordtotal}).then((res) => {
+    let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
+    console.log(newBase);
+    // console.log(res.data);
+    // console.log( res.data.split('/'));
+   
+    const link = document.createElement('a');
+    link.href = newBase+res.data;
+    link.setAttribute('download', String(res.data).split('/').pop());
+    link.click();
+    // Cleanup
+    link.remove();
+    })
 }
     
   

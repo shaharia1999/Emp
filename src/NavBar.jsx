@@ -6,13 +6,18 @@ import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
     const [type,setType]=useState(false)
+    const [type2,setType2]=useState(false)
     let data= localStorage.getItem('type')
     console.log(data);
     useEffect(()=>{
       
-        let data= localStorage.getItem('type')
-           if(data){
+        let data= localStorage.getItem('type');
+
+           if(data==='Admin'){
             setType(true)
+           }else if
+           (data==='Front' ){
+            setType2(true)
            }
           
  
@@ -30,7 +35,7 @@ const NavBar = () => {
                 <NavLink to="/profile" className='text-white'>Profile</NavLink>
                 <NavLink to="/login" className='text-white'>Login</NavLink>
                 {
-                    type && <NavLink to="/invoice" className='text-white'>Invoice</NavLink>
+                    type &&  <NavLink to="/invoice" className='text-white'>Invoice</NavLink>
                 }
                 
                     
@@ -40,7 +45,7 @@ const NavBar = () => {
                 }
                 
                 {
-                    type &&  <NavLink to="/student" className='text-white'>Student</NavLink> 
+                    type || type2 && <NavLink to="/student" className='text-white'>Student</NavLink> 
                 }
                 
     
