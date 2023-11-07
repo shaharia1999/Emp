@@ -12,7 +12,8 @@ const ApiUrl={
     GetInfo:`${baseUrl}get-info/`,
     Invoice:`${baseUrl}invoice-generator/`,
     getStudentInfo:'https://arenawebsecurity.net/admission-api/V5n9e9FXU8kZ/',
-    getStudentInfoPdf:`${baseUrl}invoice-generator-student/`
+    getStudentInfoPdf:`${baseUrl}invoice-generator-student/`,
+    Type:`${baseUrl}get-aws`
 }
 
 export default ApiUrl;

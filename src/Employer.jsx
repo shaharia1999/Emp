@@ -18,9 +18,10 @@ const Employers = () => {
   function Search() {
     let email = document.getElementById("title").value;
     let id = localStorage.getItem("id");
-   console.log(id);
-    axios
-      .post(ApiUrl.getStudentInfo, { huzaifa: "aws-201", shaharia: email })
+    axios.get(ApiUrl.Type+`/${id}`).then((res)=>{
+      // console.log(res);
+      axios
+      .post(ApiUrl.getStudentInfo, { huzaifa: String(res.data.aws_id).toLowerCase(), shaharia: email })
       .then((res) => {
         setStudent(res.data);
         let count=0
@@ -36,6 +37,10 @@ const Employers = () => {
         console.log(err.response.data.msg);
         document.getElementById("title").value = "";
       });
+    }).catch((err)=>{
+
+    })
+   
   }
   function Remove(index){
       student[1]?.splice(index,1);

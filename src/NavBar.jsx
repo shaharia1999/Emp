@@ -16,7 +16,7 @@ const NavBar = () => {
            if(data==='Admin'){
             setType(true)
            }else if
-           (data==='Front' ){
+           (data==='Front Desk Executive' ){
             setType2(true)
            }
           
