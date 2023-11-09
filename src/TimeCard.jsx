@@ -13,7 +13,7 @@ const TimeCard = ({ clock, ClockIn, ClockOut }) => {
         <div className='flex-1'>
            
             <Card >
-            <span className={` text-2xl text-center ${clock? 'text-red-600':'text-green-600'}`}>*press the card to clock in and out</span>
+            <span className={` text-2xl text-center ${clock? 'text-red-600':'text-green-600'}`}>{`${clock?"Press The Card to Clock Out":"Press the Card to Clock In"}`}</span>
                 <div className='flex flex-col justify-center items-center gap-5' onClick={() => { clock ? ClockOut() : ClockIn() }}>
                     <p>{now.format('dddd, MMMM Do YYYY')}</p>
                     {

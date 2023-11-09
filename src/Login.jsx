@@ -10,6 +10,7 @@ const Login = () => {
         e.preventDefault();
         let formdata=new FormData(e.target);
         let data=Object.fromEntries(formdata)
+        
         axios.post(ApiUrl.LoginUrl,data,{'Content-Type':'multipart/form-data'})
         .then(res=>{
             console.log(res);
@@ -33,10 +34,9 @@ const Login = () => {
                
            
         }).catch(error=>{
-            console.log(error.response.data.msg);
             Swal.fire({
-                title: error.response.msg,
-                text:error.response.data.msg,
+                title: error.response?.msg,
+                text:error.response?.data?.msg,
                 icon: "error",
                 allowOutsideClick: false,
                 allowEscapeKey: false,

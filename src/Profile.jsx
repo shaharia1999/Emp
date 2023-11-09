@@ -35,7 +35,6 @@ const Profile = () => {
     axios
       .get(`${ApiUrl.ProfileUrl}${id}/`)
       .then((res) => {
-        console.log(res.data);
         setEmp(res.data);
       })
       .catch((error) => console.log(error));
@@ -150,8 +149,8 @@ const Profile = () => {
             })
             .catch((error) => {
               Swal.fire({
-                title: error.response.msg,
-                text:error.response.data.msg,
+                title: error.response?.msg,
+                text:error.response.data?.msg,
                 icon: "error",
                 allowOutsideClick: false,
                 allowEscapeKey: false,
@@ -194,7 +193,7 @@ const Profile = () => {
           ""
         )}
         <TimeCard
-          clock={emp.clock}
+          clock={emp?.clock}
           ClockIn={ClockIn}
           ClockOut={ClockOut}
         ></TimeCard>
