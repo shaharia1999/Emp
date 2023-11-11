@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment';
 import { Card } from 'flowbite-react';
 import { TbClockUp, TbClockDown } from "react-icons/tb";
 import { useEffect, useState } from 'react';
