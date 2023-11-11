@@ -173,7 +173,7 @@ const Profile = () => {
     <div className="lg:flex block md:mx-10 mx-2 mt-5 md:gap-4">
       <div className="flex flex-col gap-3">
         <Card>
-          <Avatar img={emp?.image} size="xl" rounded />
+          <Avatar img={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`} size="xl" rounded />
           <p>Name: {emp?.name}</p>
           <p>Gender: {emp?.gender}</p>
           <p>Designation: {emp?.designation}</p>
