@@ -7,12 +7,13 @@ import { NavLink } from 'react-router-dom';
 const NavBar = () => {
     const [type,setType]=useState(false)
     const [type2,setType2]=useState(false)
+    const id=localStorage.getItem('id')
     let data= localStorage.getItem('type')
-    console.log(data);
+    console.log(id);
+ 
     useEffect(()=>{
       
         let data= localStorage.getItem('type');
-
            if(data==='Admin'){
             setType(true)
            }else if
@@ -33,7 +34,10 @@ const NavBar = () => {
             <Navbar.Collapse>
                 {/* <NavLink to="/" className='text-white'>Home</NavLink>  */}
                 <NavLink to="/profile" className='text-white'>Profile</NavLink>
-                <NavLink to="/login" className='text-white'>Login</NavLink>
+        {
+            !id && <NavLink to="/login" className='text-white'>Login</NavLink>
+        }
+                
                 {
                     type &&  <NavLink to="/invoice" className='text-white'>Invoice</NavLink>
                 }

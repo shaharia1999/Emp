@@ -167,6 +167,7 @@ const Profile = () => {
     localStorage.clear();
     setType(null)
     navigate("/login");
+    location.reload()
   }
 
   return (
@@ -179,6 +180,7 @@ const Profile = () => {
           <p>Designation: {emp?.designation}</p>
           <p>Phone: {emp?.phone}</p>
           <p>Address: {emp?.addr}</p>
+          <p>Dextop: </p>
         </Card>
         <Button gradientDuoTone="purpleToPink" onClick={Logout}>
           Logout
