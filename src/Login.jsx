@@ -5,6 +5,13 @@ import ApiUrl from './ApiUrl';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 const Login = () => {
+    const userAgent = navigator.userAgent;
+    const browserName = navigator.appName;
+    const browserVersion = navigator.appVersion;
+
+    console.log('User Agent:', userAgent);
+    console.log('Browser Name:', browserName);
+    console.log('Browser Version:', browserVersion);
     const navigate= useNavigate()
     function LoginUser(e) {
         e.preventDefault();

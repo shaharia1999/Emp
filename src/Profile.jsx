@@ -19,6 +19,7 @@ const Profile = () => {
   useEffect(() => {
     getProfileInfo();
     getAttenDanceInfo();
+    
   }, []);
   // useEffect(() => {
   //   if (!types) {

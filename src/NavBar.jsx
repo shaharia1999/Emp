@@ -9,7 +9,11 @@ const NavBar = () => {
     const [type2,setType2]=useState(false)
     const id=localStorage.getItem('id')
     let data= localStorage.getItem('type')
-    console.log(id);
+    // console.log(id);
+    const myArray = [data];
+    const isElementIncluded = myArray.includes('Front-end Developer','Back-end Developer','Front Desk Executive');
+    
+    console.log(isElementIncluded); // This will output true
  
     useEffect(()=>{
       
@@ -17,7 +21,7 @@ const NavBar = () => {
            if(data==='Admin'){
             setType(true)
            }else if
-           (data==='Front Desk Executive' ){
+           (isElementIncluded){
             setType2(true)
            }
           

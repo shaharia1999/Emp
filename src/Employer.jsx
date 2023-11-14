@@ -5,6 +5,7 @@ import { useState } from "react";
 import moment from "moment";
 import { toWords } from "number-to-words";
 import { split } from "postcss/lib/list";
+import Swal from "sweetalert2";
 
 // console.log(id);
 
@@ -35,9 +36,29 @@ const Employers = () => {
       })
       .catch((err) => {
         console.log(err.response.data.msg);
+        Swal.fire({
+          title: err.response.data.msg,
+          text:err.response.data.msg,
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
+          showConfirmButton: true,
+          showCancelButton: true,
+        })
         document.getElementById("title").value = "";
       });
     }).catch((err)=>{
+      Swal.fire({
+        title: err.response.data.msg,
+        text:err.response.data.msg,
+        icon: "error",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        showConfirmButton: true,
+        showCancelButton: true,
+      })
 
     })
    
