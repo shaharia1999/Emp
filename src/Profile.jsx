@@ -37,6 +37,7 @@ const Profile = () => {
       .get(`${ApiUrl.ProfileUrl}${id}/`)
       .then((res) => {
         setEmp(res.data);
+        // console.log(res.data);
       })
       .catch((error) => console.log(error));
   }
@@ -173,15 +174,15 @@ const Profile = () => {
 
   return (
     <div className="lg:flex block md:mx-10 mx-2 mt-5 md:gap-4">
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 w-96">
         <Card>
           <Avatar img={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`} size="xl" rounded />
-          <p>Name: {emp?.name}</p>
-          <p>Gender: {emp?.gender}</p>
-          <p>Designation: {emp?.designation}</p>
-          <p>Phone: {emp?.phone}</p>
-          <p>Address: {emp?.addr}</p>
-          <p>Dextop: </p>
+          <p><addr className='font-medium'>Name:</addr> {emp?.name}</p>
+          <p><addr className='font-medium'>Gender:</addr> {emp?.gender}</p>
+          <p><addr className='font-medium'>Designation:</addr> {emp?.designation}</p>
+          <p><addr className='font-medium'>Phone: </addr>{emp?.phone}</p>
+          <p><addr className='font-medium'>Address: </addr>{emp?.addr}</p>
+          <p><addr className='font-medium'>Desktop:</addr> {emp?.pc} </p>
         </Card>
         <Button gradientDuoTone="purpleToPink" onClick={Logout}>
           Logout

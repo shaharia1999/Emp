@@ -24,8 +24,6 @@ const NavBar = () => {
            (isElementIncluded){
             setType2(true)
            }
-          
- 
     },[type])
 
     return (
