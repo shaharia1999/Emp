@@ -10,8 +10,8 @@ const NavBar = () => {
     const id=localStorage.getItem('id')
     let data= localStorage.getItem('type')
     // console.log(id);
-    const myArray = [data];
-    const isElementIncluded = myArray.includes('Front-end Developer','Back-end Developer','Front Desk Executive');
+    const myArray = ['Back-end Developer','Front-end Developer','Front Desk Executive'];
+    const isElementIncluded = myArray.includes(data);
     
     console.log(isElementIncluded); // This will output true
  
