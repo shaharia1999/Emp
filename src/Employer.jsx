@@ -17,7 +17,7 @@ const Employers = () => {
  console.log(newarrey);
 
   function Search() {
-    let email = document.getElementById("title").value;
+    let email = document.getElementById("title").value.trim();
     let id = localStorage.getItem("id");
     axios.get(ApiUrl.Type+`/${id}`).then((res)=>{
       // console.log(res);
