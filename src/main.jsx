@@ -7,12 +7,14 @@ import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Profile from './Profile.jsx'
 import Private from './Private.jsx';
-import ForHome from './ForHome.jsx';
 import CreateInvoice from './CreateInvoice.jsx';
 import Leave from './Leave.jsx';
 import Employers from './Employer.jsx';
 import Admin from './Adimn.jsx';
 import React from 'react';
+import DashBoard from './DashBoard/DashBoard.jsx';
+import DashBoardHome from './DashBoard/DashBoardHome.jsx';
+import Status from './DashBoard/Status.jsx';
 
 
 const router = createBrowserRouter([{
@@ -23,10 +25,6 @@ const router = createBrowserRouter([{
       path: '/',
       element: <Home></Home>,
       children: [
-        // {
-        //   path: '/',
-        //   element: <ForHome></ForHome>
-        // },
         {
           path: '/',
           element: <Login></Login>
@@ -44,14 +42,29 @@ const router = createBrowserRouter([{
           element: <Admin><CreateInvoice></CreateInvoice></Admin>
         },
         {
-          path: '/leave',
-          element: <Leave></Leave>
-        },
-        
-        {
           path: '/student',
           element:<Employers></Employers>
         },
+       
+        {
+          path: '/dashboard',
+          element: <DashBoard />,
+          children: [
+            {
+              path: 'home',
+              element: <DashBoardHome/>,
+            },
+            {
+              path: 'leave',
+              element: <Leave />,
+            },
+            {
+              path: 'status',
+              element: <Status />,
+            },
+            // Other child routes
+          ],
+        }
       ]
     },
 
@@ -63,7 +76,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
    <React.StrictMode>
   <div>
     <RouterProvider router={router} />
-    <Outlet></Outlet>
+    {/* <Outlet></Outlet> */}
     </div>
    </React.StrictMode>
 )

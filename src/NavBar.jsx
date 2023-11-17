@@ -16,6 +16,7 @@ const NavBar = () => {
     console.log(isElementIncluded); // This will output true
  
     useEffect(()=>{
+        console.log(type,type2);
       
         let data= localStorage.getItem('type');
            if(data==='Admin'){
@@ -24,7 +25,7 @@ const NavBar = () => {
            (isElementIncluded){
             setType2(true)
            }
-    },[type])
+    },[type,type2])
 
     return (
         <Navbar fluid rounded className='bg-[#0891B2] mb-4'>
@@ -46,13 +47,22 @@ const NavBar = () => {
                 
                     
                 
-                {
+                {/* {
                     type &&  <NavLink to="/leave" className='text-white'>Leave</NavLink> 
-                }
+                } */}
                 
                 {
-                    type || type2 && <NavLink to="/student" className='text-white'>Student</NavLink> 
+                    type  && <NavLink to="/student" className='text-white'>Student</NavLink> 
                 }
+                {
+                   type2 && <NavLink to="/student" className='text-white'>Student</NavLink> 
+                }
+                {
+                    type &&  <NavLink to="/dashboard" className='text-white'>DashBord</NavLink> 
+                }
+                   
+                
+
                 
     
                 
