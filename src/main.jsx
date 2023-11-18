@@ -33,10 +33,10 @@ const router = createBrowserRouter([{
           path: '/login',
           element: <Login></Login>
         },
-        {
-          path: '/profile',
-          element: <Private><Profile></Profile></Private>
-        },
+        // {
+        //   path: '/profile',
+        //   element: <Private><Profile></Profile></Private>
+        // },
         {
           path: '/invoice',
           element: <Admin><CreateInvoice></CreateInvoice></Admin>
@@ -51,7 +51,7 @@ const router = createBrowserRouter([{
           element: <DashBoard />,
           children: [
             {
-              path: 'home',
+              path: '',
               element: <DashBoardHome/>,
             },
             {
@@ -61,6 +61,10 @@ const router = createBrowserRouter([{
             {
               path: 'status',
               element: <Status />,
+            },
+            {
+              path: 'profile',
+               element: <Private><Profile></Profile></Private>,
             },
             // Other child routes
           ],

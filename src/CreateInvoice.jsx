@@ -95,8 +95,6 @@ function MakePDF3() {
 function Remove(index){
   invoiceRow.splice(index,1);
   setInvoiceRow(invoiceRow.map((x)=>x));
-    
- 
 }
     return (
         <div className="mx-20 flex flex-col justify-center items-center font-Rovoto" id="main-body" >
@@ -126,7 +124,6 @@ function Remove(index){
                     <div className="flex justify-center">
                         <div className="shadow-sm px-5 py-4 mt-3">
                             <p className="font-semibold text-center pb-3 text-[#0891B2]">Salary Of </p>
-                            {/* <Select className="inline-block w-40" options={months} /> */}
                             <div
                                 className="max-w-md inline-flex"
                                 id='disturb'
@@ -218,10 +215,7 @@ function Remove(index){
                                     <td className="border  border-black text-center uppercase ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
-                            {/* <p><span className="font-semibold">Total Earning:</span>{earning}</p>
-                            <p><span className="font-semibold">Total Deduct:</span>{deduct}</p>
-                            <p><span className="font-semibold">Net Salary:</span>{Number(earning) - Number(deduct)}</p>
-                            <p><span className="font-semibold">Amount In Words:</span>{toWords(Number(earning) - Number(deduct))}</p> */}
+
                         </div>
                         <div className="mt-5">
                             <div className="flex justify-between">
@@ -254,10 +248,6 @@ function Remove(index){
                             </Modal.Footer>
                         </Modal>
                     </div>
-
-  
-
-
                     <div className="  absolute bottom-0 left-0 right-0 p-3" >
                         <div className="w-full flex justify-between mb-3">
                         <span className=" leading-8 border-t-4 border-dotted border-black ">Employee Signature</span>

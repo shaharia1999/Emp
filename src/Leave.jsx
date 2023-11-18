@@ -1,6 +1,6 @@
 // import React from 'react';
 
-import { Label, Radio, TextInput, Textarea } from "flowbite-react";
+import { Button, Label, Radio, TextInput, Textarea } from "flowbite-react";
 import { useState } from "react";
 import { DatePicker } from "react-rainbow-components";
 
@@ -176,7 +176,10 @@ const Leave = () => {
       <Textarea id="comment" placeholder="Leave a comment..." required rows={4} />
     </div>
     <div className="flex justify-center mt-3">
-    <button className="px-10 py-3 rounded-md text-white bg-[#0891B2] ">Apply</button>
+    {/* <button className="px-10 py-3 rounded-md text-white bg-[#0891B2] ">Apply</button> */}
+    <Button gradientDuoTone="purpleToPink" className="px-4" >
+          Apply
+        </Button>
     </div>
          
           </form>

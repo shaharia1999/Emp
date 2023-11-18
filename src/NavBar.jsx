@@ -28,7 +28,7 @@ const NavBar = () => {
     },[type,type2])
 
     return (
-        <Navbar fluid rounded className='bg-[#0891B2] mb-4'>
+        <Navbar fluid rounded className='bg-[#0891B2] mb-4 z-[10] sticky'>
             <Navbar.Brand href="/">
                 <img src="https://arenawebsecurity.net/static/media/main-log-new.png" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
                 <span className=" whitespace-nowrap text-xl font-semibold  text-white">EmpPanel</span>
@@ -36,7 +36,7 @@ const NavBar = () => {
             <Navbar.Toggle />
             <Navbar.Collapse>
                 {/* <NavLink to="/" className='text-white'>Home</NavLink>  */}
-                <NavLink to="/profile" className='text-white'>Profile</NavLink>
+                {/* <NavLink to="/profile" className='text-white'>Profile</NavLink> */}
         {
             !id && <NavLink to="/login" className='text-white'>Login</NavLink>
         }
