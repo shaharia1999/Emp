@@ -1,10 +1,14 @@
 import { Navbar } from 'flowbite-react';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { True } from './store/DrawarStore';
 
 
 
 const NavBar = () => {
+  
+    const dispatch = useDispatch()
     const [type,setType]=useState(false)
     const [type2,setType2]=useState(false)
     const id=localStorage.getItem('id')
@@ -13,10 +17,10 @@ const NavBar = () => {
     const myArray = ['Back-end Developer','Front-end Developer','Front Desk Executive'];
     const isElementIncluded = myArray.includes(data);
     
-    console.log(isElementIncluded); // This will output true
+    // console.log(isElementIncluded); // This will output true
  
     useEffect(()=>{
-        console.log(type,type2);
+        // console.log(type,type2);
       
         let data= localStorage.getItem('type');
            if(data==='Admin'){
@@ -57,9 +61,9 @@ const NavBar = () => {
                 {
                    type2 && <NavLink to="/student" className='text-white'>Student</NavLink> 
                 }
-                {
-                    type &&  <NavLink to="/dashboard" className='text-white'>DashBord</NavLink> 
-                }
+                
+                <NavLink to="/dashboard" className='text-white'onClick={() => dispatch(True())}>DashBord</NavLink> 
+                
                    
                 
 

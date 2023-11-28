@@ -206,9 +206,13 @@ const Profile = () => {
       
 
         <div className=" md:p-5">
+        <div className=" md:p-5">
+                <input type="checkbox" name="" id="" className="bg-red-400 mr-4" />
+                <label>Holidays</label>
+                </div>
           <Table className="text-[12px] md:text-[16px] mt-2">
             <Table.Head className="">
-              <Table.HeadCell className="hidden  lg:table-cell">No.</Table.HeadCell>
+              {/* <Table.HeadCell className="hidden  lg:table-cell">No.</Table.HeadCell> */}
               <Table.HeadCell>Date</Table.HeadCell>
               <Table.HeadCell>Weekday</Table.HeadCell>
               <Table.HeadCell>Clock in</Table.HeadCell>
@@ -222,13 +226,13 @@ const Profile = () => {
                 return (
                   <Table.Row
                     key={index}
-                    className={`text-black border-4 odd:bg-[#f0f0f0]  bg-white border-white ${
-                      isHoldiay && " rounded-lg"
+                    className={`text-black border-4  bg-white border-white ${
+                      isHoldiay ?" rounded-lg bg-red-400 ": 'odd:bg-[#f0f0f0] '
                     }`}
                   >
-                    <Table.Cell className="rounded-l-xl hidden lg:table-cell">
+                    {/* <Table.Cell className="rounded-l-xl hidden lg:table-cell">
                       {index + 1}
-                    </Table.Cell>
+                    </Table.Cell> */}
                     <Table.Cell>{x.date}</Table.Cell>
                     <Table.Cell>{moment(x.date).format("dddd")}</Table.Cell>
                     <Table.Cell>{x.clock_in}</Table.Cell>

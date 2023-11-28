@@ -27,11 +27,11 @@ const Login = () => {
                     localStorage.setItem("type",res.data?.type)
                     localStorage.setItem("id",res.data.id)
                     
-                    navigate("/profile")
+                    navigate("/dashboard")
                     location.reload()
                 }else if(res.data){
                     localStorage.setItem("id",res.data.id)
-                    navigate("/profile")
+                    navigate("/dashboard")
                 }
                 // if(localStorage.getItem('type')){
                   

@@ -10,6 +10,8 @@ import {Timeline } from 'flowbite-react';
 
 import {HiLocationMarker} from 'react-icons/hi';
 import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
+import { Table } from "flowbite-react";
+
 
 
 // import { usePDF } from 'react-to-pdf'; // it has family issues
@@ -30,8 +32,10 @@ const CreateInvoice = () => {
     const [earning, setEarning] = useState(0)
     const [deduct, setDeduct] = useState(0);
     const[empId,setEmpId]=useState(null);
+    const [atten, setAtten] = useState([]);
+    const [id,setId] = useState(null);
     const[PaymentMethod,setPaymentMethod]=useState('Cash');
-    console.log(PaymentMethod);
+
     // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
 
     for (let index = 0; index < 12; index++) {
@@ -51,7 +55,9 @@ const CreateInvoice = () => {
         setInvoiceRow([])
         if (value != null) {
             axios.get(ApiUrl.GetEmployee + `${value.value}/`).then(res => {
+                setId(res.data.uid);
                 setEmp(res.data)
+                getAttenDanceInfo(res.data.uid)
             })
         }
     }
@@ -96,6 +102,57 @@ function Remove(index){
   invoiceRow.splice(index,1);
   setInvoiceRow(invoiceRow.map((x)=>x));
 }
+
+function getAttenDanceInfo(id) {
+
+    axios
+      .get(`${ApiUrl.AttendUrl}${id}/`)
+      .then((res) => {
+        const data = res.data;
+        // console.log(data);
+        let month = moment().month() + 1;
+        let year = moment().year();
+        let date = moment().date();
+        let newAtten = new Array();
+
+        for (let index = date; index > 0; index--) {
+          let x = null;
+          for (let index2 = 0; index2 < data?.length; index2++) {
+            const element = data[index2].date;
+            if (moment(element).date() == index) {
+              x = index2;
+            }
+          }
+          if (x != null) {
+            let t = {
+              date: data[x].date,
+              clock_in: moment(data[x].clock_in, "hh:mm:ss").format("hh:mm a"),
+            };
+            if (data[x].clock_out != null) {
+              t.clock_out = moment(data[x].clock_out, "hh:mm:ss").format(
+                "hh:mm a"
+              );
+            } else {
+              t.clock_out = null;
+            }
+            newAtten.push(t);
+            data.splice(x, 1);
+          } else {
+            let newDate = {
+              date: moment(`${year}-${month}-${index}`, "YYYY-MM-DD").format(
+                "YYYY-MM-DD"
+              ),
+              clock_in: null,
+              clock_out: null,
+            };
+            newAtten.push(newDate);
+          }
+        }
+        // console.log(newAtten);
+        setAtten(newAtten);
+      })
+      .catch((error) => console.log(error));
+  }
     return (
         <div className="mx-20 flex flex-col justify-center items-center font-Rovoto" id="main-body" >
 
@@ -110,7 +167,7 @@ function Remove(index){
                     </button>
                 </div>
             }
-
+            <div className="flex w-full justify-center">
             {
                 emp && <div id="print" className=" mt-4 shadow-md p-4 w-[768px] h-[1056px] relative mb-7 ">
                     <div className="flex justify-between">
@@ -298,21 +355,56 @@ function Remove(index){
     </Timeline>
                     </div>
                 </div>
-
-
             }
-            {/* <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
-                <Modal.Body>
+            <div className='  mt-4 shadow-md p-4 w-[768px] h-[1056px] overflow-y-scroll'>
+                <h2 className="text-center text-[#0891B2] font-semibold">Details</h2>
+                <div className=" md:p-5">
+                <input type="checkbox" name="" id="" className="bg-red-400 mr-4" />
+                <label>Holidays</label>
+                </div>
+               
+         
+                <div className=" md:p-5">
+          <Table className="text-[12px] md:text-[16px] ">
+            <Table.Head className="">
+      
+              <Table.HeadCell>Date</Table.HeadCell>
+              <Table.HeadCell>Weekday</Table.HeadCell>
+              <Table.HeadCell>Clock in</Table.HeadCell>
+              <Table.HeadCell>Clock Out</Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="">
+           
+              {atten?.map((x, index) => {
+                // console.log(x);
+                let isHoldiay =
+                  moment(x.date).format("d") == 5 ||
+                  moment(x.date).format("d") == 6 ;
+   
+          
+                return (
+                  <Table.Row
+                    key={index}
+                    className={`text-black border-4  bg-white border-white ${
+                      isHoldiay ?" rounded-lg bg-red-400 ": 'odd:bg-[#f0f0f0] '
+                    }`}
+                  >
 
-                    <InsideModal year={2023} month={10} id={'2a39c802-b27d-467b-a165-e184417dba33'} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
+                    <Table.Cell>{x.date}</Table.Cell>
+                    <Table.Cell>{moment(x.date).format("dddd")}</Table.Cell>
+                    <Table.Cell>{x.clock_in}</Table.Cell>
+                    <Table.Cell className="rounded-r-xl">
+                      {x.clock_out}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
+            </Table.Body>
+          </Table>
+        </div>
+            </div>
+            </div>
 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-                        Decline
-                    </Button>
-                </Modal.Footer>
-            </Modal> */}
 
         </div>
     );
