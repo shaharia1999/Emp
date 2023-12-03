@@ -7,19 +7,9 @@ import { Select as FlowbiteSelect, TextInput, Modal, Button, Textarea } from 'fl
 import { toWords } from 'number-to-words'
 import InsideModal from "./InsideModal";
 import {Timeline } from 'flowbite-react';
-
 import {HiLocationMarker} from 'react-icons/hi';
 import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
 import { Table } from "flowbite-react";
-
-
-
-// import { usePDF } from 'react-to-pdf'; // it has family issues
-// import html2pdf from 'html2pdf.js' // it raise the same problem
-// https://html2canvas.hertzen.com/features/
-// read this then manually design this
-//
-//
 const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
@@ -36,8 +26,7 @@ const CreateInvoice = () => {
     const [id,setId] = useState(null);
     const[PaymentMethod,setPaymentMethod]=useState('Cash');
 
-    // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' }); // uncomment when you found the solution, assign targetRef to the desire element
-
+console.log(invoiceRow);
     for (let index = 0; index < 12; index++) {
         let t = { 'label': moment().month(index).format('MMMM'), 'value': index + 1 }
         months.push(t)
@@ -78,7 +67,6 @@ const CreateInvoice = () => {
             setInvoiceRow([newRow])
         }
     }
-
 function MakePDF3() {
         let totalAmount = earning;
         let TotalDeduct = deduct
@@ -98,13 +86,15 @@ function MakePDF3() {
     useEffect(() => {
         getEmployee();
     }, [])
-function Remove(index){
-  invoiceRow.splice(index,1);
-  setInvoiceRow(invoiceRow.map((x)=>x));
+function Remove(index,amount){
+  setEarning(Number(earning) - Number(amount))
+  const updatedInvoiceRow = invoiceRow.filter((item, i) => i !== index);
+  // setInvoiceRow([...invoiceRow]);
+  setInvoiceRow(updatedInvoiceRow);
+  
+
 }
-
 function getAttenDanceInfo(id) {
-
     axios
       .get(`${ApiUrl.AttendUrl}${id}/`)
       .then((res) => {
@@ -159,7 +149,6 @@ function getAttenDanceInfo(id) {
             <div className="mx-32 mb-6  w-[768px]  justify-items-center" >
                 <Select options={emps} className="hover:bg-[#0891B2]" onChange={value => getSingleEmp(value)} />
             </div>
-            {/* <Button onClick={() => props.setOpenModal('default')}>HUUH</Button> */}
             {
                 emp && <div >
                     <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
@@ -214,10 +203,7 @@ function getAttenDanceInfo(id) {
                                     className="ml-1"
                                 />
                             </div>
-
-
                         </div>
-
                     </div>
                     <div className="w-full mt-6">
                         <table className="w-full  border-collapse break-all">
@@ -233,15 +219,16 @@ function getAttenDanceInfo(id) {
                             <tbody>
                                 {
                                     invoiceRow?.map((x, index) => {
+                                      // const displayIndex = index + 1; 
                                         return (
-                                            <tr key={index}>
+                                            <tr key={index }>
                                                 <td className="border border-black pl-5">{x.title}</td>
                                                 <td className="border border-black pl-5  "><pre className=" w-[300px] break-all">{x.desc} </pre> </td>
                                                 <td className="border border-black pl-5">{x.amount}</td>
                                                 <td className="border border-black pl-5">{x.status == 1 ? "Addition" : "Deduction"}</td>
                                                 <td className="border border-black pl-5  " onClick={()=>
-                                                   Remove(index)}><button className="hover:bg-red-500 px-4 bg-amber-500  cursor-pointe py-1 rounded-lg text-white" onClick={()=>
-                                                Remove(index)}>delete</button></td>
+                                                   Remove(index,x.amount)}><button className="hover:bg-red-500 px-4 bg-amber-500  cursor-pointe py-1 rounded-lg text-white" onClick={()=>
+                                                Remove(index,x.amount)}>delete</button></td>
                                             </tr>
                                         )
                                     })
@@ -272,7 +259,6 @@ function getAttenDanceInfo(id) {
                                     <td className="border  border-black text-center uppercase ">{toWords(Number(earning) - Number(deduct))}</td>
                                 </tr>
                             </table>
-
                         </div>
                         <div className="mt-5">
                             <div className="flex justify-between">
@@ -285,18 +271,14 @@ function getAttenDanceInfo(id) {
                                 <option value='other'>Other</option>
                             </FlowbiteSelect>
                             </div>
-                           
                         </div>
                         <div className="mt-2">
                             <Textarea rows={4} id='description'>
                             </Textarea>
                         </div>
-
                         <Modal show={props.openModal === 'default'} onClose={() => setOpenModal(undefined)} size="7xl">
                             <Modal.Body>
-
                                 <InsideModal p year={year} month={month} id={emp.uid} addRow={addRow} setOpenModal={setOpenModal}></InsideModal>
-
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
@@ -310,7 +292,6 @@ function getAttenDanceInfo(id) {
                         <span className=" leading-8 border-t-4 border-dotted border-black ">Employee Signature</span>
                         <span className="leading-8 border-t-4 border-dotted border-black ">Authority Signature</span>
                         </div>
-                       
                         <Timeline horizontal className=" text-black ">
       <Timeline.Item className=" w-1/3 ">
         {/* <Timeline.Point icon={HiCalendar}  /> */}
@@ -318,12 +299,10 @@ function getAttenDanceInfo(id) {
         <HiLocationMarker className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
         </div>
         <Timeline.Content>
-          
           <Timeline.Body className="text-center text-black">
             House No-1,Block-B,Banasree,<br/>
             Main Road,Rampura,Dhaka-1219
           </Timeline.Body>
-         
         </Timeline.Content>
       </Timeline.Item>
       <Timeline.Item className=" w-1/3 ">
@@ -332,7 +311,6 @@ function getAttenDanceInfo(id) {
         <AiTwotoneMail className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
         </div>
         <Timeline.Content>
-          
           <Timeline.Body className="text-black text-center">
              www.arenawebsecurity.net<br/>
              support@arenawebsecurity.net
@@ -345,7 +323,6 @@ function getAttenDanceInfo(id) {
         <AiFillPhone className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white bg-[#69D4DD] rounded-full"/>
         </div>
         <Timeline.Content>
-
           <Timeline.Body className="text-black text-right">
             +8800188663989<br/>
             +8801779224640
@@ -362,12 +339,9 @@ function getAttenDanceInfo(id) {
                 <input type="checkbox" name="" id="" className="bg-red-400 mr-4" />
                 <label>Holidays</label>
                 </div>
-               
-         
                 <div className=" md:p-5">
           <Table className="text-[12px] md:text-[16px] ">
             <Table.Head className="">
-      
               <Table.HeadCell>Date</Table.HeadCell>
               <Table.HeadCell>Weekday</Table.HeadCell>
               <Table.HeadCell>Clock in</Table.HeadCell>
@@ -380,8 +354,6 @@ function getAttenDanceInfo(id) {
                 let isHoldiay =
                   moment(x.date).format("d") == 5 ||
                   moment(x.date).format("d") == 6 ;
-   
-          
                 return (
                   <Table.Row
                     key={index}
@@ -389,7 +361,6 @@ function getAttenDanceInfo(id) {
                       isHoldiay ?" rounded-lg bg-red-400 ": 'odd:bg-[#f0f0f0] '
                     }`}
                   >
-
                     <Table.Cell>{x.date}</Table.Cell>
                     <Table.Cell>{moment(x.date).format("dddd")}</Table.Cell>
                     <Table.Cell>{x.clock_in}</Table.Cell>
@@ -404,8 +375,6 @@ function getAttenDanceInfo(id) {
         </div>
             </div>
             </div>
-
-
         </div>
     );
 };

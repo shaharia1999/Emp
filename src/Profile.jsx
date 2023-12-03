@@ -15,7 +15,7 @@ const Profile = () => {
   const navigate = useNavigate();
   let id = localStorage.getItem("id");
   const {setType}=useContext(myContext);
-   let [types,setTypes]=useState(false)
+  let [types,setTypes]=useState(false)
   useEffect(() => {
     getProfileInfo();
     getAttenDanceInfo();
@@ -51,7 +51,6 @@ const Profile = () => {
         let year = moment().year();
         let date = moment().date();
         let newAtten = new Array();
-
         for (let index = date; index > 0; index--) {
           let x = null;
           for (let index2 = 0; index2 < data?.length; index2++) {
@@ -171,7 +170,6 @@ const Profile = () => {
     navigate("/login");
     location.reload()
   }
-
   return (
     <div className="lg:flex block md:mx-10 mx-2 mt-5 md:gap-4">
       <div className="flex flex-col gap-3 w-96">
@@ -187,7 +185,6 @@ const Profile = () => {
         <Button gradientDuoTone="purpleToPink" onClick={Logout}>
           Logout
         </Button>
-      
       </div>
       <div className="w-full">
         <div className="md:flex w-full gap-1 block ">
@@ -201,10 +198,7 @@ const Profile = () => {
           ClockIn={ClockIn}
           ClockOut={ClockOut}
         ></TimeCard>
-        
         </div>
-      
-
         <div className=" md:p-5">
         <div className=" md:p-5">
                 <input type="checkbox" name="" id="" className="bg-red-400 mr-4" />
