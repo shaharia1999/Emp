@@ -1,4 +1,26 @@
-.list-item::before {
+/* .list-item::before {
     content: '*';
     margin-right: 5px; /* Adjust as needed for spacing */
+ 
+/* .term_condition{
+  position: relative;
+}
+.term_condition::before{
+  content: '';
+  background-image: url(../images/th.jpeg);
+  background-size: cover;
+  opacity: 0.1;
+  width: 320px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%)
+} */
+  @media print {
+   #back,#print{
+    display: none !important;
+   }
+    
+   
   }

@@ -7,17 +7,24 @@ import { toWords } from "number-to-words";
 import { split } from "postcss/lib/list";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Add } from "./store/Invoice";
+import { False, True } from "./store/DrawarStore";
 
 // console.log(id);
-
+const path  = location.pathname;
+    console.log(path);  
 const Employers = () => {
   const [student, setStudent] = useState(null);
-  const [newarrey,setNewarrey]=useState([])
-  console.log(student);
+  
+  // const [newarrey,setNewarrey]=useState([])
+  const drawar = useSelector((state) =>(state.drawar.value))
   const [total,setTotal]=useState(0)
   const dispatch = useDispatch()
+  useState(()=>{
+   console.log(drawar );
+  //  dispatch(True())
+  },[drawar])
 
   function Search() {
     let email = document.getElementById("title").value.trim();
@@ -82,6 +89,7 @@ const Employers = () => {
   const PDf=()=>{
     let wordtotal=document.getElementById('wordtotal').innerText;
     student.push(wordtotal,total)
+    dispatch(False())
      dispatch(Add(student,wordtotal))
    }
   // function MakePDF3() {
@@ -186,9 +194,9 @@ const Employers = () => {
                         {/* <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} onClick={MakePDF3}>
                         Save PDF
                        </button> */}
-                       <Link to='invoice'>
+                       <Link to='1'>
                        <button onClick={PDf} className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} >
-                        Push
+                        Print
                        </button>
                        </Link>
                         
