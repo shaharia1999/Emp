@@ -158,7 +158,8 @@ function getAttenDanceInfo(id) {
             }
             <div className="flex w-full justify-center">
             {
-                emp && <div id="print" className=" mt-4 shadow-md p-4 w-[768px] h-[1056px] relative mb-7 ">
+                emp && 
+                <div id="print" className=" mt-4 shadow-md p-4 w-[768px] h-[1056px] relative mb-7 ">
                     <div className="flex justify-between">
                     <div> <p><span className="font-semibold">Name: </span>{emp?.name} </p>
                     <p><span className="font-semibold">Designation: </span>{emp?.desig} </p>

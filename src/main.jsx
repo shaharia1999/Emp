@@ -15,6 +15,7 @@ import React from 'react';
 import DashBoard from './DashBoard/DashBoard.jsx';
 import DashBoardHome from './DashBoard/DashBoardHome.jsx';
 import Status from './DashBoard/Status.jsx';
+import Payment_invoice from './Payment_Invoice/Payment_invoice.jsx';
 
 
 const router = createBrowserRouter([{
@@ -43,8 +44,16 @@ const router = createBrowserRouter([{
         },
         {
           path: '/student',
-          element:<Employers></Employers>
+          element:<Employers></Employers>,
+          
         },
+        {
+          path: '/student/:id',
+          element:<Payment_invoice></Payment_invoice>,
+          
+        },
+
+       
        
         {
           path: '/dashboard',

@@ -6,6 +6,9 @@ import moment from "moment";
 import { toWords } from "number-to-words";
 import { split } from "postcss/lib/list";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Add } from "./store/Invoice";
 
 // console.log(id);
 
@@ -14,7 +17,7 @@ const Employers = () => {
   const [newarrey,setNewarrey]=useState([])
   console.log(student);
   const [total,setTotal]=useState(0)
- console.log(newarrey);
+  const dispatch = useDispatch()
 
   function Search() {
     let email = document.getElementById("title").value.trim();
@@ -76,23 +79,30 @@ const Employers = () => {
       
    
   }
-  function MakePDF3() {
-   let wordtotal=document.getElementById('wordtotal').innerText
+  const PDf=()=>{
+    let wordtotal=document.getElementById('wordtotal').innerText;
+    student.push(wordtotal,total)
+     dispatch(Add(student,wordtotal))
+   }
+  // function MakePDF3() {
+  //  let wordtotal=document.getElementById('wordtotal').innerText;
    
-    axios.post(ApiUrl.getStudentInfoPdf,{student,total,wordtotal}).then((res) => {
-    let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
-    console.log(newBase);
-    // console.log(res.data);
-    // console.log( res.data.split('/'));
+  //  console.log(student);
+
+    // axios.post(ApiUrl.getStudentInfoPdf,{student,total,wordtotal}).then((res) => {
+    // let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
+    // console.log(newBase);
+    // // console.log(res.data);
+    // // console.log( res.data.split('/'));
    
-    const link = document.createElement('a');
-    link.href = newBase+res.data;
-    link.setAttribute('download', String(res.data).split('/').pop());
-    link.click();
-    // Cleanup
-    link.remove();
-    })
-}
+    // const link = document.createElement('a');
+    // link.href = newBase+res.data;
+    // link.setAttribute('download', String(res.data).split('/').pop());
+    // link.click();
+    // // Cleanup
+    // link.remove();
+    // })
+// }
     
   
   return (
@@ -173,9 +183,15 @@ const Employers = () => {
                             </tbody>
                         </table>
                         <center className="mt-10">
-                        <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} onClick={MakePDF3}>
+                        {/* <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} onClick={MakePDF3}>
                         Save PDF
+                       </button> */}
+                       <Link to='invoice'>
+                       <button onClick={PDf} className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} >
+                        Push
                        </button>
+                       </Link>
+                        
                         </center>
                      
           </div>

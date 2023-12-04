@@ -9,10 +9,13 @@ export default {
   theme: {
     extend: {
       fontFamily:{
+        Plyafire:['DM Serif Display'],
         Rovoto:['Roboto Condensed']
       }
     },
   },
   plugins: [require('flowbite/plugin')],
 }
+
+
 
