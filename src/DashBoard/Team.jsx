@@ -7,11 +7,11 @@ const Team = () => {
         Team AWS
       </h1>
       <div className="grid grid-cols-3 gap-5 mt-6 mb-6">
-        <Card>
+        <Card className="">
           <img
             className="max-w-full h-62"
             alt="Meaningful alt text for an image that is not purely decorative"
-            src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
+            src="../../src/images/ceo.png"
           />
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Ceo
@@ -24,11 +24,12 @@ const Team = () => {
             far, in reverse chronological order.
           </p>
         </Card>
-        <Card>
+        <Card className="">
           <img
-            className="max-w-full h-62"
+            className="max-w-full h-62 "
             alt="Meaningful alt text for an image that is not purely decorative"
-            src="../../src/images/1673078179358.jpeg"
+            src="../../src/images/ifty.png"
+            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
           />
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Arena DevOps
@@ -45,7 +46,7 @@ const Team = () => {
           <img
             className="max-w-full h-62"
             alt="Meaningful alt text for an image that is not purely decorative"
-            src="../../src/images/Capture.PNG"
+            src="../../src/images/nira.png"
           />
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Team Delta
