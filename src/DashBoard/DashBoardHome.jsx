@@ -1,14 +1,15 @@
 
 import CanvasJSReact from '@canvasjs/react-charts';
 import moment from "moment";
-import { NavLink, Outlet,} from "react-router-dom";
-import { Select as FlowbiteSelect, TextInput, Modal, Button, Textarea } from 'flowbite-react';
+// import { NavLink, Outlet,} from "react-router-dom";
+import { Select as FlowbiteSelect, TextInput,} from 'flowbite-react';
 import { useState } from "react";
+
+
 
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const DashBoardHome = () => {
- 
   const months = new Array(12)
   const [month,setMonth]=useState('')
   const [year, setYear] = useState(moment().format("YYYY"))
@@ -40,6 +41,7 @@ const DashBoardHome = () => {
           
         ]
     }]
+    
 }
 
 
@@ -81,6 +83,8 @@ const DashBoardHome = () => {
                                     </div>
     
       <CanvasJSChart options={options} />
+
+
      
     </div>
   );

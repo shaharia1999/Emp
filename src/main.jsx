@@ -15,6 +15,10 @@ import DashBoard from "./DashBoard/DashBoard.jsx";
 import DashBoardHome from "./DashBoard/DashBoardHome.jsx";
 import Status from "./DashBoard/Status.jsx";
 import Payment_invoice from "./Payment_Invoice/Payment_invoice.jsx";
+import TINY from "./DashBoard/RichText.jsx";
+import ApproveLeave from "./DashBoard/ApproveLeave.jsx";
+import TaskList from "./DashBoard/TaskList.jsx";
+import Team from "./DashBoard/Team.jsx";
 
 const router = createBrowserRouter([
   {
@@ -67,8 +71,24 @@ const router = createBrowserRouter([
                 element: <Leave />,
               },
               {
+                path: "leaveapp",
+                element: <ApproveLeave />,
+              },
+              {
                 path: "status",
                 element: <Status />,
+              },
+              {
+                path: "task",
+                element: <TINY />,
+              },
+              {
+                path: "taskList",
+                element: <TaskList />,
+              },
+              {
+                path: "team",
+                element: <Team />,
               },
               {
                 path: "profile",
