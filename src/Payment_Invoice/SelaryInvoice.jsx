@@ -8,29 +8,44 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { True } from "../store/DrawarStore";
 import { FaCheckCircle } from "react-icons/fa";
+import axios from "axios";
+import ApiUrl from "../ApiUrl";
+let id = localStorage.getItem("id");
 
 
-const Payment_invoice = () => {
+const SelaryInvoice= () => {
     const dispatch = useDispatch()
   const [newData, setNewdata] = useState(null);
   const data = useSelector((state) => state.Payment.value);
+  const data2 = useSelector((state) => state.Selary.value);
+  const [emp, setEmp] = useState(null);
   const loading = useSelector((state) => state.drawar.value);
   useEffect(() => {
-    console.log(loading);
+    // console.log(data2[0]);
+    axios
+    .get(`${ApiUrl.ProfileUrl}${id}/`)
+    .then((res) => {
+      setEmp(res.data);
+      // console.log(res.data);
+    })
+    .catch((error) => console.log(error));
+    console.log(emp);
     if (data) {
       setNewdata(data[0]);
     }
-    console.log('data');
+
   }, [loading]);
+
+
   function Print() {
     // dispatch(True())
     print();
   }
   function Back() {
-    // location.reload()
     dispatch(True())
-    // print();
+
   }
+
   return (
     <div className="relative">
     <Link to='/student' id='back'className="absolute left-2 "><button onClick={Back} className="bg-lime-600 px-6 py-2 text-white mt-6 ml-6 mx-auto">Back</button></Link>
@@ -48,16 +63,11 @@ const Payment_invoice = () => {
         <img src={logo} className="w-40 h-40"></img>
           {/* <img src={paid} className="w-40 h-40"></img> */}
           <div className="flex justify-center">
-          <span className="font-bold text-2xl border-b-2 border-black ">
-            Consignment
-          </span>
+        
         </div>
         
           <div className="text-[14px]">
-            <p>
-              <addr className="font-bold">Consignment no :</addr>
-              {newData && newData[0].reg_id}
-            </p>
+           
             <p>
               <addr className="font-bold">Date : </addr>
               {moment().format("D-MMM-YYYY")}
@@ -69,27 +79,24 @@ const Payment_invoice = () => {
           <article>
             <p>
               <addr className="font-bold">Name : </addr>{" "}
-              {newData && newData[0]?.reg_fullname}
+              {data2 && data2[0].emp?.name}
             </p>
             <p>
-              <addr className="font-bold">Email :</addr>
-              {newData && newData[0]?.reg_email}
+              <addr className="font-bold">Designation :</addr>
+              {data2 && data2[0].emp?.desig}
             </p>
           </article>
-          <article>
-            <p>
-              <addr className="font-bold">Contact No : </addr>
-              {newData && newData[0]?.reg_mobile}
-            </p>
-            <p>
-              <addr className="font-bold">Installment : </addr>
-              {newData && newData[0]?.installment}
-            </p>
-          </article>
+    
         </div>
+        
+        {
+          data2 ?<h3 className="text-center text-[18px]">Salary of the <span className="font-bold">{moment().month(Number(data2&& data2[0].month) - 1).format('MMMM')} {data2 && data2[0].year}</span></h3>: <h3 className="text-center text-[18px]">Salary of the ......</h3>
+        }
+        
         <table className="w-full  border-collapse break-all mt-2">
           <thead>
             <tr className="text-[14px]">
+              <th className="border border-black ">Title</th>
               <th className="border border-black ">Description</th>
               <th className="border border-black ">Amount</th>
             </tr>
@@ -208,4 +215,4 @@ const Payment_invoice = () => {
   );
 };
 
-export default Payment_invoice;
+export default SelaryInvoice;

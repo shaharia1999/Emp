@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Home.jsx";
 import Login from "./Login.jsx";
 import Profile from "./Profile.jsx";
@@ -19,6 +19,9 @@ import TINY from "./DashBoard/RichText.jsx";
 import ApproveLeave from "./DashBoard/ApproveLeave.jsx";
 import TaskList from "./DashBoard/TaskList.jsx";
 import Team from "./DashBoard/Team.jsx";
+import DevOps from "./DashBoard/TeamDevOps/DevOps.jsx";
+import TeamDelta from "./DashBoard/TeamDevOps/TeamDelta.jsx";
+import SelaryInvoice from "./Payment_Invoice/SelaryInvoice.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +53,10 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: "/invoice/:id",
+            element: <SelaryInvoice></SelaryInvoice>,
+          },
+          {
             path: "/student",
             element: <Employers></Employers>,
           },
@@ -57,14 +64,23 @@ const router = createBrowserRouter([
             path: "/student/:id",
             element: <Payment_invoice></Payment_invoice>,
           },
+          {
+            path: "/team/devOps",
+            element: <DevOps/>,
+          },
+          {
+            path: "/team/delta",
+            element: <TeamDelta/>,
+          },
 
           {
             path: "/dashboard",
             element: <DashBoard />,
             children: [
-              {
+            {
                 path: "",
-                element: <DashBoardHome />,
+                element:<Private><DashBoardHome /></Private> ,
+              
               },
               {
                 path: "leave",
@@ -90,6 +106,7 @@ const router = createBrowserRouter([
                 path: "team",
                 element: <Team />,
               },
+            
               {
                 path: "profile",
                 element: (
@@ -98,6 +115,7 @@ const router = createBrowserRouter([
                   </Private>
                 ),
               },
+             
               // Other child routes
             ],
           },

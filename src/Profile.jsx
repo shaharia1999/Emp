@@ -15,7 +15,6 @@ const Profile = () => {
   const navigate = useNavigate();
   let id = localStorage.getItem("id");
   const {setType}=useContext(myContext);
-  let [types,setTypes]=useState(false)
   useEffect(() => {
     getProfileInfo();
     getAttenDanceInfo();
@@ -172,6 +171,7 @@ const Profile = () => {
   }
   return (
     <div className="lg:flex block md:mx-10 mx-2 mt-5 md:gap-4">
+     
       <div className="flex flex-col gap-3 w-96">
         <Card>
           <Avatar img={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`} size="xl" rounded />

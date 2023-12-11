@@ -1,11 +1,12 @@
 import { Navbar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { True } from "./store/DrawarStore";
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [type, setType] = useState(false);
   const [type2, setType2] = useState(false);
   const id = localStorage.getItem("id");
@@ -31,10 +32,16 @@ const NavBar = () => {
       setType2(true);
     }
   }, [type, type2]);
+  function Logout() {
+    localStorage.clear();
+    setType(null)
+    navigate("/login");
+    location.reload()
+  }
 
   return (
     <Navbar fluid rounded className="bg-[#0891B2] mb-4 z-[10] sticky">
-      <Navbar.Brand href="/">
+      <Navbar.Brand href="/dashboard">
         <img
           src="https://arenawebsecurity.net/static/media/main-log-new.png"
           className="mr-3 h-6 sm:h-9"
@@ -52,6 +59,11 @@ const NavBar = () => {
           <NavLink to="/login" className="text-white">
             Login
           </NavLink>
+        )}
+        {id && (
+          <li className="text-white cursor-pointer" onClick={Logout}>
+            Log out
+          </li>
         )}
 
         {type && (

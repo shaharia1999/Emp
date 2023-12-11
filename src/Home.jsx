@@ -10,11 +10,23 @@ const Home = () => {
     const dispatch = useDispatch()
     useEffect(()=>{
 
-    },drawar)
+    },[drawar])
     return (
         <div >
             {
-                path=='/student/1'?<></>:<NavBar></NavBar>
+                path=='/student/1'?<></>:<div>
+                              <marquee>
+            <addr className="font-bold">Notice : </addr>
+            Arrive promptly at 10:10 a.m. and depart at 6:00 p.m. Any arrival
+            after 10:10 a.m. is considered late.
+            <span className="text-red-500">
+              {" "}
+              Three instances of tardiness will result in a deduction of one
+              day's salary..
+            </span>
+          </marquee>
+                    <NavBar></NavBar>
+                </div>
             }
           
             <Outlet></Outlet>

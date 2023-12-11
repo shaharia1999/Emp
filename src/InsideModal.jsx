@@ -159,7 +159,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                 type="number"
                 name="amount"
                 value={salary}
-                onChange={(value) => setSalary(value.value)}
+                onChange={(value) =>setSalary(value.value)}
               />
             </div>
             <div id="select" className="inline-block w-1/2">
@@ -354,7 +354,7 @@ const InsideModal = ({ year, month, id, addRow, setOpenModal }) => {
                 required
                 type="number"
                 name="amount"
-                value={absentSumAmount}
+                defaultValue={absentSumAmount}
                 onChange={(value) => setSalary(value.value)}
               />
             </div>

@@ -10,6 +10,9 @@ import {Timeline } from 'flowbite-react';
 import {HiLocationMarker} from 'react-icons/hi';
 import {AiFillPhone, AiTwotoneMail} from 'react-icons/ai';
 import { Table } from "flowbite-react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Payment } from "./store/Selary";
 const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
@@ -25,6 +28,7 @@ const CreateInvoice = () => {
     const [atten, setAtten] = useState([]);
     const [id,setId] = useState(null);
     const[PaymentMethod,setPaymentMethod]=useState('Cash');
+    const dispatch=useDispatch();
 
 console.log(invoiceRow);
     for (let index = 0; index < 12; index++) {
@@ -83,9 +87,20 @@ function MakePDF3() {
         link.remove();
         })
     }
+const PDf=()=>{
+  let totalAmount = earning;
+        let TotalDeduct = deduct
+        let NetSalary = Number(earning) - Number(deduct);
+        let AmountInWords = toWords(Number(earning) - Number(deduct));
+        let description = document.getElementById('description').value
+  const data= { invoiceRow, totalAmount, TotalDeduct, NetSalary, AmountInWords, description, PaymentMethod, empId, month, year ,
+    emp}
+  dispatch(Payment(data))
+ }
     useEffect(() => {
         getEmployee();
     }, [])
+
 function Remove(index,amount){
   setEarning(Number(earning) - Number(amount))
   const updatedInvoiceRow = invoiceRow.filter((item, i) => i !== index);
@@ -151,9 +166,14 @@ function getAttenDanceInfo(id) {
             </div>
             {
                 emp && <div >
-                    <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
+                    {/* <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
                         Save PDF
-                    </button>
+                    </button> */}
+                    <Link to='1'>
+                  <button onClick={PDf} className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} >
+                  Print
+                  </button>
+                  </Link>
                 </div>
             }
             <div className="flex w-full justify-center">
