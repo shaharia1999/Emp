@@ -25,43 +25,7 @@ const TeamDelta = () => {
             far, in reverse chronological order.
           </p>
         </Card>
-            <Card className="cursor-pointer" >
-          <img
-            className="max-w-full h-62 "
-            alt="Meaningful alt text for an image that is not purely decorative"
-            src="../../src/images/sagar.png"
-            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
-          />
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Data Entry Operator
-          </h5>
-          <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            Sagar
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-        </Card>
-            <Card className="cursor-pointer" >
-          <img
-            className="max-w-full h-62 "
-            alt="Meaningful alt text for an image that is not purely decorative"
-            src="../../src/images/era.png"
-            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
-          />
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          cyber security specialist
-          </h5>
-          <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
-           Anika Tabassum Nira
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-        </Card>
-            <Card className="cursor-pointer" >
+        <Card className="cursor-pointer" >
           <img
             className="max-w-full h-62 "
             alt="Meaningful alt text for an image that is not purely decorative"
@@ -79,6 +43,44 @@ const TeamDelta = () => {
             far, in reverse chronological order.
           </p>
         </Card>
+           
+            <Card className="cursor-pointer" >
+          <img
+            className="max-w-full h-62 "
+            alt="Meaningful alt text for an image that is not purely decorative"
+            src="../../src/images/era.png"
+            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
+          />
+          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Cyber security specialist
+          </h5>
+          <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          Nishat Tabassum Era
+          </h5>
+          <p className="font-normal text-gray-700 dark:text-gray-400">
+            Here are the biggest enterprise technology acquisitions of 2021 so
+            far, in reverse chronological order.
+          </p>
+        </Card>
+        <Card className="cursor-pointer" >
+          <img
+            className="max-w-full h-62 "
+            alt="Meaningful alt text for an image that is not purely decorative"
+            src="../../src/images/sagar.png"
+            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
+          />
+          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Data Entry Operator
+          </h5>
+          <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            Sagar
+          </h5>
+          <p className="font-normal text-gray-700 dark:text-gray-400">
+            Here are the biggest enterprise technology acquisitions of 2021 so
+            far, in reverse chronological order.
+          </p>
+        </Card>
+
             <Card className="cursor-pointer" >
           <img
             className="max-w-full h-62 "
@@ -133,7 +135,7 @@ const TeamDelta = () => {
             far, in reverse chronological order.
           </p>
         </Card>
-            <Card className="cursor-pointer" >
+        <Card className="cursor-pointer" >
           <img
             className="max-w-full h-62 "
             alt="Meaningful alt text for an image that is not purely decorative"
@@ -141,10 +143,46 @@ const TeamDelta = () => {
             // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
           />
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Call Center Executive
+          Data Entry Operator 
           </h5>
           <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
           Jiniya Alom
+          </h5>
+          <p className="font-normal text-gray-700 dark:text-gray-400">
+            Here are the biggest enterprise technology acquisitions of 2021 so
+            far, in reverse chronological order.
+          </p>
+        </Card>
+        <Card className="cursor-pointer" >
+          <img
+            className="max-w-full h-62 "
+            alt="Meaningful alt text for an image that is not purely decorative"
+            src="../../src/images/sabrina.png"
+            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
+          />
+          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Call Center Executive
+          </h5>
+          <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          Sabrina Rahman
+          </h5>
+          <p className="font-normal text-gray-700 dark:text-gray-400">
+            Here are the biggest enterprise technology acquisitions of 2021 so
+            far, in reverse chronological order.
+          </p>
+        </Card>
+        <Card className="cursor-pointer" >
+          <img
+            className="max-w-full h-62 "
+            alt="Meaningful alt text for an image that is not purely decorative"
+            src="../../src/images/tw.png"
+            // src="../../src/images/357772075_283305974210552_3393920507529656284_n.jpg"
+          />
+          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Call Center Executive
+          </h5>
+          <h5 className="text-1xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          Towhid 
           </h5>
           <p className="font-normal text-gray-700 dark:text-gray-400">
             Here are the biggest enterprise technology acquisitions of 2021 so

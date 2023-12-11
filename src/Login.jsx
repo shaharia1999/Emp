@@ -4,11 +4,18 @@ import { Label, TextInput } from "flowbite-react";
 import ApiUrl from "./ApiUrl";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 const Login = () => {
   const userAgent = navigator.userAgent;
   const browserName = navigator.appName;
   const browserVersion = navigator.appVersion;
-
+useEffect(()=>{
+   
+//    console.log(localStorage.getItem('type')) 
+   if(localStorage.getItem('type')){
+ navigate("/dashboard/profile");
+   }
+},[]);
   console.log("User Agent:", userAgent);
   console.log("Browser Name:", browserName);
   console.log("Browser Version:", browserVersion);
