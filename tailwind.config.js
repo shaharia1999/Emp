@@ -10,7 +10,7 @@ export default {
     extend: {
       fontFamily:{
         Plyafire:['DM Serif Display'],
-        Rovoto:['Roboto Condensed']
+        Rovoto:['Roboto Slab']
       }
     },
   },

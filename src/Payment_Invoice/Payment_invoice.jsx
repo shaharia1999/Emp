@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { True } from "../store/DrawarStore";
 import { FaCheckCircle } from "react-icons/fa";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 
 const Payment_invoice = () => {
@@ -15,6 +17,10 @@ const Payment_invoice = () => {
   const [newData, setNewdata] = useState(null);
   const data = useSelector((state) => state.Payment.value);
   const loading = useSelector((state) => state.drawar.value);
+  const [pdfName, setPdfName] = useState('generated.pdf');
+  const date=moment().format("D-MMM-YYYY");
+  
+  console.log(name);
   useEffect(() => {
     console.log(loading);
     if (data) {
@@ -31,15 +37,32 @@ const Payment_invoice = () => {
     dispatch(True())
     // print();
   }
+
+  // pdf 
+  const generatePDF = () => {
+    html2canvas(document.getElementById('content')).then(function (canvas) {
+      const cleanFileName = (newData[0]?.reg_email +date).replace(/[^\w]/g, '_');
+      var imgData = canvas.toDataURL('image/png');
+      var pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+     
+      pdf.save(cleanFileName);
+    });
+  };
+
+  const handleDownload = () => {
+    generatePDF(pdfName);
+  };
   return (
     <div className="relative">
     <Link to='/student' id='back'className="absolute left-2 "><button onClick={Back} className="bg-lime-600 px-6 py-2 text-white mt-6 ml-6 mx-auto">Back</button></Link>
-    <button  className="bg-lime-600 px-6 py-2 absolute right-2  text-white mt-6 ml-6 mx-auto" id="print" onClick={Print}>Print</button>
+    {/* <button  className="bg-lime-600 px-6 py-2 absolute right-2  text-white mt-6 ml-6 mx-auto" id="print" onClick={Print}>Print</button> */}
+    <button  className="bg-lime-600 px-6 py-2 absolute right-2  text-white mt-6 ml-6 mx-auto" id="print" onClick={handleDownload}>Print</button>
     <div className="flex justify-center items-center  ">
       {/* <h1>Print</h1> */}
       <div
       
-        className=" font-Rovoto  p-4 w-[793.70px] h-[1020px]  relative mb-7 "
+        className=" font-Rovoto  p-4 w-[793.70px] h-[1020px]  relative mb-7 "id="content"
         
       >
         
@@ -48,7 +71,7 @@ const Payment_invoice = () => {
         <img src={logo} className="w-40 h-40"></img>
           {/* <img src={paid} className="w-40 h-40"></img> */}
           <div className="flex justify-center">
-          <span className="font-bold text-2xl border-b-2 border-black ">
+          <span className="font-bold text-2xl border-b-2 pb-2 border-black ">
             Consignment
           </span>
         </div>
@@ -90,8 +113,8 @@ const Payment_invoice = () => {
         <table className="w-full  border-collapse break-all mt-2">
           <thead>
             <tr className="text-[14px]">
-              <th className="border border-black ">Description</th>
-              <th className="border border-black ">Amount</th>
+              <th className="border border-black pb-2">Description</th>
+              <th className="border border-black pb-2">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -99,13 +122,13 @@ const Payment_invoice = () => {
               newData[1].map((x, index) => {
                 return (
                   <tr key={index} className="text-[14px]">
-                    <td className="border border-black pl-5">
+                    <td className="border border-black pl-5 pb-2">
                       <pre className=" w-[300px] break-all">
                         ({moment(x.time).format("D-MMM-YYYY")}) - {newData && newData[0]?.reg_course}
                       </pre>
                    
                     </td>
-                    <td className="border border-black pl-5  ">{x.amount}</td>
+                    <td className="border border-black pl-5 pb-2 ">{x.amount}</td>
                   </tr>
                 );
               })}
