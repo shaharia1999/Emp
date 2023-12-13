@@ -1,8 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Drawer } from "react-rainbow-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { False } from "../store/DrawarStore";
+import NavBar from "../NavBar";
 let data = localStorage.getItem("type");
 
 const DashBoard = () => {
@@ -10,9 +11,32 @@ const DashBoard = () => {
   const dispatch = useDispatch();
   console.log(drawar);
   console.log(data);
+  const path  = location.pathname;
+  console.log(path);
+
+  useEffect(()=>{
+
+  },[drawar])
   // const [isOpen,setIsOpen]=useState(true)
 
   return (
+    <>
+       {
+                path=='/student/1'?<></>:<div>
+                              <marquee>
+            <addr className="font-bold">Notice : </addr>
+            Arrive promptly at 10:10 a.m. and depart at 6:00 p.m. Any arrival
+            after 10:10 a.m. is considered late.
+            <span className="text-red-500">
+              {" "}
+              Three instances of tardiness will result in a deduction of one
+              day's salary..
+            </span>
+          </marquee>
+                    <NavBar></NavBar>
+                </div>
+            }
+
     <div className="mt-[-20px] flex ">
       <Drawer
         id="drawar-1"
@@ -83,6 +107,7 @@ const DashBoard = () => {
         {<Outlet />}
       </div>
     </div>
+    </>
   );
 };
 

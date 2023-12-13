@@ -170,8 +170,8 @@ const Profile = () => {
     location.reload()
   }
   return (
-    <div className="lg:flex block md:mx-10 mx-2 mt-5 md:gap-4">
-     
+    <div className="lg:flex block md:px-10 px-2 pt-20 md:gap-4 bg-[#C6D3E1]">
+{/*      
       <div className="flex flex-col gap-3 w-96">
         <Card>
           <Avatar img={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`} size="xl" rounded />
@@ -185,9 +185,9 @@ const Profile = () => {
         <Button gradientDuoTone="purpleToPink" onClick={Logout}>
           Logout
         </Button>
-      </div>
+      </div> */}
       <div className="w-full">
-        <div className="md:flex w-full gap-1 block ">
+        {/* <div className="md:flex w-full  block ">
         {emp.clock != false ? (
           <DurationCard clock={emp.clock}></DurationCard>
         ) : (
@@ -198,8 +198,37 @@ const Profile = () => {
           ClockIn={ClockIn}
           ClockOut={ClockOut}
         ></TimeCard>
+        </div> */}
+        <div className="bg-white py-5">
+        <div className="flex justify-between bg-[#D0ECF0] mx-5 py-5 px-5 rounded-t-md">
+          <article>
+          <p><addr className='font-medium'>Name:</addr> {emp?.name}</p>
+          <p><addr className='font-medium'>Designation:</addr> {emp?.designation}</p>
+          <p><addr className='font-medium'>Phone: </addr>{emp?.phone}</p>
+          </article>
+          {/* <article><Avatar className="mt-[-30px] w-60 h-48 bg-red-500 bg-cover" img={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`}  rounded imgClassName="w-full h-full object-cover" /></article> */}
+          <article>
+            <img className="rounded-full w-56 h-56 mt-[-100px]" src={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`}/>
+     
+            </article>
+       
+          <article>
+          <p><addr className='font-medium'>Desktop:</addr> {emp?.pc} </p>
+          <p><addr className='font-medium'>Gender:</addr> {emp?.gender}</p>
+          </article>
         </div>
-        <div className=" md:p-5">
+        </div>
+        <div className="bg-[#F9FAFB] rounded-b-md">
+          <div className="md:flex w-full  block ">
+       
+        <TimeCard
+          clock={emp?.clock}
+          ClockIn={ClockIn}
+          ClockOut={ClockOut}
+        ></TimeCard>
+        </div>
+        </div>
+        <div className=" ">
         <div className=" md:p-5">
                 <input type="checkbox" name="" id="" className="bg-red-400 mr-4" />
                 <label>Holidays</label>

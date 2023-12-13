@@ -4,11 +4,9 @@ import ApiUrl from "./ApiUrl";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { toWords } from "number-to-words";
-import { split } from "postcss/lib/list";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 import { Add } from "./store/Invoice";
-import { False, True } from "./store/DrawarStore";
+import { False} from "./store/DrawarStore";
 
 // new
 import { useDispatch, useSelector } from "react-redux";
@@ -24,15 +22,22 @@ const path = location.pathname;
 console.log(path);
 const Employers = () => {
   const [student, setStudent] = useState(null);
-
-  // const [newarrey,setNewarrey]=useState([])
   const drawar = useSelector((state) => state.drawar.value);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
+  const [newData, setNewdata] = useState(null);
+  const data = useSelector((state) => state.Payment.value);
+  const loading = useSelector((state) => state.drawar.value);
+  const [pdfName, setPdfName] = useState("generated.pdf");
+  const date = moment().format("D-MMM-YYYY");
+
+
   useState(() => {
     console.log(drawar);
     //  dispatch(True())
   }, [drawar]);
+
+
 
   function Search() {
     let email = document.getElementById("title").value.trim();
@@ -48,6 +53,7 @@ const Employers = () => {
           })
           .then((res) => {
             setStudent(res.data);
+         
             let count = 0;
             res.data[1]?.forEach((x) => {
               console.log(Number(x.amount));
@@ -101,35 +107,7 @@ const Employers = () => {
     dispatch(False());
     dispatch(Add(student, wordtotal));
   };
-  // function MakePDF3() {
-  //  let wordtotal=document.getElementById('wordtotal').innerText;
 
-  //  console.log(student);
-
-  // axios.post(ApiUrl.getStudentInfoPdf,{student,total,wordtotal}).then((res) => {
-  // let newBase = ApiUrl.BaseUrl.substring(0, ApiUrl.BaseUrl.length - 1)
-  // console.log(newBase);
-  // // console.log(res.data);
-  // // console.log( res.data.split('/'));
-
-  // const link = document.createElement('a');
-  // link.href = newBase+res.data;
-  // link.setAttribute('download', String(res.data).split('/').pop());
-  // link.click();
-  // // Cleanup
-  // link.remove();
-  // })
-  // }
-
-  // New Pdf genarator
-
-  const [newData, setNewdata] = useState(null);
-  const data = useSelector((state) => state.Payment.value);
-  const loading = useSelector((state) => state.drawar.value);
-  const [pdfName, setPdfName] = useState("generated.pdf");
-  const date = moment().format("D-MMM-YYYY");
-
-  console.log(name);
   useEffect(() => {
     console.log(loading);
     if (data) {
@@ -138,39 +116,7 @@ const Employers = () => {
     console.log("data");
   }, [loading]);
 
-  // pdf
-  // const generatePDF = () => {
-  //   html2canvas(document.getElementById("content")).then(function (canvas) {
-  //     const cleanFileName = (student[0]?.reg_email + date).replace(
-  //       /[^\w]/g,
-  //       "_"
-  //     );
-  //     var imgData = canvas.toDataURL("image/png");
-  //     var pdf = new jsPDF();
-  //     pdf.addImage(imgData, "PNG", 0, 0);
-  //     pdf.save(cleanFileName);
-  //     document.getElementById("main").style.display = "none";
-  //   });
-  // };
-  // const generatePDF = () => {
-  //   const content = document.getElementById('content');
-  //   html2canvas(content, { scale: 2, logging: false }).then(function (canvas) {
-  //     const cleanFileName = (student[0]?.reg_email + date).replace(
-  //       /[^\w]/g,
-  //       "_"
-  //     );
-  //     const imgData = canvas.toDataURL('image/png', 1.0); // Set image quality to 1.0 (max quality)
-  //     const pdf = new jsPDF({
-  //       orientation: 'portrait',
-  //       unit: 'mm',
-  //       format: 'a4',
-  //     });
 
-  //     pdf.addImage(imgData, 'PNG', 0, 0, 210, 297); // Use A4 dimensions (adjust as needed)
-  //     pdf.save(cleanFileName );
-  //     document.getElementById("main").style.display = "none";
-  //   });
-  // };
   const generatePDF = () => {
     const content = document.getElementById('content');
     html2canvas(content, { scale: 2, logging: false }).then(function (canvas) {
@@ -200,10 +146,8 @@ const Employers = () => {
   const handleDownload = () => {
     document.getElementById("main").style.display = "block";
     PDf();
-    // generatePDF(pdfName);
-    setTimeout(() => {
       generatePDF(pdfName);
-    }, 1000);
+
   };
   return (
     <div>
@@ -341,7 +285,7 @@ const Employers = () => {
               <div className="text-[14px]">
                 <p>
                   <addr className="font-bold">Consignment no : </addr>
-                  {newData && newData[0].reg_id}
+                  {student && student[0]?.reg_id}.{moment().format("D")}{moment().format("MM")}
                 </p>
                 <p>
                   <addr className="font-bold ">Date : </addr>
@@ -355,21 +299,21 @@ const Employers = () => {
               <article>
                 <p>
                   <addr className="font-bold">Name : </addr>{" "}
-                  {newData && newData[0]?.reg_fullname}
+                  {student && student[0]?.reg_fullname}
                 </p>
                 <p>
                   <addr className="font-bold">Email : </addr>
-                  {newData && newData[0]?.reg_email}
+                  {student && student[0]?.reg_email}
                 </p>
               </article>
               <article>
                 <p>
                   <addr className="font-bold">Contact No : </addr>
-                  {newData && newData[0]?.reg_mobile}
+                  {student && student[0]?.reg_mobile}
                 </p>
                 <p>
                   <addr className="font-bold">Installment : </addr>
-                  {newData && newData[0]?.installment}
+                  {student && student[0]?.installment}
                 </p>
               </article>
             </div>
@@ -381,14 +325,14 @@ const Employers = () => {
                 </tr>
               </thead>
               <tbody>
-                {newData &&
-                  newData[1].map((x, index) => {
+                {student &&
+                  student[1].map((x, index) => {
                     return (
                       <tr key={index} className="text-[14px]">
                         <td className="border border-black pl-5 pb-2">
                           <pre className=" w-[300px] break-all">
                             ({moment(x.time).format("D-MMM-YYYY")}) -{" "}
-                            {newData && newData[0]?.reg_course}
+                            {student && student[0]?.reg_course}
                           </pre>
                         </td>
                         <td className="border border-black pl-5 pb-2 ">

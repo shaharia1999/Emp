@@ -5,6 +5,8 @@ import ApiUrl from "./ApiUrl";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import './login.css'
+import img from '../src/images/aws.png'
 const Login = () => {
   const userAgent = navigator.userAgent;
   const browserName = navigator.appName;
@@ -57,16 +59,23 @@ useEffect(()=>{
       });
   }
   return (
-    <div className="flex justify-center">
-      <Card className="w-[50%] flex justify-center">
+    <div className="relative">
+    <div className="flex justify-center main">
+     
+    </div>
+     <Card className="w-[30%] flex shadow-md bg-transparent justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  py-5">
+      <div className="relative py-6">
+      <img alt="awsPng" src={img} className="w-52 h-20 absolute top-1/2 left-[45%] transform -translate-x-1/2 -translate-y-1/2 "></img>
+      </div>
+     
         <form className="flex  flex-col gap-4 " onSubmit={LoginUser}>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="email1" value="Your email" />
+              {/* <Label htmlFor="email1" value="Your email" /> */}
             </div>
             <TextInput
               id="email1"
-              placeholder="name@flowbite.com"
+              placeholder="Email"
               required
               type="email"
               name="email"
@@ -74,21 +83,24 @@ useEffect(()=>{
           </div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="password1" value="Your password" />
+              {/* <Label htmlFor="password1" value="Your password" /> */}
             </div>
             <TextInput
               id="password1"
+              placeholder="Password"
               required
               type="password"
               name="password"
             />
           </div>
+          <div className="flex justify-center">
           <button
             type="submit"
-            className="hover:bg-lime-600 bg-[#0891B2] py-2 rounded-lg text-white"
+            className="hover:bg-lime-600 bg-[#7271B6] py-2 rounded-lg text-white w-36"
           >
-            Submit
+            Login
           </button>
+          </div>
         </form>
       </Card>
     </div>

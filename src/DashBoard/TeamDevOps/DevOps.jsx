@@ -1,8 +1,12 @@
 import { Card } from "flowbite-react";
 
 
+
 const DevOps = () => {
     return (
+      <>
+    
+     
         <div className="px-20">
             <h1 className="text-center mt-5 font-semibold text-2xl bg-[#0891B2]  py-2 text-white">Team DevOps</h1>
             <div className="grid grid-cols-3 gap-5 mt-6 mb-6">
@@ -64,6 +68,7 @@ const DevOps = () => {
 
             
         </div>
+        </>
     );
 };
 
