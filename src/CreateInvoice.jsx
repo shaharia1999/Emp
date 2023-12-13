@@ -13,6 +13,7 @@ import { Table } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Payment } from "./store/Selary";
+import NavBar from "./NavBar";
 const CreateInvoice = () => {
     const [emps, setEmps] = useState([])
     const [emp, setEmp] = useState(null)
@@ -159,6 +160,22 @@ function getAttenDanceInfo(id) {
       .catch((error) => console.log(error));
   }
     return (
+      <>
+        
+               <div>
+                              <marquee>
+            <addr className="font-bold">Notice : </addr>
+            Arrive promptly at 10:10 a.m. and depart at 6:00 p.m. Any arrival
+            after 10:10 a.m. is considered late.
+            <span className="text-red-500">
+              {" "}
+              Three instances of tardiness will result in a deduction of one
+              day's salary..
+            </span>
+          </marquee>
+                    <NavBar></NavBar>
+                </div>
+            
         <div className="mx-20 flex flex-col justify-center items-center font-Rovoto" id="main-body" >
 
             <div className="mx-32 mb-6  w-[768px]  justify-items-center" >
@@ -397,6 +414,7 @@ function getAttenDanceInfo(id) {
             </div>
             </div>
         </div>
+        </>
     );
 };
 

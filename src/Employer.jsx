@@ -16,6 +16,7 @@ import "../src/Payment_Invoice/Invoice.css";
 import { FaCheckCircle } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import NavBar from "./NavBar";
 
 // console.log(id);
 const path = location.pathname;
@@ -151,6 +152,19 @@ const Employers = () => {
   };
   return (
     <div>
+       <div>
+                              <marquee>
+            <addr className="font-bold">Notice : </addr>
+            Arrive promptly at 10:10 a.m. and depart at 6:00 p.m. Any arrival
+            after 10:10 a.m. is considered late.
+            <span className="text-red-500">
+              {" "}
+              Three instances of tardiness will result in a deduction of one
+              day's salary..
+            </span>
+          </marquee>
+                    <NavBar></NavBar>
+                </div>
       <div className="flex  justify-center font-Rovoto">
         <div>
           <div className="w-[768px] relative px-10">

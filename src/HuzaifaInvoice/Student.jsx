@@ -9,11 +9,12 @@ import Swal from "sweetalert2";
 
 // new
 import "../src/Payment_Invoice/Invoice.css";
+import NavBar from "../NavBar";
 
 
 // console.log(id);
 const path = location.pathname;
-console.log(path);
+
 const Student = () => {
   const [student, setStudent] = useState(null);
   const [total, setTotal] = useState(0);
@@ -106,6 +107,7 @@ const Student = () => {
 
   return (
     <div>
+      
       <div className="flex  justify-center font-Rovoto">
         <div>
           <div className="w-[768px] relative px-10">

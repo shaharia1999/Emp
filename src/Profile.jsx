@@ -199,7 +199,7 @@ const Profile = () => {
           ClockOut={ClockOut}
         ></TimeCard>
         </div> */}
-        <div className="bg-white py-5">
+        <div className="bg-white py-5 rounded-t-md">
         <div className="flex justify-between bg-[#D0ECF0] mx-5 py-5 px-5 rounded-t-md">
           <article>
           <p><addr className='font-medium'>Name:</addr> {emp?.name}</p>
@@ -208,7 +208,7 @@ const Profile = () => {
           </article>
           {/* <article><Avatar className="mt-[-30px] w-60 h-48 bg-red-500 bg-cover" img={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`}  rounded imgClassName="w-full h-full object-cover" /></article> */}
           <article>
-            <img className="rounded-full w-56 h-56 mt-[-100px]" src={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`}/>
+            <img className="rounded-full w-56 h-56 mt-[-100px] border border-amber-400" src={`${ApiUrl.BaseUrl}media/Profile/${emp?.image}`}/>
      
             </article>
        
@@ -233,7 +233,7 @@ const Profile = () => {
                 <input type="checkbox" name="" id="" className="bg-red-400 mr-4" />
                 <label>Holidays</label>
                 </div>
-          <Table className="text-[12px] md:text-[16px] mt-2">
+          <Table className="text-[12px] md:text-[16px] mt-2 mx-2">
             <Table.Head className="">
               {/* <Table.HeadCell className="hidden  lg:table-cell">No.</Table.HeadCell> */}
               <Table.HeadCell>Date</Table.HeadCell>
@@ -241,7 +241,7 @@ const Profile = () => {
               <Table.HeadCell>Clock in</Table.HeadCell>
               <Table.HeadCell>Clock Out</Table.HeadCell>
             </Table.Head>
-            <Table.Body className="">
+            <Table.Body className="mx-2">
               {atten?.map((x, index) => {
                 let isHoldiay =
                   moment(x.date).format("d") == 5 ||
@@ -249,8 +249,8 @@ const Profile = () => {
                 return (
                   <Table.Row
                     key={index}
-                    className={`text-black border-4  bg-white border-white ${
-                      isHoldiay ?" rounded-lg bg-red-400 ": 'odd:bg-[#f0f0f0] '
+                    className={`text-black  bg-white border-white border-y-2 ${
+                      isHoldiay ?"  bg-red-400 ": 'odd:bg-[#f0f0f0] '
                     }`}
                   >
                     {/* <Table.Cell className="rounded-l-xl hidden lg:table-cell">
@@ -259,7 +259,7 @@ const Profile = () => {
                     <Table.Cell>{x.date}</Table.Cell>
                     <Table.Cell>{moment(x.date).format("dddd")}</Table.Cell>
                     <Table.Cell>{x.clock_in}</Table.Cell>
-                    <Table.Cell className="rounded-r-xl">
+                    <Table.Cell className="">
                       {x.clock_out}
                     </Table.Cell>
                   </Table.Row>

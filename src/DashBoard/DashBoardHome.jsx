@@ -4,6 +4,7 @@ import moment from "moment";
 // import { NavLink, Outlet,} from "react-router-dom";
 import { Select as FlowbiteSelect, TextInput,} from 'flowbite-react';
 import { useState } from "react";
+import { MdTask } from 'react-icons/md';
 
 
 
@@ -19,31 +20,60 @@ const DashBoardHome = () => {
       let t = { 'label': moment().month(index).format('MMMM'), 'value': index + 1 }
       months.push(t)
   }
-  console.log(months);
   // Configuration options for the chart
-  const options = {
+
+// Index Label Chart
+const [options2, setOptions2] = useState({
     animationEnabled: true,
     exportEnabled: true,
-    theme: "", // "light1", "dark1", "dark2"
-    title:{
-        text: ""
+    theme: "light2",
+
+    axisY: {
+      includeZero: true
     },
-    height: 500,
+    height:700,
+    data: [{
+      type: "column",
+      indexLabelFontColor: "#5A5757",
+      indexLabelPlacement: "outside",
+      dataPoints: [
+        { x: 10, y: 71 },
+        { x: 20, y: 55 },
+        { x: 30, y: 50 },
+        { x: 40, y: 65 },
+        { x: 50, y: 71 },
+        { x: 60, y: 68 },
+        { x: 70, y: 38 },
+        { x: 80, y: 92, indexLabel: "Highest" },
+        { x: 90, y: 54 },
+        { x: 100, y: 60 },
+        { x: 110, y: 21 },
+        { x: 120, y: 49 },
+        { x: 130, y: 36 }
+      ]
+    }]
+  });
+
+// pie Chart 
+const options = {
+    animationEnabled: true,
+    exportEnabled: true,
+    theme: "light1", // "light1", "dark1", "dark2"
+
     data: [{
         type: "pie",
         indexLabel: "{label}: {y}%",		
         startAngle: -90,
         dataPoints: [
-            { y: 20, label: "Attends" },
-            { y: 24, label: "Absense" },
-            { y: 20, label: "Late" },
-            { y: 14, label: "Leave" },
-          
+            { y: 20, label: "Airfare" },
+            { y: 24, label: "Food & Drinks" },
+            { y: 20, label: "Accomodation" },
+            { y: 14, label: "Transportation" },
+            { y: 12, label: "Activities" },
+            { y: 10, label: "Misc" }	
         ]
     }]
-    
 }
-
 
   return (
     <div className='  px-10'>
@@ -82,7 +112,55 @@ const DashBoardHome = () => {
                                     />
                                     </div>
     
-      <CanvasJSChart options={options} />
+      {/* <CanvasJSChart options={options} /> */}
+      <div className='grid grid-cols-6 gap-5 my-10'>
+      <div className='col-span-4 shadow-2xl px-10 py-10' >
+        <div className=''>
+        <CanvasJSChart options={options2}  />
+        </div>
+        
+      </div>
+      <div className='col-span-2 '>
+        <div className=''>
+            <div className='flex justify-between items-center shadow-lg  py-6 border px-5 my-2'>
+                <div><MdTask className='text-3xl text-blue-500' /></div>
+                <div>
+                    <p>Total Task</p>
+                    <p className='text-center text-2xl'>34 +</p>
+                </div>
+                <div className='text-center text-2xl'>10%</div>
+            </div>
+            <div className='flex justify-between items-center shadow-lg  py-6 border px-5 my-2'>
+                <div><MdTask className='text-3xl text-red-500' /></div>
+                <div>
+                    <p>Total Task</p>
+                    <p className='text-center text-2xl'>34 +</p>
+                </div>
+                <div className='text-center text-2xl'>10%</div>
+            </div>
+            <div className='flex justify-between items-center shadow-lg  py-6 border px-5 my-2'>
+                <div><MdTask className='text-3xl text-green-500' /></div>
+                <div>
+                    <p>Total Task</p>
+                    <p className='text-center text-2xl'>34 +</p>
+                </div>
+                <div className='text-center text-2xl'>10%</div>
+            </div>
+            <div className='flex justify-between items-center shadow-lg  py-6 border px-5 my-2'>
+                <div><MdTask className='text-3xl text-yellow-500' /></div>
+                <div>
+                    <p>Total Task</p>
+                    <p className='text-center text-2xl'>34 +</p>
+                </div>
+                <div className='text-center text-2xl'>10%</div>
+            </div>
+            
+        </div>
+        <div className='shadow-lg'>
+        <CanvasJSChart options={options} />
+        </div>
+      </div>
+    </div>
 
 
      
