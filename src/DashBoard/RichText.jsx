@@ -12,8 +12,9 @@ const TINY = () =>
   };
   return (
 
-    <div className='px-20 '>
-    <div className='mt-10 grid place-items-center '>
+    <div className='px-20 mt-20'>
+    <div className='mt-10 grid   '>
+      <h1 className='text-3xl pb-4 px-5 '>Submit Your Tasks and Wait for Review </h1>
     <Editor
       apiKey='glgt2ka62szakfifl35ejbg97lje8m14lffv8w3eegkuwbu9'
       init={{
@@ -30,10 +31,10 @@ const TINY = () =>
       value={value}
       onEditorChange={handleEditorChange}
     />
-    <buttun className='bg-green-500 px-10 py-2 mt-2 text-white rounded-md  cursor-pointer '>Submit</buttun>
+    <buttun className='bg-green-500 px-10 py-2 mt-2 text-white rounded-md  cursor-pointer text-center hover:bg-pink-600'>Submit Task</buttun>
     </div>
     <div>
-      <h1 className='text-center mt-4 bg-[#0891B2] text-white font-semibold py-2'>Task Submitted list</h1>
+      <h1 className='text-center mt-4 bg-[#0891B2]  text-white font-semibold py-2'>Task Submitted list</h1>
       <Table className="text-[12px] md:text-[16px] mt-2 mb-20">
             <Table.Head className="">
               {/* <Table.HeadCell className="hidden  lg:table-cell">No.</Table.HeadCell> */}

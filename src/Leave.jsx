@@ -14,7 +14,7 @@ const Leave = () => {
     return (
       <div className="flex justify-center items-center h-auto w-[100%]  ">
         <div className=" w-[768px] h-auto mt-5 font-Rovoto   px-3 py-5 shadow-md ">
-          <h1 className="text-center text-2xl text-[#0891B2]">Leave Request</h1>
+          <h1 className="text-center text-2xl text-[#0891B2] ">Leave Request</h1>
           <p className="text-center text-lg">
             Request your leave details down below.
           </p>

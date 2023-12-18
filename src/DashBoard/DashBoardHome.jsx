@@ -44,7 +44,7 @@ const [options2, setOptions2] = useState({
         { x: 50, y: 71 },
         { x: 60, y: 68 },
         { x: 70, y: 38 },
-        { x: 80, y: 92, indexLabel: "Highest" },
+        { x: 80, y: 92,  },
         { x: 90, y: 54 },
         { x: 100, y: 60 },
         { x: 110, y: 21 },
@@ -53,7 +53,19 @@ const [options2, setOptions2] = useState({
       ]
     }]
   });
+  const updateFirstDataPointY = (newY) => {
+    alert('hi')
+    // Create a copy of the options2 state
+    const updatedOptions = { ...options2 };
 
+    // Update the y value of the first data point
+    updatedOptions.data[0].dataPoints[0].y = 25;
+
+    // Update the state with the new options
+    setOptions2(updatedOptions);
+  };
+
+console.log(options2.data[0].dataPoints[0].y);
 // pie Chart 
 const options = {
     animationEnabled: true,
@@ -77,7 +89,7 @@ const options = {
 
   return (
     <div className='  px-10'>
-        <h1 className="font-bold text-2xl text-center mt-2">Your History</h1>
+        <h1 className="font-bold text-2xl text-center mt-10">Your History</h1>
       <div className="flex px-10 mt-2 justify-center">
     
                 
@@ -156,8 +168,9 @@ const options = {
             </div>
             
         </div>
-        <div className='shadow-lg'>
-        <CanvasJSChart options={options} />
+        <div className='shadow-lg' >
+        <CanvasJSChart options={options}   />
+        {/* <button onClick={()=>updateFirstDataPointY()}>hi</button> */}
         </div>
       </div>
     </div>
