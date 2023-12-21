@@ -168,9 +168,9 @@ const Employers = () => {
       <div className="flex  justify-center font-Rovoto">
         <div>
           <div className="w-[768px] relative px-10">
-            <TextInput id="title" required type="text" name="title" />
+            <input id="title" required type="text" name="title"  className="OutLine rounded-3xl border border-[#0891B2] focus:border-[#0891B2] focus:outline-none w-full" />
             <addr
-              className="bg-[#0891B2] hover:bg-lime-600 px-4 py-[9px] absolute right-0 top-0 rounded-r-lg text-white cursor-pointer"
+              className="bg-[#0891B2] hover:bg-lime-600 px-4 py-[9px] absolute right-0 top-0 rounded-r-3xl text-white cursor-pointer"
               onClick={Search}
             >
               Search

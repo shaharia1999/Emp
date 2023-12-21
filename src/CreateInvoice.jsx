@@ -183,14 +183,14 @@ function getAttenDanceInfo(id) {
             </div>
             {
                 emp && <div >
-                    {/* <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
+                    <button className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg ${invoiceRow.length==0?'hidden':'block'}`} onClick={() => MakePDF3()}>
                         Save PDF
-                    </button> */}
-                    <Link to='1'>
+                    </button>
+                    {/* <Link to='1'>
                   <button onClick={PDf} className={`bg-[#0891B2] hover:bg-lime-600 text-white px-8 py-2 rounded-lg `} >
                   Print
                   </button>
-                  </Link>
+                  </Link> */}
                 </div>
             }
             <div className="flex w-full justify-center">

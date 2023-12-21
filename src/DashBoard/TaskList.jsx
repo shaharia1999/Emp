@@ -1,9 +1,50 @@
 import { Button, Modal, Select, Table } from "flowbite-react";
 import moment from "moment";
 import { useState } from "react";
+import { TableDraggable } from "reactjs-table-draggable";
+
+
+
+
+
 
 const TaskList = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [columns, setColumns] = useState([
+    { field: 'id', label: 'ID' },
+    { field: 'first_name', label: 'First Name' },
+    { field: 'last_name', label: 'Last Name' },
+    { field: 'address', label: 'Address' },
+  ])
+
+  const handleChange = (field, label) => {
+    for (const col of columns) {
+      if (col.field === field) {
+        col.label = label
+      }
+    }
+    setColumns([...columns])
+  }
+
+  const onDragEnd = columns => {
+    setColumns([...columns])
+  }
+
+  const rows = [
+    { id: 1, first_name: 'Jhon', last_name: 'Doe', address: 'New York, USA',  },
+    { id: 2, first_name: 'Jane', last_name: 'Doe', address: 'Washington, USA',  },
+    { id: 3, first_name: 'Bob', last_name: 'Smith', address: 'Los Angeles, USA', },
+  ]
+  const renderCell = (cell, row) => (
+    <td
+      key={cell.id}
+      style={{ color: row.last_name === 'Doe' ? 'green' : 'yellow' }}
+    >
+      {cell.value}
+    </td>
+  );
+
+
   return (
     <div className="px-20">
       {/* <Button >Toggle modal</Button> */}
@@ -30,9 +71,8 @@ const TaskList = () => {
       <h1 className="text-center mt-4 bg-[#0891B2] text-white font-semibold py-2">
         Task list
       </h1>
-      <Table className="text-[12px] md:text-[16px] mt-2 mb-20">
+      {/* <Table className="text-[12px] md:text-[16px] mt-2 mb-20">
         <Table.Head className="">
-          {/* <Table.HeadCell className="hidden  lg:table-cell">No.</Table.HeadCell> */}
           <Table.HeadCell className="text-center">Number</Table.HeadCell>
           <Table.HeadCell className="text-center">Name</Table.HeadCell>
           <Table.HeadCell className="text-center">Date</Table.HeadCell>
@@ -97,7 +137,18 @@ const TaskList = () => {
             </Table.Cell>
           </Table.Row>
         </Table.Body>
-      </Table>
+      </Table> */}
+       <div className="ag-theme-quartz w-full" >
+       <TableDraggable
+      data={rows}
+      editable={true}
+      onChange={handleChange}
+      columns={columns}
+      onDragEnd={onDragEnd}
+      
+  
+    />
+    </div>
     </div>
   );
 };
