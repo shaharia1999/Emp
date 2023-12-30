@@ -81,6 +81,11 @@ const NavBar = () => {
             Student
           </NavLink>
         )}
+        {type && (
+          <NavLink to="/cer" className="text-white">
+            Certificate
+          </NavLink>
+        )}
         {type2 && (
           <NavLink to="/student" className="text-white">
             Student

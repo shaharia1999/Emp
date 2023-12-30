@@ -3,6 +3,7 @@
 import { Button, Label, Radio, TextInput, Textarea } from "flowbite-react";
 import { useState } from "react";
 import { DatePicker } from "react-rainbow-components";
+import Certificate from "./Certificate";
 
 const Leave = () => {
     // const initialState = {
@@ -184,6 +185,7 @@ const Leave = () => {
          
           </form>
         </div>
+        {/* <Certificate></Certificate> */}
       </div>
     );
 };

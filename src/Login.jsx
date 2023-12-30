@@ -10,7 +10,7 @@ import img from '../src/images/aws.png'
 const Login = () => {
   const userAgent = navigator.userAgent;
   const browserName = navigator.appName;
-  const browserVersion = navigator.appVersion;
+const browserVersion = navigator.appVersion;
 useEffect(()=>{
    
 //    console.log(localStorage.getItem('type')) 

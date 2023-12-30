@@ -22,6 +22,7 @@ import Team from "./DashBoard/Team.jsx";
 import DevOps from "./DashBoard/TeamDevOps/DevOps.jsx";
 import TeamDelta from "./DashBoard/TeamDevOps/TeamDelta.jsx";
 import SelaryInvoice from "./Payment_Invoice/SelaryInvoice.jsx";
+import Certificate from "./Certificate.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Login></Login>,
+          },
+          {
+            path: "/cer",
+            element: <Certificate></Certificate>,
           },
           {
             path: "/login",
