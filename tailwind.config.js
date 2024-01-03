@@ -9,7 +9,9 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        Plyafire:['DM Serif Display'],
+        comforta:['Comfortaa'],
+        Plyafire:['Lora'],
+        Display:['DM Serif Display'],
         Rovoto:['Roboto Slab']
       }
     },

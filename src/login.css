@@ -17,10 +17,11 @@
 .certificate{
     margin: 30px  auto;
     width: 80%;
-    background-image: url('../src/images/Group\ 2.png');
+    height: auto;
+    /* background-image: url('../src/images/Group\ 2.png'); */
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     z-index: 100 !important;
     margin-top: 60px;
 }
