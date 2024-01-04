@@ -26,12 +26,12 @@ const NavBar = () => {
     // console.log(type,type2);
 
     let data = localStorage.getItem("type");
-    if (data === "Admin") {
+    if (isElementIncluded) {
       setType(true);
-    } else if (isElementIncluded) {
-      setType2(true);
-    }
-  }, [type, type2]);
+     
+    } 
+   
+  },[type]);
   function Logout() {
     localStorage.clear();
     setType(null)
@@ -76,17 +76,17 @@ const NavBar = () => {
                     type &&  <NavLink to="/leave" className='text-white'>Leave</NavLink> 
                 } */}
 
-        {type && (
+        {/* {type && (
           <NavLink to="/student" className="text-white">
             Student
           </NavLink>
-        )}
+        )} */}
         {type && (
           <NavLink to="/cer" className="text-white">
             Certificate
           </NavLink>
         )}
-        {type2 && (
+        {type && (
           <NavLink to="/student" className="text-white">
             Student
           </NavLink>
